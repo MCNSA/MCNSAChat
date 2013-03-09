@@ -17,9 +17,6 @@ Cross-server, multi-channel chat plugin.
 |/me <message>||Emotes your message (will appear as `* you <message>`). Example: `/me needs more diamonds`|
 |/msg <player> <message>||Sends a private message to a player. Works across servers. Aliases: `/w`, `/tell`, `/whisper`|
 |/r <message>||Replies to the last person who messaged you (or whom you messaged)|
-|/rand <min> <max>||Gives a random number according to `min` (default: `0`) and `max`.|
-|/ranks||Lists all of the server ranks.|
-
 # Mod commands
 
 |**Command**|**Permission Node**|**Description**|
@@ -40,3 +37,11 @@ Cross-server, multi-channel chat plugin.
 |/cmode <channel> <mode>||Changes channel’s mode. Modes: `LOCAL` (makes channel work only on the current server), `MUTE` (nobody can talk), `RAVE` (random colors for letters, useful to stop huge fights), `RANDOM` (prepends everything with `&k` to make the text obfuscated), `LOUD` (enables bold and changes text to caps), `BORING` (removes all color and formatting), `PERSIST` (makes the channel show up in `/clist` even if it’s empty)|
 |/cname <channel> <name>||Changes channel’s display name. Can be used to properly capitalize letters. Example: `/cname mod MOD`|
     
+# MCNSA Grab Bag
+
+|**Command**|**Permission Node**|**Description**|
+|:------|:--------------|:----------|
+|/dicks||A message of love.|
+|/pong||Alternative to `/ping`.|
+|/rand <min> <max>||Gives a random number according to `min` (default: `0`) and `max`.|
+|/ranks||Lists all of the server ranks.|
