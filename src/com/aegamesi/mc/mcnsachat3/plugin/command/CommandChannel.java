@@ -20,21 +20,21 @@ public class CommandChannel implements Command {
 	public Boolean handle(Player player, String sArgs) {
 		if(sArgs.length() < 1)
 			return false;
-	
+		String chanName = sArgs.replaceAll("[^A-Za-z0-9]", "");
 		ChatPlayer cp = PlayerManager.getPlayer(player.getName(), plugin.name);
 		if(cp.modes.contains(ChatPlayer.Mode.LOCKED)) {
 			PluginUtil.send(cp.name, "You have been locked in your channel and may not change channels.");
 			return true;
 		}
 
-		String read_perm = ChannelManager.getChannel(sArgs) == null ? "" : ChannelManager.getChannel(sArgs).read_permission;
+		String read_perm = ChannelManager.getChannel(chanName) == null ? "" : ChannelManager.getChannel(chanName).read_permission;
 		if (!read_perm.equals("") && !MCNSAChat3.permissions.has(player, "mcnsachat3.read." + read_perm)) {
 			plugin.getLogger().info(player.getName() + " attempted to read channel " + sArgs + " without permission!");
 			PluginUtil.send(player.getName(), "&cYou don't have permission to do that!");
 			return true;
 		}
 		
-		cp.changeChannels(sArgs);
+		cp.changeChannels(chanName);
 		
 		if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new PlayerUpdatePacket(cp));
