@@ -1,5 +1,7 @@
 package com.aegamesi.mc.mcnsachat3.managers;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -22,6 +24,7 @@ import com.aegamesi.mc.mcnsachat3.packets.PlayerJoinedPacket;
 import com.aegamesi.mc.mcnsachat3.packets.PlayerLeftPacket;
 import com.aegamesi.mc.mcnsachat3.plugin.MCNSAChat3;
 import com.aegamesi.mc.mcnsachat3.plugin.PluginUtil;
+import com.aegamesi.mc.mcnsachat3.plugin.SLAPI;
 
 public class PlayerListener implements Listener {
 	public MCNSAChat3 plugin;
@@ -56,7 +59,35 @@ public class PlayerListener implements Listener {
 			p.listening.addAll((List<String>) plugin.getConfig().getList("default-listen"));
 			welcomeThem = true;
 		}
-
+		
+		//Timeout handling
+		//Initilise hashmap
+		HashMap<String, Long > timeouts = new HashMap<String, Long>();
+	//Try loading the hashmap
+		try{ timeouts = SLAPI.load("plugins/MCNSAChat3/timeout.bin"); }
+		catch(Exception e){ plugin.getLogger().warning("Error loading timeout hashmap. "+e.getMessage()); }
+		
+	//get current timestamp
+		long timeNow = new Date().getTime();
+		
+		for (String key: timeouts.keySet()) {
+			Long timeoutTime = timeouts.get(key);
+			if (key.contains(p.name)){
+				//Player is in the timeoutlist
+				if (timeNow >= timeoutTime) {
+					//Timeout has expired
+					timeouts.remove(key);
+					//save hashmap
+					try { SLAPI.save(timeouts, "plugins/MCNSAChat3/timeout.bin");}
+					catch (Exception e) { plugin.getLogger().warning("Could not save timeouts file "+e.getMessage()); }
+				}
+				else {
+					//Timeout is still active
+					p.modes.add(ChatPlayer.Mode.MUTE);
+					PluginUtil.send(key, "Your timeout is still active. You cannot chat yet");
+				}
+			}
+		}
 		PlayerManager.players.add(p);
 		if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new PlayerJoinedPacket(p, plugin.longname));

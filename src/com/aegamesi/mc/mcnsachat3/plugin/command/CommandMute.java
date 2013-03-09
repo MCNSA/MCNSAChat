@@ -15,6 +15,7 @@ import com.aegamesi.mc.mcnsachat3.packets.PlayerUpdatePacket;
 @Command.CommandInfo(alias = "cmute", permission = "mute", usage = "<player>", description = "Mute a player so you dont have to listen to them")
 public class CommandMute implements Command {
 	HashMap<String, String> mutelist = new HashMap<String, String>();
+	
 	public static MCNSAChat3 plugin = null;
 	
 	public CommandMute(MCNSAChat3 plugin) {
@@ -34,9 +35,8 @@ public class CommandMute implements Command {
 		
 		//Load the hashmap
 		try{ mutelist = SLAPI.load("plugins/MCNSAChat3/mutelist.bin"); }
-		catch(Exception e){ plugin.getLogger().warning("Error loading hash map. "+e.getMessage()); }
+		catch(Exception e){ plugin.getLogger().warning("Error loading Mutelist hashmap. "+e.getMessage()); }
 		
-		int muted = 0;
 		ChatPlayer p = PlayerManager.getPlayer(bukkitPlayer.getName(), plugin.name);
 		//This is where we set if the player is muted or not
 		if (mutelist.containsKey(player.getName()+"."+sArgs)) {

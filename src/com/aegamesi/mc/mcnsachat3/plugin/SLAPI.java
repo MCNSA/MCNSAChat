@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.bukkit.Bukkit;
+
 public class SLAPI
 {
 	public static <T extends Object> void save(T obj,String path) throws Exception

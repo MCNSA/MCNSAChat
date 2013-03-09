@@ -24,6 +24,7 @@ import com.aegamesi.mc.mcnsachat3.managers.ChatManager;
 import com.aegamesi.mc.mcnsachat3.managers.CommandManager;
 import com.aegamesi.mc.mcnsachat3.managers.PlayerListener;
 import com.aegamesi.mc.mcnsachat3.managers.PlayerManager;
+import com.aegamesi.mc.mcnsachat3.managers.TimeoutManager;
 
 public final class MCNSAChat3 extends JavaPlugin implements Listener {
 	public static ClientThread thread = null;
@@ -37,6 +38,7 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 	public static PermissionManager permissions;
 	private FileHandler fileHandler;
 	public Map<String, String> mutelist = new HashMap<String, String>();
+	public Map<String, Long> timeouts = new HashMap<String, Long>();
 
 	public void onEnable() {
 		persist = new Persistence(this);
@@ -65,19 +67,32 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 		}
 		
 		//mutelist
+			String path = getDataFolder() + "/mutelist.bin";
+			File file = new File(path);
+			if (file.exists()) {
+				try { mutelist = SLAPI.load(path); } 
+				catch (Exception e) { getLogger().warning("Could not load mutelist "+e.getMessage()); }
+			}
+			else {
+				getLogger().info("mutelist not found. Creating new");
+				mutelist = new HashMap<String, String>();
+				try { SLAPI.save(mutelist, path);}
+				catch (Exception e) { getLogger().warning("Could not save mutelist "+e.getMessage()); }
+			}
 		
-		String path = getDataFolder() + "/mutelist.bin";
-		File file = new File(path);
-		if (file.exists()) {
-			try { mutelist = SLAPI.load(path); } 
-			catch (Exception e) { getLogger().warning("Could not load mutelist "+e.getMessage()); }
-		}
-		else {
-			getLogger().info("mutelist not found. Creating new");
-			mutelist = new HashMap<String, String>();
-			try { SLAPI.save(mutelist, path);}
-			catch (Exception e) { getLogger().warning("Could not save mutelist "+e.getMessage()); }
-		}
+		//timeouts		
+			String timeoutpath = getDataFolder() + "/timeout.bin";
+			File timeoutfile = new File(timeoutpath);
+			if (timeoutfile.exists()) {
+				try { timeouts = SLAPI.load(timeoutpath); } 
+				catch (Exception e) { getLogger().warning("Could not load timeouts "+e.getMessage()); }
+			}
+			else {
+				getLogger().info("timeouts file not found. Creating new");
+				timeouts = new HashMap<String, Long>();
+				try { SLAPI.save(timeouts, timeoutpath);}
+				catch (Exception e) { getLogger().warning("Could not save timeouts "+e.getMessage()); }
+			}
 		// persistence
 		loadPlayers();
 		loadChannels();
@@ -101,6 +116,16 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 				}
 			}
 		}, 0L, 200L);
+		
+		
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(finalThis, new Runnable() {  
+			
+			public void run() {
+				TimeoutManager timeoutTask = new TimeoutManager(finalThis, getLogger());
+				timeoutTask.start();
+			}
+			
+			}, 0L, 600L);
 	}
 
 	@SuppressWarnings("unchecked")
