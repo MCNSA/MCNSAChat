@@ -25,7 +25,7 @@ Cross-server, multi-channel chat plugin.
 |/cmove \<player\> \<channel\>||Moves a player to a channel.|
 |/creconnect||Breaks the connection to the chat server, waiting for it to be restored later.|
 |/creload||Reloads configuration from file. Persistance isn’t reloaded (you need to reload the plugin or teh server).|
-|/ctimeout \<player\> \<time\>||Places player in timeout (they cannot chat or use `/msg`). Time format: `10s`, `7m` or `1h`.|
+|/timeout \<player\> \<time\> \<Reason\>||Places player in timeout (they cannot chat or use `/msg`). Time format: \<number of minutes\>.|
 |/silence \<player\>||Toggles player’s silenced status (they won’t be able to chat at all).|
 
 # Channel management
