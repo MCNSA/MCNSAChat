@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
+
 import com.aegamesi.mc.mcnsachat3.managers.ChannelManager;
 import com.aegamesi.mc.mcnsachat3.managers.PlayerManager;
 import com.aegamesi.mc.mcnsachat3.packets.ChannelUpdatePacket;
@@ -62,7 +64,12 @@ public class ChatPlayer {
 		ArrayList<Mode> modes = new ArrayList<Mode>();
 		size = in.readInt();
 		for (int i = 0; i < size; i++)
-			modes.add(Mode.valueOf(in.readUTF()));
+			try {
+				modes.add(Mode.valueOf(in.readUTF()));
+			}
+			catch (Exception e) {
+				Bukkit.getLogger().severe(e.getMessage());
+			}
 
 		ChatPlayer p = new ChatPlayer(name, server, channel, listening);
 		p.formatted = formatted;
