@@ -7,6 +7,7 @@ Cross-server, multi-channel chat plugin.
 
 |**Command**|**Permission Node**|**Description**|
 |:------|:--------------|:----------|
+|Chatting|mcnsa.chat.write|Has to be given to allow players to chat|
 |/chelp||Provides a help menu for all chat commands you can use|
 |/c \<channel\>|mcnsachat3.channel|Switches to a channel.|
 |/cmute \<player\>|mcnsachat3.mute|Ignore player’s chat and private messages.|
