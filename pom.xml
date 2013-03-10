@@ -22,12 +22,14 @@
   		<groupId>org.bukkit</groupId>
   		<artifactId>bukkit</artifactId>
   		<version>1.4.6-R0.1-SNAPSHOT</version>
+      <scope>system</scope>
       <systemPath>${basedir}/lib/bukkit-1.4.6-R0.1-20121220.180858-1.jar</systemPath>
   	</dependency>
   	<dependency>
   		<groupId>ru.tehkode</groupId>
   		<artifactId>PermissionsEx</artifactId>
   		<version>1.19.4</version>
+      <scope>system</scope>
       <systemPath>${basedir}/lib/PermissionsEx.jar</systemPath>
   	</dependency>
   </dependencies>
