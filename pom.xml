@@ -29,4 +29,10 @@
   		<version>1.19.4</version>
   	</dependency>
   </dependencies>
+  <repositories>
+  <repository>
+    <id>my-local-repo</id>
+    <url>file://${basedir}/lib</url>
+  </repository>
+</repositories>
 </project>
