@@ -12,10 +12,10 @@ Cross-server, multi-channel chat plugin.
 |`/chelp`||Provides a help menu for all chat commands you can use.|
 |`/c <channel>`|`mcnsachat3.channel`|Switches to a channel.|
 |`/cmute <player>`|`mcnsachat3.mute`|Ignore player’s chat and private messages.|
-|`/clist||List available channels.|
+|`/clist`||List available channels.|
 |`/clisten <channel>`|`mcnsachat3.listen`|Allows to listen to more channels, while typing in another.|
 |`/csearch <player>`|`mcnsachat3.search`|Views the channel a player is currently in.|
-|`/list||Lists everyone online. Aliases: `/who`, `/playerlist`, `/online`, `/players`|
+|`/list`||Lists everyone online. Aliases: `/who`, `/playerlist`, `/online`, `/players`|
 |`/me <message>`||Emotes your message (will appear as `* you <message>`). Example: `/me needs more diamonds`|
 |`/msg <player> <message>`|`mcnsachat3.msg`|Sends a private message to a player. Works across servers. Aliases: `/w`, `/tell`, `/whisper`|
 |`/r <message>`|`mcnsachat3.msg`|Replies to the last person who messaged you (or whom you messaged)|
@@ -44,10 +44,10 @@ Cross-server, multi-channel chat plugin.
 
 |**Command**|**Permission Node**|**Description**|
 |:------|:--------------|:----------|
-|/dicks||A message of love.|
-|/pong||Alternative to `/ping`.|
-|/rand <min> <max>||Gives a random number according to `min` (default: `0`) and `max`.|
-|/ranks||Lists all of the server ranks.|
+|`/dicks`||A message of love.|
+|`/pong`||Alternative to `/ping`.|
+|`/rand <min> <max>`||Gives a random number according to `min` (default: `0`) and `max`.|
+|`/ranks`||Lists all of the server ranks.|
 
 # Configuration
 
