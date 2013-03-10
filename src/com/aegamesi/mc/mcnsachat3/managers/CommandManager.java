@@ -33,7 +33,6 @@ import com.aegamesi.mc.mcnsachat3.plugin.command.CommandReconnect;
 import com.aegamesi.mc.mcnsachat3.plugin.command.CommandReload;
 import com.aegamesi.mc.mcnsachat3.plugin.command.CommandSearch;
 import com.aegamesi.mc.mcnsachat3.plugin.command.CommandSeeAll;
-import com.aegamesi.mc.mcnsachat3.plugin.command.CommandSilence;
 import com.aegamesi.mc.mcnsachat3.plugin.command.CommandTimeout;
 import com.aegamesi.mc.mcnsachat3.plugin.command.fun.CommandDicks;
 import com.aegamesi.mc.mcnsachat3.plugin.command.fun.CommandPong;
@@ -49,7 +48,6 @@ public class CommandManager {
 		registerCommand(new CommandRanks(plugin));
 		registerCommand(new CommandMe(plugin));
 		registerCommand(new CommandSeeAll(plugin));
-		registerCommand(new CommandSilence(plugin));
 		registerCommand(new CommandChannel(plugin));
 		registerCommand(new CommandListen(plugin));
 		registerCommand(new CommandHelp(plugin));
