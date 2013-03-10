@@ -184,4 +184,5 @@ public class PlayerListener implements Listener {
 			System.out.println("Intercepted command from " + evt.getPlayer().getName() + ": " + evt.getMessage());
 		}
 	}
+	//test
 }
