@@ -135,7 +135,7 @@ public class PlayerListener implements Listener {
 		PluginUtil.send(quitString);
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOW)
 	public void chatHandler(AsyncPlayerChatEvent evt) {
 		if (evt.isCancelled())
 			return;
