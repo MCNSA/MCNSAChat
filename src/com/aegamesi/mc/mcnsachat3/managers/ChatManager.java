@@ -107,6 +107,7 @@ public class ChatManager {
 		message = message.replace("%channel%", chan.color + chan.name);
 		message = message.replace("%rank%", PluginUtil.formatRank(player.name));
 		message = message.replace("%prefix%", MCNSAChat3.permissions.getUser(player.name).getPrefix());
+		message = message.replace("%suffix%", MCNSAChat3.permissions.getUser(player.name).getSuffix());
 		message = message.replace("%player%", player.name);
 		message = message.replace("%message%", line);
 
