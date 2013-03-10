@@ -32,21 +32,21 @@ public class CommandMute implements Command {
 			PluginUtil.send(player.getName(), "&cPlayer not found.");
 			return true;
 		}
-		
+		String playeMute = Bukkit.getPlayer(sArgs).getName();
 		//Load the hashmap
 		try{ mutelist = SLAPI.load("plugins/MCNSAChat3/mutelist.bin"); }
 		catch(Exception e){ plugin.getLogger().warning("Error loading Mutelist hashmap. "+e.getMessage()); }
 		
 		ChatPlayer p = PlayerManager.getPlayer(bukkitPlayer.getName(), plugin.name);
 		//This is where we set if the player is muted or not
-		if (mutelist.containsKey(player.getName()+"."+sArgs)) {
+		if (mutelist.containsKey(player.getName()+"."+playeMute)) {
 			//Player is already muted so lets remove
-			mutelist.remove(player.getName()+"."+sArgs);
+			mutelist.remove(player.getName()+"."+playeMute);
 			PluginUtil.send(player.getName(), PluginUtil.formatUser(p.name)+ " has been unmuted");
 		}
 		else {
 			//Player is not already muted, so lets mute
-			mutelist.put(player.getName()+"."+sArgs, "111");
+			mutelist.put(player.getName()+"."+playeMute, "111");
 			PluginUtil.send(player.getName(), PluginUtil.formatUser(p.name)+ " has been muted");
 		}
 		
