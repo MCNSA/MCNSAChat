@@ -17,9 +17,12 @@
       </plugin>
     </plugins>
   </build>
-  <repository>
-	<id>ProjectRepo</id>
-	<name>ProjectRepo</name>
-	<url>file://${project.basedir}/lib</url>
-  </repository>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>Required</id>
+      <name>Required Libaries</name>
+      <url>>file://${project.basedir}/lib</url>
+      <layout>default</layout>
+    </repository>
 </project>
