@@ -5,7 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>mcnsaChat3</name>
   <build>
-  <repository>
+	<repository>
 		<id>ProjectRepo</id>
 		<name>ProjectRepo</name>
 		<url>file://${project.basedir}/lib</url>
@@ -27,7 +27,6 @@
   		<groupId>org.bukkit</groupId>
   		<artifactId>bukkit</artifactId>
   		<version>1.4.6-R0.1-SNAPSHOT</version>
-  		<systemPath>lib</systemPath>
   	</dependency>
   	<dependency>
   		<groupId>ru.tehkode</groupId>
