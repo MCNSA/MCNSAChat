@@ -14,7 +14,7 @@ import com.aegamesi.mc.mcnsachat3.plugin.Persistence;
 import com.aegamesi.mc.mcnsachat3.plugin.PluginUtil;
 import com.aegamesi.mc.mcnsachat3.plugin.SLAPI;
 
-@Command.CommandInfo(alias = "ct", permission = "timeout", usage = "<player> <time> <reason>", description = "Puts a player in timeout")
+@Command.CommandInfo(alias = "timeout", permission = "timeout", usage = "<player> <time> <reason>", description = "Puts a player in timeout")
 public class CommandTimeout implements Command {
 	public static MCNSAChat3 plugin = null;
 	

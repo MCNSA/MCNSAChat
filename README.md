@@ -28,7 +28,7 @@ Cross-server, multi-channel chat plugin.
 |`/cmove <player> <channel>`|`mcnsachat3.move`|Moves a player to a channel.|
 |`/creconnect`|mcnsachat3.reconnect|Breaks the connection to the chat server, waiting for it to be restored later.|
 |`/creload`|mcnsachat3.reload|Reloads configuration from file. Persistance isn’t reloaded (you need to reload the plugin or teh server).|
-|`/ct <player> <time> <reason>`|`mcnsachat3.timeout`|Places player in timeout (they cannot chat or use `/msg`). Time format: <number of minutes>.|
+|`/timeout <player> <time> <reason>`|`mcnsachat3.timeout`|Places player in timeout (they cannot chat or use `/msg`). Time format: <number of minutes>.|
 |`/silence <player>`|`mcnsachat3.silence`|Toggles player’s silenced status (they won’t be able to chat at all).|
 
 # Channel management
