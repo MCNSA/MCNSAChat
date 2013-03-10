@@ -5,6 +5,12 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>mcnsaChat3</name>
   <build>
+  	<resources>
+      <resource>
+        <directory>resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
