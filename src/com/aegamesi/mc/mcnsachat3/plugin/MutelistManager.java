@@ -10,6 +10,7 @@ public class MutelistManager {
 	public Map<String, String> mutelist = new HashMap<String, String>();
 	private MCNSAChat3 plugin;
 	public MutelistManager get(MCNSAChat3 plugin){
+		
 		this.plugin = plugin;
 		this.load();
 		return null;
@@ -19,13 +20,13 @@ public class MutelistManager {
 		String path = "/plugins/MCNSAChat3/mutelist.bin";
 		File file = new File(path);
 		if (file.exists()) {
-			try { mutelist = SLAPI.load(path); } 
+			try { this.mutelist = SLAPI.load(path); } 
 			catch (Exception e) { plugin.getLogger().warning("Could not load mutelist "+e.getMessage()); }
 		}
 		else {
 			plugin.getLogger().info("mutelist not found. Creating new");
-			mutelist = new HashMap<String, String>();
-			try { SLAPI.save(mutelist, path);}
+			this.mutelist = new HashMap<String, String>();
+			try { SLAPI.save(this.mutelist, path);}
 			catch (Exception e) { plugin.getLogger().warning("Could not save mutelist "+e.getMessage()); }
 		}
 	}
@@ -33,7 +34,7 @@ public class MutelistManager {
 	public void save(){
 		String path = "/plugins/MCNSAChat3/mutelist.bin";
 		File file = new File(path);
-		try { SLAPI.save(mutelist, path);}
+		try { SLAPI.save(this.mutelist, path);}
 		catch (Exception e) { plugin.getLogger().warning("Could not save mutelist "+e.getMessage()); }
 	}
 	public Map read() {
