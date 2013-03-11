@@ -60,34 +60,7 @@ public class PlayerListener implements Listener {
 			welcomeThem = true;
 		}
 		
-		//Timeout handling
-		//Initilise hashmap
-		HashMap<String, Long > timeouts = new HashMap<String, Long>();
-	//Try loading the hashmap
-		try{ timeouts = SLAPI.load("plugins/MCNSAChat3/timeout.bin"); }
-		catch(Exception e){ plugin.getLogger().warning("Error loading timeout hashmap. "+e.getMessage()); }
 		
-	//get current timestamp
-		long timeNow = new Date().getTime();
-		
-		for (String key: timeouts.keySet()) {
-			Long timeoutTime = timeouts.get(key);
-			if (key.contains(p.name)){
-				//Player is in the timeoutlist
-				if (timeNow >= timeoutTime) {
-					//Timeout has expired
-					timeouts.remove(key);
-					//save hashmap
-					try { SLAPI.save(timeouts, "plugins/MCNSAChat3/timeout.bin");}
-					catch (Exception e) { plugin.getLogger().warning("Could not save timeouts file "+e.getMessage()); }
-				}
-				else {
-					//Timeout is still active
-					p.modes.add(ChatPlayer.Mode.MUTE);
-					PluginUtil.send(key, "Your timeout is still active. You cannot chat yet");
-				}
-			}
-		}
 		PlayerManager.players.add(p);
 		if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new PlayerJoinedPacket(p, plugin.longname));
@@ -112,6 +85,35 @@ public class PlayerListener implements Listener {
 			result = result.substring(0, 16);
 		evt.getPlayer().setPlayerListName(result);
 		PluginUtil.send(evt.getPlayer().getName(), PluginUtil.getPlayerList());
+		
+		//Timeout handling
+				//Initilise hashmap
+				HashMap<String, Long > timeouts = new HashMap<String, Long>();
+			//Try loading the hashmap
+				try{ timeouts = SLAPI.load("plugins/MCNSAChat3/timeout.bin"); }
+				catch(Exception e){ plugin.getLogger().warning("Error loading timeout hashmap. "+e.getMessage()); }
+				
+			//get current timestamp
+				long timeNow = new Date().getTime();
+				
+				for (String key: timeouts.keySet()) {
+					Long timeoutTime = timeouts.get(key);
+					if (key.contains(p.name)){
+						//Player is in the timeoutlist
+						if (timeNow >= timeoutTime) {
+							//Timeout has expired
+							timeouts.remove(key);
+							//save hashmap
+							try { SLAPI.save(timeouts, "plugins/MCNSAChat3/timeout.bin");}
+							catch (Exception e) { plugin.getLogger().warning("Could not save timeouts file "+e.getMessage()); }
+						}
+						else {
+							//Timeout is still active
+							p.modes.add(ChatPlayer.Mode.MUTE);
+							PluginUtil.send(key, "Your timeout is still active. You cannot chat yet");
+						}
+					}
+				}
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
