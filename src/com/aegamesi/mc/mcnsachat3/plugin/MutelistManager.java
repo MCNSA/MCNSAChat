@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
-
 public class MutelistManager {
 	public Map<String, String> mutelist = new HashMap<String, String>();
 	private MCNSAChat3 plugin;
