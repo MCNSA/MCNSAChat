@@ -38,8 +38,8 @@ public class MutelistManager {
 	public Map<String, String> read() {
 		return this.mutelist;
 	}
-	public boolean update(Map<String, String> newMutelist){
-		plugin.mutelist = newMutelist;
+	public boolean update(Map newMutelist){
+		plugin.getLogger().info("Mutelist passed to update");
 		return true;
 	}
 
