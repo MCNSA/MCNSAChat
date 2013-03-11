@@ -14,7 +14,7 @@ import com.aegamesi.mc.mcnsachat3.plugin.Persistence;
 import com.aegamesi.mc.mcnsachat3.plugin.PluginUtil;
 import com.aegamesi.mc.mcnsachat3.plugin.SLAPI;
 
-@Command.CommandInfo(alias = "ctm", permission = "timeout", usage = "<player> <time> <reason>", description = "Puts a player in timeout")
+@Command.CommandInfo(alias = "cto", permission = "timeout", usage = "<player> <time> <reason>", description = "Puts a player in timeout")
 public class CommandTimeout implements Command {
 	public static MCNSAChat3 plugin = null;
 	
@@ -48,7 +48,7 @@ public class CommandTimeout implements Command {
 			//Trying to remove a player from timeout
 			if (args[0].startsWith("help")) {
 				//Asking for help
-				PluginUtil.send(player.getName(), "Usage: /ctm <player> <mins> <reason> - Put a player in time out for <mins>");
+				PluginUtil.send(player.getName(), "Usage: /cto <player> <mins> <reason> - Put a player in time out for <mins>");
 			}
 			if (!(Bukkit.getPlayer(args[0]) != null)) {
 				//Player doesn't exist
