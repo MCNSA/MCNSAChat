@@ -38,8 +38,9 @@ public class MutelistManager {
 	public Map<String, String> read() {
 		return this.mutelist;
 	}
-	public void update(Map<String, String> newMutelist){
+	public boolean update(Map<String, String> newMutelist){
 		this.mutelist = newMutelist;
+		return true;
 	}
 
 }

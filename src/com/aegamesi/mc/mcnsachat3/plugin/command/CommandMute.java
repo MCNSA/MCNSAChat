@@ -49,7 +49,9 @@ public class CommandMute implements Command {
 		}
 		
 		//save the mutelist
-		plugin.muteManager.update(mutelist);
+		if ((plugin.muteManager.update(mutelist))) {
+			plugin.getLogger().info("Mutelist updated");
+		}
 		
 		if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new PlayerUpdatePacket(p));
