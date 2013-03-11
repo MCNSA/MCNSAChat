@@ -181,7 +181,8 @@ public class PlayerListener implements Listener {
 
 		if (plugin.command.handleCommand(evt.getPlayer(), evt.getMessage())) {
 			evt.setCancelled(true);
-			System.out.println("Intercepted command from " + evt.getPlayer().getName() + ": " + evt.getMessage());
+			// not necessary to announce every single time someone sends a command
+			//System.out.println("Intercepted command from " + evt.getPlayer().getName() + ": " + evt.getMessage());
 		}
 	}
 }

@@ -51,6 +51,9 @@ public class ChatManager {
 		message = message.replace("%to%", to);
 
 		PluginUtil.sendLater(from.name, message);
+
+		// and log it to the console
+		System.out.println("[msg] " + from.name + " to " + to +": " + line);
 	}
 
 	public void chat(ChatPlayer player, String line, String channel) {

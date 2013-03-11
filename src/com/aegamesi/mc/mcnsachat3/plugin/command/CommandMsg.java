@@ -58,6 +58,9 @@ public class CommandMsg implements Command {
 			plugin.chat.pm_receive(from, to, message);
 		if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new PlayerPMPacket(from, to, message));
+
+		// log it
+		
 		
 		return true;
 	}
