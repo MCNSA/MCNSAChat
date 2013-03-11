@@ -11,7 +11,7 @@ public class MutelistManager {
 	private static MCNSAChat3 plugin;
 
 	public static Map<String, String> load(){
-		String path = "/plugins/MCNSAChat3/mutelist.bin";
+		String path = "plugins/MCNSAChat3/mutelist.bin";
 		File file = new File(path);
 		if (file.exists()) {
 			try { mutelist = SLAPI.load(path); } 
@@ -27,7 +27,7 @@ public class MutelistManager {
 	}
 	
 	public static void save(Map mutelist){
-		String path = "/plugins/MCNSAChat3/mutelist.bin";
+		String path = "plugins/MCNSAChat3/mutelist.bin";
 		File file = new File(path);
 		try { SLAPI.save(mutelist, path);}
 		catch (Exception e) { plugin.getLogger().warning("Could not save mutelist "+e.getMessage()); }
