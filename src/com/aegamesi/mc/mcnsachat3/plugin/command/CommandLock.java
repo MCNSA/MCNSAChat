@@ -44,7 +44,7 @@ public class CommandLock implements Command {
 			PluginUtil.send(targetPlayer.name, "You are no longer locked from changing channels.");
 			targetPlayer.modes.remove(ChatPlayer.Mode.LOCKED);
 		} else {
-			PluginUtil.send(targetPlayer.name, "You have locked from changing channels.");
+			PluginUtil.send(targetPlayer.name, "You have been locked from changing channels.");
 			targetPlayer.modes.add(ChatPlayer.Mode.LOCKED);
 		}
 		
