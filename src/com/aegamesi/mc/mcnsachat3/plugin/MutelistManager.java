@@ -39,7 +39,7 @@ public class MutelistManager {
 		return this.mutelist;
 	}
 	public boolean update(Map<String, String> newMutelist){
-		this.mutelist = newMutelist;
+		plugin.mutelist = newMutelist;
 		return true;
 	}
 
