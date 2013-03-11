@@ -30,8 +30,7 @@ Built jars can be found at http://maboughey.co.uk:8080/
 |`/creload`|`mcnsachat3.command.reload`|Reloads configuration from file. Persistance isn’t reloaded (you need to reload the plugin or teh server).|
 |`/cto <player> <time> <reason>`|`mcnsachat3.command.timeout`|Places player in timeout (they cannot chat or use `/msg`). Time is just a number (minutes).|
 |`/cto <player>`|`mcnsachat3.command.timeout`|Pull out a player from timeout.|
-|'/cto'|'mcnsachat3.command.timeout'|View players in timeout'|
-|'/cto help'|'mcnsachat3.command.timeout'|'Display usage of /cto command'|
+|`/cto`|`mcnsachat3.command.timeout`|View all players currently in timeout.|
 
 # Channel management
 
@@ -48,7 +47,7 @@ Built jars can be found at http://maboughey.co.uk:8080/
 |:------|:--------------|:----------|
 |`/dicks`||A message of love.|
 |`/pong`||Alternative to `/ping`.|
-|`/rand <min> <max>`||Gives a random number according to `min` (default: `0`) and `max`.|
+|`/rand [<min>] <max>`||Gives a random number according to `min` (default: `0`) and `max`.|
 |`/ranks`||Lists all of the server ranks.|
 
 # Configuration
