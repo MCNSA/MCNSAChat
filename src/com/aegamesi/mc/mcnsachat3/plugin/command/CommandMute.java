@@ -1,6 +1,7 @@
 package com.aegamesi.mc.mcnsachat3.plugin.command;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ import com.aegamesi.mc.mcnsachat3.packets.PlayerUpdatePacket;
 
 @Command.CommandInfo(alias = "cmute", permission = "mute", usage = "<player>", description = "Mute a player so you dont have to listen to them")
 public class CommandMute implements Command {
-	HashMap<String, String> mutelist = new HashMap<String, String>();
+	Map<String, String> mutelist = new HashMap<String, String>();
 	
 	public static MCNSAChat3 plugin = null;
 	
@@ -33,12 +34,9 @@ public class CommandMute implements Command {
 			return true;
 		}
 		String playeMute = Bukkit.getPlayer(sArgs).getName();
-		//Load the hashmap
-		try{ mutelist = SLAPI.load("plugins/MCNSAChat3/mutelist.bin"); }
-		catch(Exception e){ plugin.getLogger().warning("Error loading Mutelist hashmap. "+e.getMessage()); }
-		
 		ChatPlayer p = PlayerManager.getPlayer(bukkitPlayer.getName(), plugin.name);
 		//This is where we set if the player is muted or not
+		this.mutelist = plugin.muteManager.mutelist;
 		if (mutelist.containsKey(player.getName()+"."+playeMute)) {
 			//Player is already muted so lets remove
 			mutelist.remove(player.getName()+"."+playeMute);
@@ -51,8 +49,7 @@ public class CommandMute implements Command {
 		}
 		
 		//save the mutelist
-		try { SLAPI.save(mutelist, "plugins/MCNSAChat3/mutelist.bin");}
-		catch (Exception e) { plugin.getLogger().warning("Could not save mutelist "+e.getMessage()); }
+		plugin.muteManager.update(mutelist);
 		
 		if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new PlayerUpdatePacket(p));

@@ -30,7 +30,7 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 	public static ClientThread thread = null;
 	public String name;
 	public String longname;
-
+	public MutelistManager muteManager;
 	public ChatManager chat;
 	public CommandManager command;
 	public PlayerListener pHandler;
@@ -67,18 +67,8 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 		}
 		
 		//mutelist
-			String path = getDataFolder() + "/mutelist.bin";
-			File file = new File(path);
-			if (file.exists()) {
-				try { mutelist = SLAPI.load(path); } 
-				catch (Exception e) { getLogger().warning("Could not load mutelist "+e.getMessage()); }
-			}
-			else {
-				getLogger().info("mutelist not found. Creating new");
-				mutelist = new HashMap<String, String>();
-				try { SLAPI.save(mutelist, path);}
-				catch (Exception e) { getLogger().warning("Could not save mutelist "+e.getMessage()); }
-			}
+			
+		muteManager = new MutelistManager().get(this);
 		
 		//timeouts		
 			String timeoutpath = getDataFolder() + "/timeout.bin";

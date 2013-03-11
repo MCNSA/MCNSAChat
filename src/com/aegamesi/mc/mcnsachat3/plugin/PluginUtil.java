@@ -73,11 +73,7 @@ public class PluginUtil {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 			@Override
 			public void run() {
-				//Load hashmap
-				HashMap<String, String> mutelist = new HashMap<String, String>();
-				try{ mutelist = SLAPI.load("plugins/MCNSAChat3/mutelist.bin"); }
-				catch(Exception e){ plugin.getLogger().warning("Error loading hash map. "+e.getMessage()); }
-				if (!(mutelist.containsKey(who+"."+sender))){
+				if (!(plugin.mutelist.containsKey(who+"."+sender))){
 					send(who, message);
 				}
 			}
