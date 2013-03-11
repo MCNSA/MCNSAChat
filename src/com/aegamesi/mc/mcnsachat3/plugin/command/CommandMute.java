@@ -39,17 +39,17 @@ public class CommandMute implements Command {
 		this.mutelist = plugin.mutelist;
 		if (mutelist.containsKey(player.getName()+"."+playeMute)) {
 			//Player is already muted so lets remove
-			mutelist.remove(player.getName()+"."+playeMute);
+			this.mutelist.remove(player.getName()+"."+playeMute);
 			PluginUtil.send(player.getName(), PluginUtil.formatUser(p.name)+ " has been unmuted");
 		}
 		else {
 			//Player is not already muted, so lets mute
-			mutelist.put(player.getName()+"."+playeMute, "111");
+			this.mutelist.put(player.getName()+"."+playeMute, "111");
 			PluginUtil.send(player.getName(), PluginUtil.formatUser(p.name)+ " has been muted");
 		}
 		
 		//save the mutelist
-		if ((plugin.muteManager.update(mutelist))) {
+		if ((plugin.muteManager.update(this.mutelist))) {
 			plugin.getLogger().info("Mutelist updated");
 		}
 		
