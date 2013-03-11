@@ -28,8 +28,10 @@ Built jars can be found at http://maboughey.co.uk:8080/
 |`/cmove <player> <channel>`|`mcnsachat3.command.move`|Moves a player to a channel.|
 |`/creconnect`|`mcnsachat3.command.reconnect`|Breaks the connection to the chat server, waiting for it to be restored later.|
 |`/creload`|`mcnsachat3.command.reload`|Reloads configuration from file. Persistance isn’t reloaded (you need to reload the plugin or teh server).|
-|`/ctm <player> <time> <reason>`|`mcnsachat3.command.timeout`|Places player in timeout (they cannot chat or use `/msg`). Time is just a number (minutes).|
-|`/ctm <player>`|`mcnsachat3.command.timeout`|Pull out a player from timeout.|
+|`/cto <player> <time> <reason>`|`mcnsachat3.command.timeout`|Places player in timeout (they cannot chat or use `/msg`). Time is just a number (minutes).|
+|`/cto <player>`|`mcnsachat3.command.timeout`|Pull out a player from timeout.|
+|'/cto'|'mcnsachat3.command.timeout'|View players in timeout'|
+|'/cto help'|'mcnsachat3.command.timeout'|'Display usage of /cto command'|
 
 # Channel management
 
