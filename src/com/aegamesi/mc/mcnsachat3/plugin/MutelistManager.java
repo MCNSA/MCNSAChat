@@ -35,11 +35,11 @@ public class MutelistManager {
 		try { SLAPI.save(this.mutelist, path);}
 		catch (Exception e) { plugin.getLogger().warning("Could not save mutelist "+e.getMessage()); }
 	}
-	public Map read() {
+	public Map<String, String> read() {
 		return this.mutelist;
 	}
-	public void update(Map mutelist){
-		this.mutelist = mutelist;
+	public void update(Map<String, String> newMutelist){
+		this.mutelist = newMutelist;
 	}
 
 }
