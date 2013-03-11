@@ -36,7 +36,7 @@ public class CommandMute implements Command {
 		String playeMute = Bukkit.getPlayer(sArgs).getName();
 		ChatPlayer p = PlayerManager.getPlayer(bukkitPlayer.getName(), plugin.name);
 		//This is where we set if the player is muted or not
-		this.mutelist = plugin.mutelist;
+		this.mutelist = this.plugin.mutelist;
 		if (mutelist.containsKey(player.getName()+"."+playeMute)) {
 			//Player is already muted so lets remove
 			this.mutelist.remove(player.getName()+"."+playeMute);
@@ -49,8 +49,8 @@ public class CommandMute implements Command {
 		}
 		
 		//save the mutelist
-		if ((plugin.muteManager.update(this.mutelist))) {
-			plugin.getLogger().info("Mutelist updated");
+		if ((this.plugin.muteManager.update(this.mutelist))) {
+			this.plugin.getLogger().info("Mutelist updated");
 		}
 		
 		if (MCNSAChat3.thread != null)
