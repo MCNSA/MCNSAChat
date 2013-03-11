@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>MCNSAChat</groupId>
   <artifactId>MCNSAChat</artifactId>
-  <version>1.0.0.1-TESTING</version>
+  <version>3.0.0.1-Release</version>
   <name>mcnsaChat3</name>
   <build>
   	<resources>
