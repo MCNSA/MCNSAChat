@@ -2,12 +2,14 @@ package com.aegamesi.mc.mcnsachat3.managers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 
 import com.aegamesi.mc.mcnsachat3.chat.ChatChannel;
 import com.aegamesi.mc.mcnsachat3.chat.ChatPlayer;
 import com.aegamesi.mc.mcnsachat3.plugin.MCNSAChat3;
+import com.aegamesi.mc.mcnsachat3.plugin.MutelistManager;
 import com.aegamesi.mc.mcnsachat3.plugin.PluginUtil;
 import com.aegamesi.mc.mcnsachat3.plugin.SLAPI;
 
@@ -33,8 +35,11 @@ public class ChatManager {
 		message = message.replace("%message%", line);
 		message = message.replace("%from%", from.name);
 		message = message.replace("%to%", to);
-
-		PluginUtil.sendLater(to, message);
+		Map<String, String> mutelist = MutelistManager.load();
+		if (!(mutelist.containsKey(to+"."+from.name))){
+			PluginUtil.sendLater(to, message);
+		}
+		
 	}
 
 	public void pm_send(ChatPlayer from, String to, String line) {
