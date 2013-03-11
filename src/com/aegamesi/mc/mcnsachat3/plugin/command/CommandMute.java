@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import com.aegamesi.mc.mcnsachat3.chat.ChatPlayer;
 import com.aegamesi.mc.mcnsachat3.managers.PlayerManager;
 import com.aegamesi.mc.mcnsachat3.plugin.MCNSAChat3;
+import com.aegamesi.mc.mcnsachat3.plugin.MutelistManager;
 import com.aegamesi.mc.mcnsachat3.plugin.PluginUtil;
 import com.aegamesi.mc.mcnsachat3.plugin.SLAPI;
 import com.aegamesi.mc.mcnsachat3.packets.PlayerUpdatePacket;
@@ -49,7 +50,7 @@ public class CommandMute implements Command {
 		}
 		
 		//save the mutelist
-		plugin.muteManager.update(mutelist);
+		MutelistManager.save(this.mutelist);
 		
 		if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new PlayerUpdatePacket(p));

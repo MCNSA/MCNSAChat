@@ -68,8 +68,7 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 		
 		//mutelist
 			
-		muteManager = new MutelistManager().get(this);
-		this.mutelist = muteManager.mutelist;
+		this.mutelist = MutelistManager.load();
 		
 		//timeouts		
 			String timeoutpath = getDataFolder() + "/timeout.bin";

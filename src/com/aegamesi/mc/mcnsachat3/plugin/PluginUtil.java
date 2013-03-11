@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,7 +74,8 @@ public class PluginUtil {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 			@Override
 			public void run() {
-				if (!(plugin.mutelist.containsKey(who+"."+sender))){
+				Map<String, String> mutelist = MutelistManager.load();
+				if (!(mutelist.containsKey(who+"."+sender))){
 					send(who, message);
 				}
 			}
