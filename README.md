@@ -2,7 +2,6 @@ MCNSAChat
 =========
 
 Cross-server, multi-channel chat plugin.
-
 Built jars can be found at http://maboughey.co.uk:8080/
 # Commands
 
