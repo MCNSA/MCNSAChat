@@ -33,30 +33,41 @@ public class CommandMute implements Command {
 		
 		ArrayList<ChatPlayer> tos = PlayerManager.getPlayersByFuzzyName(sArgs);
 		if(tos.size() == 0) {
-			PluginUtil.send(player.getName(), "&cPlayer not found.");
+			PluginUtil.send(player.getName(), "&cPlayer not found");
 			return true;
 		}
-		ChatPlayer p = PlayerManager.getPlayer(sArgs, plugin.name);
-		String playeMute = p.name;
+		ArrayList<String> uniques = new ArrayList<String>();
+		for(ChatPlayer tooo : tos) {
+			if(!uniques.contains(tooo.name))
+				uniques.add(tooo.name);
+		}
+		if(uniques.size() > 1) {
+			String matches = "";
+			for(String match : uniques)
+				matches += match + " ";
+			PluginUtil.send(player.getName(), matches);
+			return true;
+		}
+		String playeMute = uniques.get(0);
 		
 		//This is where we set if the player is muted or not
-		this.mutelist = this.plugin.mutelist;
+		this.mutelist = MutelistManager.load();
 		if (this.mutelist.containsKey(player.getName()+"."+playeMute)) {
 			//Player is already muted so lets remove
 			this.mutelist.remove(player.getName()+"."+playeMute);
-			PluginUtil.send(player.getName(), PluginUtil.formatUser(p.name)+ " has been unmuted");
+			PluginUtil.send(player.getName(), PluginUtil.formatUser(playeMute)+ " has been unmuted");
 		}
 		else {
 			//Player is not already muted, so lets mute
 			this.mutelist.put(player.getName()+"."+playeMute, "111");
-			PluginUtil.send(player.getName(), PluginUtil.formatUser(p.name)+ " has been muted");
+			PluginUtil.send(player.getName(), PluginUtil.formatUser(playeMute)+ " has been muted");
 		}
 		
 		//save the mutelist
 		MutelistManager.save(this.mutelist);
 		
-		if (MCNSAChat3.thread != null)
-			MCNSAChat3.thread.write(new PlayerUpdatePacket(p));
+		//if (MCNSAChat3.thread != null)
+		//	MCNSAChat3.thread.write(new PlayerUpdatePacket(p));
 		return true;
 	}
 }
