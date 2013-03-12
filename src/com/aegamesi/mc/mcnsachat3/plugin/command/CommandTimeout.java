@@ -86,7 +86,7 @@ public class CommandTimeout implements Command {
 			}
 			String msg = string.toString();
 			//Is the Reason string empty?
-			if (string.length() > 3) {
+			if (msg.length() < 3) {
 				//String is empty. Use a default
 				msg = "Annoying a mod too much";
 			}
