@@ -107,8 +107,6 @@ public class CommandTimeout implements Command {
 			//add mute mode
 			p.modes.add(ChatPlayer.Mode.MUTE);
 			
-			//Tell the mod
-			PluginUtil.send(player.getName(), "&4"+playerTimeout+" &6Has been put in timeout for &4"+args[1]+"min &6Reason: "+msg);
 			//Tell everyone else
 			PluginUtil.send("&4"+playerTimeout+" &6Has been put in timeout for &4"+args[1]+"min &6Reason: "+msg);
 			}	
