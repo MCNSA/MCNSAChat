@@ -1,5 +1,6 @@
 package com.aegamesi.mc.mcnsachat3.plugin.command;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,13 +30,14 @@ public class CommandMute implements Command {
 		if(sArgs.length() < 1)
 			return false;
 	
-		Player bukkitPlayer = Bukkit.getPlayer(sArgs);
-		if(bukkitPlayer == null) {
+		PlayerManager.getPlayer(player.getName(), plugin.name);
+		ArrayList<ChatPlayer> tos = PlayerManager.getPlayersByFuzzyName(sArgs);
+		if(tos.size() == 0) {
 			PluginUtil.send(player.getName(), "&cPlayer not found.");
 			return true;
 		}
 		String playeMute = Bukkit.getPlayer(sArgs).getName();
-		ChatPlayer p = PlayerManager.getPlayer(bukkitPlayer.getName(), plugin.name);
+		ChatPlayer p = PlayerManager.getPlayer(sArgs, plugin.name);
 		//This is where we set if the player is muted or not
 		this.mutelist = this.plugin.mutelist;
 		if (this.mutelist.containsKey(player.getName()+"."+playeMute)) {
