@@ -36,6 +36,7 @@ import com.aegamesi.mc.mcnsachat3.plugin.command.CommandSeeAll;
 import com.aegamesi.mc.mcnsachat3.plugin.command.CommandTimeout;
 import com.aegamesi.mc.mcnsachat3.plugin.command.fun.CommandDicks;
 import com.aegamesi.mc.mcnsachat3.plugin.command.fun.CommandPong;
+import com.aegamesi.mc.mcnsachat3.plugin.command.fun.CommandRand;
 
 public class CommandManager {
 	public MCNSAChat3 plugin = null;
@@ -69,6 +70,7 @@ public class CommandManager {
 		// "fun" commands
 		registerCommand(new CommandDicks(plugin));
 		registerCommand(new CommandPong(plugin));
+		registerCommand(new CommandRand(plugin));
 		
 		// aliases
 		registerCommand(new CommandMsg(plugin), "tell");

@@ -1,22 +1,24 @@
 package com.aegamesi.mc.mcnsachat3.plugin.command.fun;
 
+import java.util.Random;
+
 import org.bukkit.entity.Player;
 
 import com.aegamesi.mc.mcnsachat3.chat.ChatChannel;
 import com.aegamesi.mc.mcnsachat3.chat.ChatPlayer;
 import com.aegamesi.mc.mcnsachat3.managers.ChannelManager;
 import com.aegamesi.mc.mcnsachat3.managers.PlayerManager;
-import com.aegamesi.mc.mcnsachat3.packets.PlayerChatPacket;
 import com.aegamesi.mc.mcnsachat3.plugin.MCNSAChat3;
 import com.aegamesi.mc.mcnsachat3.plugin.PluginUtil;
 import com.aegamesi.mc.mcnsachat3.plugin.command.Command;
 
-@Command.CommandInfo(alias = "dicks", permission = "", usage = "", description = "")
-public class CommandDicks implements Command {
+@Command.CommandInfo(alias = "rand", permission = "", usage = "/rand <start> <end> - Random number between <Start> and <end>", description = "")
+public class CommandRand implements Command {
+	private static final long aEnd = 0;
 	public static MCNSAChat3 plugin = null;
 
-	public CommandDicks(MCNSAChat3 plugin) {
-		CommandDicks.plugin = plugin;
+	public CommandRand(MCNSAChat3 plugin) {
+		CommandRand.plugin = plugin;
 	}
 
 	public Boolean handle(Player player, String sArgs) {
@@ -31,11 +33,36 @@ public class CommandDicks implements Command {
 			PluginUtil.send(p.name, "You are not allowed to speak right now.");
 			return true;
 		}
-
-		if (MCNSAChat3.thread != null)
-			MCNSAChat3.thread.write(new PlayerChatPacket(p, "JudgeAnderson is the sexiest Button.", null, PlayerChatPacket.Type.CHAT));
-
-		plugin.chat.chat(p, "JudgeAnderson is the sexiest Button.", null);
+		
+		//Split arguments and assign to variables	
+			String[] args = sArgs.split(" ");
+			//Base variables
+			int start = 0;
+			int end = 20;
+			//Check if the start/end have been specified, if so assign
+			if (args.length == 1) {
+				end = Integer.parseInt(args[0]);
+			}
+			if (args.length == 2) {
+				start = Integer.parseInt(args[0]);
+				end = Integer.parseInt(args[1]);
+				//Check if start greater than end
+				if (start > end) {
+					//Reverse them
+					end	= Integer.parseInt(args[0]);
+					start = Integer.parseInt(args[1]);
+				}
+			}
+		
+		
+		//get the range, casting to long to avoid overflow problems
+			long range = (long)aEnd - (long)start + 1;
+			Random random = new Random();
+		// compute a fraction of the range, 0 <= frac < range
+			long fraction = (long)(range * random.nextDouble());
+			int randomNumber =  (int)(fraction + start);    
+		//Send to everyone
+		PluginUtil.send("&6"+player.getName()+"&frolled the number &6"+randomNumber);
 		return true;
 	}
 }

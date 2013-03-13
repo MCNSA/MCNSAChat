@@ -47,7 +47,7 @@ Built jars can be found at http://maboughey.co.uk:8080/
 |:------|:--------------|:----------|
 |`/dicks`||A message of love.|
 |`/pong`||Alternative to `/ping`.|
-|`/rand [<min>] <max>`||Gives a random number according to `min` (default: `0`) and `max`.|
+|`/rand [<min>] <max>`||Gives a random number according to `min` (default: `0`) and `max` (default: `20`).|
 |`/ranks`||Lists all of the server ranks.|
 
 # Configuration
