@@ -53,14 +53,9 @@ public class CommandRand implements Command {
 					start = Integer.parseInt(args[1]);
 				}
 			}
-		
-		
-		//get the range, casting to long to avoid overflow problems
-			long range = (long)aEnd - (long)start + 1;
-			Random random = new Random();
-		// compute a fraction of the range, 0 <= frac < range
-			long fraction = (long)(range * random.nextDouble());
-			int randomNumber =  (int)(fraction + start);    
+			Random rn = new Random();
+			int range = end - start + 1;
+			int randomNumber =  rn.nextInt(range) + start;  
 		//Send to everyone
 		PluginUtil.send("&6"+player.getName()+"&frolled the number &6"+randomNumber);
 		return true;
