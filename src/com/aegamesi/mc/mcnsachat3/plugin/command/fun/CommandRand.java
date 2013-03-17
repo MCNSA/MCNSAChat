@@ -57,7 +57,7 @@ public class CommandRand implements Command {
 			int range = end - start + 1;
 			int randomNumber =  rn.nextInt(range) + start;  
 		//Send to everyone
-		PluginUtil.send("&6"+player.getName()+"&frolled the number &6"+randomNumber);
+		PluginUtil.send("&6"+player.getName()+" &frolled the number &6"+randomNumber);
 		return true;
 	}
 }

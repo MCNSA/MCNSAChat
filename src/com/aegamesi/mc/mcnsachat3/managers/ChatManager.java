@@ -139,7 +139,12 @@ public class ChatManager {
 			if (send)
 					PluginUtil.sendLaterBlock(p.name, line + "&r",sender);
 		}
-		Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+		if (plugin.getConfig().getString("console-listen-other-servers").startsWith("true")) {
+			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+		}
+		if (line.contains(plugin.name) && plugin.getConfig().getString("console-listen-other-servers").startsWith("false")) {
+			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+		}
 	}
 	public void info(ChatPlayer player, String line, String channel, boolean net) {
 		ChatChannel chan = ChannelManager.getChannel(channel);
@@ -157,6 +162,11 @@ public class ChatManager {
 			if (send)
 				PluginUtil.sendLater(p.name, line + "&r");
 		}
-		Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+		if (plugin.getConfig().getString("console-listen-other-servers").startsWith("true")) {
+			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+		}
+		if (line.contains(plugin.name) && plugin.getConfig().getString("console-listen-other-servers").startsWith("false")) {
+			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+		}
 	}
 }
