@@ -142,7 +142,7 @@ public class ChatManager {
 		if (plugin.getConfig().getString("console-listen-other-servers").startsWith("true")) {
 			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
 		}
-		if (line.contains(plugin.name) && plugin.getConfig().getString("console-listen-other-servers").startsWith("false")) {
+		if (line.contains(plugin.name) && plugin.getConfig().getString("console-listen-other-servers").startsWith("false") && plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
 			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
 		}
 	}
@@ -165,7 +165,7 @@ public class ChatManager {
 		if (plugin.getConfig().getString("console-listen-other-servers").startsWith("true")) {
 			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
 		}
-		if (line.contains(plugin.name) && plugin.getConfig().getString("console-listen-other-servers").startsWith("false")) {
+		if (line.contains(plugin.name) && plugin.getConfig().getString("console-listen-other-servers").startsWith("false") && plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
 			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
 		}
 	}
