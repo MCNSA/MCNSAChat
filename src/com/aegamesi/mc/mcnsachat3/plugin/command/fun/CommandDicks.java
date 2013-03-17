@@ -11,7 +11,7 @@ import com.aegamesi.mc.mcnsachat3.plugin.MCNSAChat3;
 import com.aegamesi.mc.mcnsachat3.plugin.PluginUtil;
 import com.aegamesi.mc.mcnsachat3.plugin.command.Command;
 
-@Command.CommandInfo(alias = "dicks", permission = "", usage = "", description = "")
+@Command.CommandInfo(alias = "dicks", permission = "fun", usage = "", description = "")
 public class CommandDicks implements Command {
 	public static MCNSAChat3 plugin = null;
 

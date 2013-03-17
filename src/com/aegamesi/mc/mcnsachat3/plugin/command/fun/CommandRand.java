@@ -12,7 +12,7 @@ import com.aegamesi.mc.mcnsachat3.plugin.MCNSAChat3;
 import com.aegamesi.mc.mcnsachat3.plugin.PluginUtil;
 import com.aegamesi.mc.mcnsachat3.plugin.command.Command;
 
-@Command.CommandInfo(alias = "rand", permission = "", usage = "/rand <start> <end> - Random number between <Start> and <end>", description = "")
+@Command.CommandInfo(alias = "rand", permission = "fun", usage = "/rand <start> <end> - Random number between <Start> and <end>", description = "")
 public class CommandRand implements Command {
 	private static final long aEnd = 0;
 	public static MCNSAChat3 plugin = null;

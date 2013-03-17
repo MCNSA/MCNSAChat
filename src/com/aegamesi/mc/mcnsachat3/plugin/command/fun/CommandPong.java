@@ -6,7 +6,7 @@ import com.aegamesi.mc.mcnsachat3.plugin.MCNSAChat3;
 import com.aegamesi.mc.mcnsachat3.plugin.PluginUtil;
 import com.aegamesi.mc.mcnsachat3.plugin.command.Command;
 
-@Command.CommandInfo(alias = "pong", permission = "", usage = "", description = "")
+@Command.CommandInfo(alias = "pong", permission = "fun", usage = "", description = "")
 public class CommandPong implements Command {
 	public static MCNSAChat3 plugin = null;
 
