@@ -35,6 +35,7 @@ import com.aegamesi.mc.mcnsachat3.plugin.command.CommandSearch;
 import com.aegamesi.mc.mcnsachat3.plugin.command.CommandSeeAll;
 import com.aegamesi.mc.mcnsachat3.plugin.command.CommandTimeout;
 import com.aegamesi.mc.mcnsachat3.plugin.command.fun.CommandDicks;
+import com.aegamesi.mc.mcnsachat3.plugin.command.fun.CommandMab;
 import com.aegamesi.mc.mcnsachat3.plugin.command.fun.CommandPong;
 import com.aegamesi.mc.mcnsachat3.plugin.command.fun.CommandRand;
 
@@ -71,6 +72,7 @@ public class CommandManager {
 		registerCommand(new CommandDicks(plugin));
 		registerCommand(new CommandPong(plugin));
 		registerCommand(new CommandRand(plugin));
+		registerCommand(new CommandMab(plugin));
 		
 		// aliases
 		registerCommand(new CommandMsg(plugin), "tell");

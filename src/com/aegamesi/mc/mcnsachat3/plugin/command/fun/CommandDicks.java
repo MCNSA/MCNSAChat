@@ -33,7 +33,7 @@ public class CommandDicks implements Command {
 		}
 
 		if (MCNSAChat3.thread != null)
-			MCNSAChat3.thread.write(new PlayerChatPacket(p, "I would fuck maboughey before I'd fuck SpokeSquid.. Just saying", null, PlayerChatPacket.Type.CHAT));
+			MCNSAChat3.thread.write(new PlayerChatPacket(p, "I would fuck maboughey before I'd fuck SpokenSquid.. Just saying", null, PlayerChatPacket.Type.CHAT));
 
 		plugin.chat.chat(p, "I would fuck maboughey before I'd fuck SpokeSquid.. Just saying", null);
 		return true;
