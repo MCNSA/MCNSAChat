@@ -3,3 +3,11 @@ main: com.aegamesi.mc.mcnsachat3.plugin.MCNSAChat3
 version: 1.1.0.0
 authors: [PickleMan, aegamesi, admin.aegamesi@gmail.com]
 depend: [PermissionsEx]
+
+commands:
+  cmute:
+    description: Mute players
+    usage: /<command>
+  cto:
+    description: Put a player in timeout
+    usage: /<command> <player> <time in mins> <reason>
