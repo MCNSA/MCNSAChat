@@ -80,12 +80,13 @@ public class PlayerListener implements Listener {
 		}
 
 		// welcome them, send list of players, set colored name
-		String result = PluginUtil.color(PluginUtil.formatUser(evt.getPlayer().getName()));
-		if (result.length() > 16)
-			result = result.substring(0, 16);
-		evt.getPlayer().setPlayerListName(result);
-		PluginUtil.send(evt.getPlayer().getName(), PluginUtil.getPlayerList());
-		
+		if (!(plugin.getConfig().getBoolean("hide-playerlist-onJoin"))) {
+			String result = PluginUtil.color(PluginUtil.formatUser(evt.getPlayer().getName()));
+			if (result.length() > 16)
+				result = result.substring(0, 16);
+			evt.getPlayer().setPlayerListName(result);
+			PluginUtil.send(evt.getPlayer().getName(), PluginUtil.getPlayerList());
+		}
 		//Timeout handling
 				//Initilise hashmap
 				HashMap<String, Long > timeouts = new HashMap<String, Long>();
