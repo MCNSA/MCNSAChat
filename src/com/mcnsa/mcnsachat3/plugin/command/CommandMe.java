@@ -1,0 +1,46 @@
+package com.mcnsa.mcnsachat3.plugin.command;
+
+import org.bukkit.entity.Player;
+
+import com.mcnsa.mcnsachat3.chat.ChatChannel;
+import com.mcnsa.mcnsachat3.chat.ChatPlayer;
+import com.mcnsa.mcnsachat3.managers.ChannelManager;
+import com.mcnsa.mcnsachat3.managers.PlayerManager;
+import com.mcnsa.mcnsachat3.packets.PlayerChatPacket;
+import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
+import com.mcnsa.mcnsachat3.plugin.PluginUtil;
+
+@Command.CommandInfo(alias = "me", permission = "", usage = "<action>", description = "emotes your message")
+public class CommandMe implements Command {
+	public static MCNSAChat3 plugin = null;
+
+	public CommandMe(MCNSAChat3 plugin) {
+		CommandMe.plugin = plugin;
+	}
+
+	public Boolean handle(Player player, String sArgs) {
+		if(sArgs.length() < 1) {
+			return false;
+		}
+		
+		ChatPlayer p = PlayerManager.getPlayer(player.getName(), plugin.name);
+		String write_perm = ChannelManager.getChannel(p.channel).write_permission;
+		if (!write_perm.equals("") && !MCNSAChat3.permissions.has(player, "mcnsachat3.write." + write_perm)) {
+			plugin.getLogger().info(player.getName() + " attempted to write to channel " + p.channel + " without permission!");
+			PluginUtil.send(player.getName(), "&cYou don't have permission to do that!");
+			return true;
+		}
+		if(p.modes.contains(ChatPlayer.Mode.MUTE) || ChannelManager.getChannel(p.channel).modes.contains(ChatChannel.Mode.MUTE)) {
+			PluginUtil.send(p.name, "You are not allowed to speak right now.");
+			return true;
+		}
+		// XXX blah blah check some stuff, like timeout maybe? are they allowed
+		// to chat?
+		plugin.chat.action(p, sArgs, null);
+		// tell *everybody!*
+		if (MCNSAChat3.thread != null)
+			MCNSAChat3.thread.write(new PlayerChatPacket(p, sArgs, null, PlayerChatPacket.Type.ACTION));
+		
+		return true;
+	}
+}
