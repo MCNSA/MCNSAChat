@@ -31,11 +31,13 @@ public class CommandMab implements Command {
 			PluginUtil.send(p.name, "You are not allowed to speak right now.");
 			return true;
 		}
-
+		
+		String message = plugin.getConfig().getString("command-mab");
+		message = message.replace("%player%", p.name);
 		if (MCNSAChat3.thread != null)
-			MCNSAChat3.thread.write(new PlayerChatPacket(p, "Remember, I come pre lubed ;)", null, PlayerChatPacket.Type.CHAT));
+			MCNSAChat3.thread.write(new PlayerChatPacket(p, message, null, PlayerChatPacket.Type.CHAT));
 
-		plugin.chat.chat(p, "Remember, I come pre lubed ;)", null);
+		plugin.chat.chat(p, message, null);
 		return true;
 	}
 }

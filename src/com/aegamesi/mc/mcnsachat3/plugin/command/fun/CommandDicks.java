@@ -31,11 +31,13 @@ public class CommandDicks implements Command {
 			PluginUtil.send(p.name, "You are not allowed to speak right now.");
 			return true;
 		}
-
+		
+		String message = plugin.getConfig().getString("command-dicks");
+		message = message.replace("%player%", p.name);
 		if (MCNSAChat3.thread != null)
-			MCNSAChat3.thread.write(new PlayerChatPacket(p, "I would fuck maboughey before I'd fuck SpokenSquid.. Just saying", null, PlayerChatPacket.Type.CHAT));
+			MCNSAChat3.thread.write(new PlayerChatPacket(p, message, null, PlayerChatPacket.Type.CHAT));
 
-		plugin.chat.chat(p, "I would fuck maboughey before I'd fuck SpokeSquid.. Just saying", null);
+		plugin.chat.chat(p, message, null);
 		return true;
 	}
 }
