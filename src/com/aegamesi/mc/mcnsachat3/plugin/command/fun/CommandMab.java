@@ -11,12 +11,12 @@ import com.aegamesi.mc.mcnsachat3.plugin.MCNSAChat3;
 import com.aegamesi.mc.mcnsachat3.plugin.PluginUtil;
 import com.aegamesi.mc.mcnsachat3.plugin.command.Command;
 
-@Command.CommandInfo(alias = "dicks", permission = "fun", usage = "", description = "")
-public class CommandDicks implements Command {
+@Command.CommandInfo(alias = "mab", permission = "fun", usage = "", description = "")
+public class CommandMab implements Command {
 	public static MCNSAChat3 plugin = null;
 
-	public CommandDicks(MCNSAChat3 plugin) {
-		CommandDicks.plugin = plugin;
+	public CommandMab(MCNSAChat3 plugin) {
+		CommandMab.plugin = plugin;
 	}
 
 	public Boolean handle(Player player, String sArgs) {
@@ -33,9 +33,9 @@ public class CommandDicks implements Command {
 		}
 
 		if (MCNSAChat3.thread != null)
-			MCNSAChat3.thread.write(new PlayerChatPacket(p, "I would fuck maboughey before I'd fuck SpokeSquid.. Just saying", null, PlayerChatPacket.Type.CHAT));
+			MCNSAChat3.thread.write(new PlayerChatPacket(p, "Remember, I come pre lubed ;)", null, PlayerChatPacket.Type.CHAT));
 
-		plugin.chat.chat(p, "I would fuck maboughey before I'd fuck SpokeSquid.. Just saying", null);
+		plugin.chat.chat(p, "Remember, I come pre lubed ;)", null);
 		return true;
 	}
 }
