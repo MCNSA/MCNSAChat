@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>MCNSAChat</groupId>
   <artifactId>MCNSAChat</artifactId>
-  <version>3.0.0.2-SNAPSHOT</version>
+  <version>3.0.0.3-SNAPSHOT</version>
   <name>mcnsaChat3</name>
   <build>
   	<resources>
@@ -25,11 +25,11 @@
   </build>
   <dependencies>
   	<dependency>
-  		<groupId>org.spigotmc</groupId>
-  		<artifactId>spigot-api</artifactId>
+  		<groupId>org.bukkit</groupId>
+  		<artifactId>bukkit</artifactId>
   		<version>1.5-R0.1-SNAPSHOT</version>
       <scope>system</scope>
-      <systemPath>${basedir}/lib/spigot-1.5-R0.1-SNAPSHOT.jar</systemPath>
+      <systemPath>${basedir}/lib/craftbukkit-1.5-R0.1-20130318.232750-28.jar</systemPath>
   	</dependency>
   	<dependency>
   		<groupId>ru.tehkode</groupId>

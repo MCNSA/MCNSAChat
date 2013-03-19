@@ -146,6 +146,7 @@ public class ChatManager {
 			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
 		}
 	}
+	
 	public void info(ChatPlayer player, String line, String channel, boolean net) {
 		ChatChannel chan = ChannelManager.getChannel(channel);
 		if (chan == null)
