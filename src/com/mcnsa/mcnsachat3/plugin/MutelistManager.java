@@ -10,7 +10,7 @@ public class MutelistManager {
 	public static Map<String, String> mutelist = new HashMap<String, String>();
 	private static MCNSAChat3 plugin;
 
-	public static Map<String, String> load(){
+	public static Map<String, String> load(MCNSAChat3 plugin){
 		//Loads the mutelist hashmap
 			String path = plugin.getDataFolder()+"/mutelist.bin";
 			File file = new File(path);
@@ -32,7 +32,7 @@ public class MutelistManager {
 		return mutelist;
 	}
 	
-	public static void save(Map mutelist){
+	public static void save(Map mutelist, MCNSAChat3 plugin){
 		//Function to save the map
 		String path = plugin.getDataFolder()+"/mutelist.bin";
 		File file = new File(path);

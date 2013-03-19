@@ -74,7 +74,7 @@ public class PluginUtil {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 			@Override
 			public void run() {
-				Map<String, String> mutelist = MutelistManager.load();
+				Map<String, String> mutelist = MutelistManager.load(plugin);
 				if (!(mutelist.containsKey(who+"."+sender))){
 					send(who, message);
 				}

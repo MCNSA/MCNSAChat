@@ -51,7 +51,7 @@ public class CommandMute implements Command {
 		String playeMute = uniques.get(0);
 		
 		//This is where we set if the player is muted or not
-		this.mutelist = MutelistManager.load();
+		this.mutelist = MutelistManager.load(plugin);
 		if (this.mutelist.containsKey(player.getName()+"."+playeMute)) {
 			//Player is already muted so lets remove
 			this.mutelist.remove(player.getName()+"."+playeMute);
@@ -64,7 +64,7 @@ public class CommandMute implements Command {
 		}
 		
 		//save the mutelist
-		MutelistManager.save(this.mutelist);
+		MutelistManager.save(this.mutelist, plugin);
 		
 		return true;
 	}

@@ -35,7 +35,7 @@ public class ChatManager {
 		message = message.replace("%message%", line);
 		message = message.replace("%from%", from.name);
 		message = message.replace("%to%", to);
-		Map<String, String> mutelist = MutelistManager.load();
+		Map<String, String> mutelist = MutelistManager.load(plugin);
 		if (!(mutelist.containsKey(to+"."+from.name))){
 			PluginUtil.sendLater(to, message);
 		}

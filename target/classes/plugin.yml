@@ -1,6 +1,6 @@
 name: MCNSAChat
 main: com.mcnsa.mcnsachat3.plugin.MCNSAChat3
-version: 3.0.0.2-SNAPSHOT
+version: 3.0.0.3-SNAPSHOT
 authors: [maboughey, mcnsa, mcnsa.com]
 depend: [PermissionsEx]
 
