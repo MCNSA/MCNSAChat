@@ -26,7 +26,7 @@ public class CommandTimeout implements Command {
 		//Initilise hashmap
 		HashMap<String, Long > timeouts = new HashMap<String, Long>();
 		//Try loading the hashmap
-		try{ timeouts = SLAPI.load("plugins/MCNSAChat3/timeout.bin"); }
+		try{ timeouts = SLAPI.load("plugins/MCNSAChat/timeout.bin"); }
 		catch(Exception e){ plugin.getLogger().warning("Error loading timeout hashmap. "+e.getMessage()); }
 		
 		String[] args = sArgs.split(" ");
@@ -112,7 +112,7 @@ public class CommandTimeout implements Command {
 			}	
 		
 		//Save the hashmap
-		try { SLAPI.save(timeouts, "plugins/MCNSAChat3/timeout.bin");}
+		try { SLAPI.save(timeouts, "plugins/MCNSAChat/timeout.bin");}
 		catch (Exception e) { plugin.getLogger().warning("Could not save timeouts file "+e.getMessage()); }
 		return true;
 	}

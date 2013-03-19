@@ -66,8 +66,6 @@ public class CommandMute implements Command {
 		//save the mutelist
 		MutelistManager.save(this.mutelist);
 		
-		//if (MCNSAChat3.thread != null)
-		//	MCNSAChat3.thread.write(new PlayerUpdatePacket(p));
 		return true;
 	}
 }

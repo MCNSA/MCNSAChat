@@ -26,7 +26,7 @@ public class TimeoutManager extends Thread {
 			//Initilise hashmap
 				HashMap<String, Long > timeouts = new HashMap<String, Long>();
 			//Try loading the hashmap
-				try{ timeouts = SLAPI.load("plugins/MCNSAChat3/timeout.bin"); }
+				try{ timeouts = SLAPI.load(plugin.getDataFolder()+"/timeout.bin"); }
 				catch(Exception e){ plugin.getLogger().warning("Error loading timeout hashmap. "+e.getMessage()); }
 				
 			//get current timestamp
@@ -37,7 +37,7 @@ public class TimeoutManager extends Thread {
 					if (timeNow >= timeoutTime) {
 						timeouts.remove(key);
 						//Save the hashmap
-							try { SLAPI.save(timeouts, "plugins/MCNSAChat3/timeout.bin");}
+							try { SLAPI.save(timeouts, plugin.getDataFolder()+"/timeout.bin");}
 								catch (Exception e) { plugin.getLogger().warning("Could not save timeouts file "+e.getMessage()); }
 						
 						Player bukkitPlayer = Bukkit.getPlayer(key);
