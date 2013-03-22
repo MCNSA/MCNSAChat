@@ -97,12 +97,21 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 			}
 		}, 0L, 200L);
 		
-		
+		//Timeouts
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(finalThis, new Runnable() {  
 			
 			public void run() {
 				TimeoutManager timeoutTask = new TimeoutManager(finalThis, getLogger());
 				timeoutTask.start();
+			}
+			
+			}, 0L, 600L);
+		
+		//Tab list refreshing
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(finalThis, new Runnable() {  
+			
+			public void run() {
+				PlayerRefresh.refreshTabList();
 			}
 			
 			}, 0L, 600L);

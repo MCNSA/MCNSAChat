@@ -30,6 +30,7 @@ import com.mcnsa.mcnsachat3.plugin.command.CommandName;
 import com.mcnsa.mcnsachat3.plugin.command.CommandR;
 import com.mcnsa.mcnsachat3.plugin.command.CommandRanks;
 import com.mcnsa.mcnsachat3.plugin.command.CommandReconnect;
+import com.mcnsa.mcnsachat3.plugin.command.CommandRefresh;
 import com.mcnsa.mcnsachat3.plugin.command.CommandReload;
 import com.mcnsa.mcnsachat3.plugin.command.CommandRemove;
 import com.mcnsa.mcnsachat3.plugin.command.CommandSearch;
@@ -69,6 +70,7 @@ public class CommandManager {
 		registerCommand(new CommandMute(plugin));
 		registerCommand(new CommandTimeout(plugin));
 		registerCommand(new CommandRemove(plugin));
+		registerCommand(new CommandRefresh(plugin));
 		
 		// "fun" commands
 		registerCommand(new CommandDicks(plugin));
