@@ -13,7 +13,7 @@ import com.mcnsa.mcnsachat3.packets.PlayerUpdatePacket;
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
 
-@Command.CommandInfo(alias = "cremove", permission = "remove", usage = "<player> <channel>", description = "Removes a player from a channel")
+@Command.CommandInfo(alias = "ckick", permission = "remove", usage = "<player> <channel>", description = "Removes a player from a channel")
 public class CommandRemove implements Command{
 	private static MCNSAChat3 plugin;
 
@@ -44,7 +44,11 @@ public class CommandRemove implements Command{
 			
 			PluginUtil.send(playerRemoval.name, "You are no longer listening to "+args[1]);
 			PluginUtil.send(player.getName(), playerRemoval.name+" is no longer listening to "+args[1]);
+			
+			if (MCNSAChat3.thread != null)
+			MCNSAChat3.thread.write(new PlayerUpdatePacket(playerRemoval));
 		}
+		
 		return true;
 	}
 	
