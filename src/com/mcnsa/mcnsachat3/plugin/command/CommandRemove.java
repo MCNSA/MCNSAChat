@@ -4,11 +4,8 @@ import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
 
-import com.mcnsa.mcnsachat3.chat.ChatChannel;
 import com.mcnsa.mcnsachat3.chat.ChatPlayer;
-import com.mcnsa.mcnsachat3.managers.ChannelManager;
 import com.mcnsa.mcnsachat3.managers.PlayerManager;
-import com.mcnsa.mcnsachat3.packets.ChannelUpdatePacket;
 import com.mcnsa.mcnsachat3.packets.PlayerUpdatePacket;
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
@@ -44,6 +41,7 @@ public class CommandRemove implements Command{
 			
 			PluginUtil.send(playerRemoval.name, "You are no longer listening to "+args[1]);
 			PluginUtil.send(player.getName(), playerRemoval.name+" is no longer listening to "+args[1]);
+			plugin.getLogger().info(player.getName() +"removed "+playerRemoval.name+" from "+ args[1]);
 			
 			if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new PlayerUpdatePacket(playerRemoval));

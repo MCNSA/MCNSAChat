@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.mcnsa.mcnsachat3.chat.ChatPlayer;
 import com.mcnsa.mcnsachat3.managers.PlayerManager;
-import com.mcnsa.mcnsachat3.packets.PlayerUpdatePacket;
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
 import com.mcnsa.mcnsachat3.plugin.MutelistManager;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
-import com.mcnsa.mcnsachat3.plugin.SLAPI;
+
 
 @Command.CommandInfo(alias = "cmute", permission = "mute", usage = "<player>", description = "Mute a player so you dont have to listen to them")
 public class CommandMute implements Command {

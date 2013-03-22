@@ -5,8 +5,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.bukkit.Bukkit;
-
 public class SLAPI
 {
 	public static <T extends Object> void save(T obj,String path) throws Exception
@@ -19,6 +17,7 @@ public class SLAPI
 	public static <T extends Object> T load(String path) throws Exception
 	{
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
+		@SuppressWarnings("unchecked")
 		T result = (T)ois.readObject();
 		ois.close();
 		return result;

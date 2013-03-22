@@ -1,7 +1,6 @@
 package com.mcnsa.mcnsachat3.managers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -11,7 +10,6 @@ import com.mcnsa.mcnsachat3.chat.ChatPlayer;
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
 import com.mcnsa.mcnsachat3.plugin.MutelistManager;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
-import com.mcnsa.mcnsachat3.plugin.SLAPI;
 
 public class ChatManager {
 	public MCNSAChat3 plugin;

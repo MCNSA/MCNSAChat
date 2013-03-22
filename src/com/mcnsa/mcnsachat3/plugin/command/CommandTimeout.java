@@ -1,18 +1,14 @@
 package com.mcnsa.mcnsachat3.plugin.command;
 
 import java.util.Date;
-import java.util.HashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.mcnsa.mcnsachat3.chat.ChatPlayer;
 import com.mcnsa.mcnsachat3.managers.PlayerManager;
-import com.mcnsa.mcnsachat3.packets.PlayerUpdatePacket;
+import com.mcnsa.mcnsachat3.managers.TimeoutsManager;
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
-import com.mcnsa.mcnsachat3.plugin.Persistence;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
-import com.mcnsa.mcnsachat3.plugin.SLAPI;
 
 @Command.CommandInfo(alias = "cto", permission = "timeout", usage = "<player> <time> <reason>", description = "Puts a player in timeout")
 public class CommandTimeout implements Command {
@@ -23,12 +19,7 @@ public class CommandTimeout implements Command {
 	}
 
 	public Boolean handle(Player player, String sArgs) {
-		//Initilise hashmap
-		HashMap<String, Long > timeouts = new HashMap<String, Long>();
-		//Try loading the hashmap
-		try{ timeouts = SLAPI.load("plugins/MCNSAChat/timeout.bin"); }
-		catch(Exception e){ plugin.getLogger().warning("Error loading timeout hashmap. "+e.getMessage()); }
-		
+			
 		String[] args = sArgs.split(" ");
 		
 		if (args.length > 0 && args[0].equalsIgnoreCase("")) {
@@ -36,8 +27,8 @@ public class CommandTimeout implements Command {
 			PluginUtil.send(player.getName(), "&6Players in timeout");
 			PluginUtil.send(player.getName(), "&4------------------");
 			int count = 0;
-			for (String key: timeouts.keySet()) {
-				PluginUtil.send(player.getName(), "&6"+key+": "+ new Date(timeouts.get(key)).toString());
+			for (String key: TimeoutsManager.timeouts.keySet()) {
+				PluginUtil.send(player.getName(), "&6"+key+": "+ new Date(TimeoutsManager.timeouts.get(key)).toString());
 				count++;
 			}
 			if (count == 0){
@@ -46,18 +37,15 @@ public class CommandTimeout implements Command {
 		}
 		else if ((args.length < 2) && args.length >= 1) {
 			//Trying to remove a player from timeout
-			if (args[0].startsWith("help")) {
-				//Asking for help
-				PluginUtil.send(player.getName(), "Usage: /cto <player> <mins> <reason> - Put a player in time out for <mins>");
-			}
 			if (!(Bukkit.getPlayer(args[0]) != null)) {
 				//Player doesn't exist
 				PluginUtil.send(player.getName(), "&4Could not get player");
 			}
 			else {
 				String playerTimeout = Bukkit.getPlayer(args[0]).getName();
-				if (timeouts.get(playerTimeout) != null){
-					timeouts.remove(args[0]);
+				
+				if (TimeoutsManager.timeouts.get(playerTimeout) != null){
+					TimeoutsManager.timeouts.remove(args[0]);
 					Player bukkitPlayer = Bukkit.getPlayer(args[0]);
 					ChatPlayer p = PlayerManager.getPlayer(bukkitPlayer.getName(), plugin.name);
 					p.modes.remove(ChatPlayer.Mode.MUTE);
@@ -98,7 +86,7 @@ public class CommandTimeout implements Command {
 			
 			//get the player
 			String playerTimeout = Bukkit.getPlayer(args[0]).getName();
-			timeouts.put(playerTimeout, timeOut);
+			TimeoutsManager.timeouts.put(playerTimeout, timeOut);
 			Player bukkitPlayer = Bukkit.getPlayer(args[0]);
 			ChatPlayer p = PlayerManager.getPlayer(bukkitPlayer.getName(), plugin.name);
 			
@@ -111,9 +99,6 @@ public class CommandTimeout implements Command {
 			PluginUtil.send("&4"+playerTimeout+" &6Has been put in timeout for &4"+args[1]+"min &6Reason: "+msg);
 			}	
 		
-		//Save the hashmap
-		try { SLAPI.save(timeouts, "plugins/MCNSAChat/timeout.bin");}
-		catch (Exception e) { plugin.getLogger().warning("Could not save timeouts file "+e.getMessage()); }
 		return true;
 	}
 }

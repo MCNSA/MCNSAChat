@@ -14,7 +14,6 @@ import com.mcnsa.mcnsachat3.plugin.command.Command;
 
 @Command.CommandInfo(alias = "rand", permission = "fun", usage = "/rand <start> <end> - Random number between <Start> and <end>", description = "")
 public class CommandRand implements Command {
-	private static final long aEnd = 0;
 	public static MCNSAChat3 plugin = null;
 
 	public CommandRand(MCNSAChat3 plugin) {

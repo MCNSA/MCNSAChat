@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 
 public class MutelistManager {
 	public static Map<String, String> mutelist = new HashMap<String, String>();
-	private static MCNSAChat3 plugin;
 
 	public static Map<String, String> load(MCNSAChat3 plugin){
 		//Loads the mutelist hashmap
@@ -32,10 +31,9 @@ public class MutelistManager {
 		return mutelist;
 	}
 	
-	public static void save(Map mutelist, MCNSAChat3 plugin){
+	public static void save(Map<String, String> mutelist, MCNSAChat3 plugin){
 		//Function to save the map
 		String path = plugin.getDataFolder()+"mutelist.bin";
-		File file = new File(path);
 		try { SLAPI.save(mutelist, path);}
 		catch (Exception e) { plugin.getLogger().warning("Could not save mutelist "+e.getMessage()); }
 	}

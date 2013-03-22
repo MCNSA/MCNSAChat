@@ -1,6 +1,5 @@
 package com.mcnsa.mcnsachat3.plugin;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +24,7 @@ import com.mcnsa.mcnsachat3.managers.CommandManager;
 import com.mcnsa.mcnsachat3.managers.PlayerListener;
 import com.mcnsa.mcnsachat3.managers.PlayerManager;
 import com.mcnsa.mcnsachat3.managers.TimeoutManager;
+import com.mcnsa.mcnsachat3.managers.TimeoutsManager;
 
 public final class MCNSAChat3 extends JavaPlugin implements Listener {
 	public static ClientThread thread = null;
@@ -70,19 +70,9 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 			
 		this.mutelist = MutelistManager.load(this);
 		
-		//timeouts		
-			String timeoutpath = getDataFolder() + "/timeout.bin";
-			File timeoutfile = new File(timeoutpath);
-			if (timeoutfile.exists()) {
-				try { timeouts = SLAPI.load(timeoutpath); } 
-				catch (Exception e) { getLogger().warning("Could not load timeouts "+e.getMessage()); }
-			}
-			else {
-				getLogger().info("timeouts file not found. Creating new");
-				timeouts = new HashMap<String, Long>();
-				try { SLAPI.save(timeouts, timeoutpath);}
-				catch (Exception e) { getLogger().warning("Could not save timeouts "+e.getMessage()); }
-			}
+		//timeouts
+		TimeoutsManager.load(this);
+		
 		// persistence
 		loadPlayers();
 		loadChannels();
@@ -185,6 +175,9 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 		}
 		persist.get().set("channels", chanMap);
 		persist.save();
+		
+		//Save timeouts
+		TimeoutsManager.save(this);
 
 		if (thread != null && thread.socket != null) {
 			getLogger().info("Socket is being closed NOW!");

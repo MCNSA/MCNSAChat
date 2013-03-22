@@ -51,6 +51,7 @@ public class Server {
 		onlinePlayersThread.start();
 
 		// start the i/o loop now
+		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
 		String line = null;
 		while ((line = in.nextLine()) != null) {
