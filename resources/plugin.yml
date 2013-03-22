@@ -11,3 +11,6 @@ commands:
   cto:
     description: Put a player in timeout
     usage: /<command> <player> <time in mins> <reason>
+  cremove:
+    description: Remove a player from a channel
+    Usage: /<command> <player> <channel>
