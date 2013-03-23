@@ -41,20 +41,30 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 	public Map<String, Long> timeouts = new HashMap<String, Long>();
 
 	public void onEnable() {
+		
 		persist = new Persistence(this);
 		persist.saveDefault();
 		saveDefaultConfig();
 
 		// whew all the handlers and managers...mostly
-		name = getConfig().getString("name");
-		longname = getConfig().getString("longname");
-		pHandler = new PlayerListener(this);
-		chat = new ChatManager(this);
-		command = new CommandManager(this);
-		PlayerManager.init();
-		ChannelManager.init();
-		PluginUtil.plugin = this;
-		permissions = PermissionsEx.getPermissionManager();
+			//Server name
+				name = getConfig().getString("name");
+				longname = getConfig().getString("longname");
+		
+			//Player handler
+				pHandler = new PlayerListener(this);
+			//Chat manager
+				chat = new ChatManager(this);
+			//Commant manager
+				command = new CommandManager(this);
+			//Player manager
+				PlayerManager.init();
+			//Channel manager
+				ChannelManager.init();
+			//send plugin instance to pluginutils
+				PluginUtil.plugin = this;
+			//Permissions manager
+				permissions = PermissionsEx.getPermissionManager();
 		
 		getLogger().setUseParentHandlers(false);
 		try {
@@ -199,4 +209,5 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 		}
 		fileHandler.close();
 	}
+	
 }
