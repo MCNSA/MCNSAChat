@@ -5,12 +5,51 @@ authors: [maboughey, mcnsa, mcnsa.com]
 depend: [PermissionsEx]
 
 commands:
+  chelp:
+    description: derp
+  c:
+    description: derp
   cmute:
-    description: Mute players
-    usage: /<command>
+    description: derp
+  clist:
+    description: derp
+  clisten:
+    description: derp
+  csearch:
+    description: derp
+  list:
+    description: derp
+  me:
+    description: derp
+  msg:
+    description: derp
+  r:
+    description: derp
+  clock:
+    description: derp
+  cmove:
+    description: derp
+  creconnect:
+    description: derp
+  creload:
+    description: derp
   cto:
-    description: Put a player in timeout
-    usage: /<command> <player> <time in mins> <reason>
-  ckick:
-    description: Remove a player from a channel
-    Usage: /<command> <player> <channel>
+    description: derp
+  calias:
+    description: derp
+  ccolor:
+    description: derp
+  cmode:
+    description: derp
+  cname:
+    description: derp
+  dicks:
+    description: derp
+  pong:
+    description: derp
+  rand:
+    description: derp
+  ranks:
+    description: derp
+  mab:
+    description: derp

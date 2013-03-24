@@ -2,6 +2,7 @@ package com.mcnsa.mcnsachat3.plugin.command;
 
 import java.util.Date;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mcnsa.mcnsachat3.chat.ChatPlayer;
@@ -18,28 +19,28 @@ public class CommandTimeout implements Command {
 		CommandTimeout.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 			
 		String[] args = sArgs.split(" ");
 		
 		if (args.length > 0 && args[0].equalsIgnoreCase("")) {
 			//List players in timeout
-			PluginUtil.send(player.getName(), "&6Players in timeout");
-			PluginUtil.send(player.getName(), "&4------------------");
+			PluginUtil.send(sender, "&6Players in timeout");
+			PluginUtil.send(sender, "&4------------------");
 			int count = 0;
 			for (String key: TimeoutsManager.timeouts.keySet()) {
-				PluginUtil.send(player.getName(), "&6"+key+": "+ new Date(TimeoutsManager.timeouts.get(key)).toString());
+				PluginUtil.send(sender, "&6"+key+": "+ new Date(TimeoutsManager.timeouts.get(key)).toString());
 				count++;
 			}
 			if (count == 0){
-				PluginUtil.send(player.getName(), "&6None");
+				PluginUtil.send(sender, "&6None");
 			}
 		}
 		else if ((args.length < 2) && args.length >= 1) {
 			//Trying to remove a player from timeout
 			if (!(Bukkit.getPlayer(args[0]) != null)) {
 				//Player doesn't exist
-				PluginUtil.send(player.getName(), "&4Could not get player");
+				PluginUtil.send(sender, "&4Could not get player");
 			}
 			else {
 				String playerTimeout = Bukkit.getPlayer(args[0]).getName();
@@ -50,11 +51,11 @@ public class CommandTimeout implements Command {
 					ChatPlayer p = PlayerManager.getPlayer(bukkitPlayer.getName(), plugin.name);
 					p.modes.remove(ChatPlayer.Mode.MUTE);
 					PluginUtil.send(p.name, "You are no longer in timeout.");
-					PluginUtil.send(player.getName(), "&6"+playerTimeout+" Removed from timeout");
+					PluginUtil.send(sender, "&6"+playerTimeout+" Removed from timeout");
 					PluginUtil.send("&6"+playerTimeout+" &4has been removed from timeout");
 				}
 				else {
-					PluginUtil.send(player.getName(), "&4"+playerTimeout+" is not in timeout");
+					PluginUtil.send(sender, "&4"+playerTimeout+" is not in timeout");
 				}
 			}
 			
@@ -63,7 +64,7 @@ public class CommandTimeout implements Command {
 			//Trying to put a player in timeout
 			if (!(Bukkit.getPlayer(args[0]) != null)) {
 				//Player doesn't exist
-				PluginUtil.send(player.getName(), "&4Could not get player");
+				PluginUtil.send(sender, "&4Could not get player");
 				return true;
 			}
 			

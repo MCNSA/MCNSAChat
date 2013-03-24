@@ -8,10 +8,26 @@ import java.util.Random;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class PluginUtil {
 	public static MCNSAChat3 plugin = null;
+
+	public static String implode(String joiner, String... parts) {
+		// join our expression
+		StringBuilder sb = new StringBuilder();
+		boolean first = true;
+		for(String part: parts) {
+			if(first) {
+				sb.append(part);
+			}
+			else {
+				sb.append(joiner).append(part);
+			}
+		}
+		return sb.toString();
+	}
 
 	public static String color(String str) {
 		return ChatColor.translateAlternateColorCodes('&', str);
@@ -51,6 +67,13 @@ public class PluginUtil {
 		if (player != null)
 			player.sendMessage(color(message));
 	}
+	
+	public static void send(CommandSender who, String message) {
+		if(message.length() <= 0) {
+			return;
+		}
+		who.sendMessage(color(message));
+	}
 
 	public static void send(String message) {
 		if (message.length() <= 0)
@@ -67,6 +90,26 @@ public class PluginUtil {
 		}, 0L);
 	}
 	public static void sendLaterBlock(final String who, final String message, final String sender) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+			@Override
+			public void run() {
+				Map<String, String> mutelist = MutelistManager.load(plugin);
+				if (!(mutelist.containsKey(who+"."+sender))){
+					send(who, message);
+				}
+			}
+		}, 0L);
+	}
+
+	public static void sendLater(final CommandSender who, final String message) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+			@Override
+			public void run() {
+				send(who, message);
+			}
+		}, 0L);
+	}
+	public static void sendLaterBlock(final CommandSender who, final String message, final String sender) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 			@Override
 			public void run() {

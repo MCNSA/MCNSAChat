@@ -1,6 +1,7 @@
 package com.mcnsa.mcnsachat3.plugin.command;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mcnsa.mcnsachat3.chat.ChatPlayer;
@@ -17,7 +18,7 @@ public class CommandLock implements Command {
 		CommandLock.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		if(sArgs.length() < 1)
 			return false;
 
@@ -26,7 +27,7 @@ public class CommandLock implements Command {
 	
 		Player bukkitPlayer = Bukkit.getPlayer(argParts[0]);
 		if(bukkitPlayer == null) {
-			PluginUtil.send(player.getName(), "&cPlayer not found.");
+			PluginUtil.send(sender, "&cPlayer not found.");
 			return true;
 		}
 
@@ -49,7 +50,7 @@ public class CommandLock implements Command {
 		}
 		
 		// notify them
-		PluginUtil.send(player.getName(), "Locked " + PluginUtil.formatUser(targetPlayer.name));
+		PluginUtil.send(sender, "Locked " + PluginUtil.formatUser(targetPlayer.name));
 		
 		// and update them across the servers
 		if (MCNSAChat3.thread != null)

@@ -2,8 +2,7 @@ package com.mcnsa.mcnsachat3.plugin.command;
 
 import java.util.ArrayList;
 
-import org.bukkit.entity.Player;
-
+import org.bukkit.command.CommandSender;
 import com.mcnsa.mcnsachat3.chat.ChatPlayer;
 import com.mcnsa.mcnsachat3.managers.PlayerManager;
 import com.mcnsa.mcnsachat3.packets.PlayerUpdatePacket;
@@ -18,7 +17,7 @@ public class CommandRemove implements Command{
 		 CommandRemove.plugin = plugin;
 	}
 	
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		if(sArgs.length() < 1)
 			return false;
 		
@@ -31,7 +30,7 @@ public class CommandRemove implements Command{
 		ArrayList<ChatPlayer> playerRemove = PlayerManager.getPlayersByFuzzyName(args[0]);
 		if (playerRemove.isEmpty()) {
 			//Could not find player
-			PluginUtil.send(player.getName(), "Could not find player");
+			PluginUtil.send(sender, "Could not find player");
 			return true;
 		}
 		else {
@@ -40,8 +39,8 @@ public class CommandRemove implements Command{
 			playerRemoval.listening.remove(args[1].toLowerCase());
 			
 			PluginUtil.send(playerRemoval.name, "You are no longer listening to "+args[1]);
-			PluginUtil.send(player.getName(), playerRemoval.name+" is no longer listening to "+args[1]);
-			plugin.getLogger().info(player.getName() +"removed "+playerRemoval.name+" from "+ args[1]);
+			PluginUtil.send(sender, playerRemoval.name+" is no longer listening to "+args[1]);
+			plugin.getLogger().info(sender.getName() +"removed "+playerRemoval.name+" from "+ args[1]);
 			
 			if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new PlayerUpdatePacket(playerRemoval));

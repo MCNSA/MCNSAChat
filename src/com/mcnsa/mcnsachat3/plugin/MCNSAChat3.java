@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.logging.FileHandler;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -71,7 +73,12 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 			fileHandler = new FileHandler(getDataFolder() + "/chat3.log", 1024 * 1024 * 1024, 1);
 			fileHandler.setFormatter(new LogFormatter());
 			getLogger().addHandler(fileHandler);
-		} catch (SecurityException | IOException e) {
+		}
+		catch (IOException e) {
+			System.out.println("Error opening log file, redirecting output to console.");
+			getLogger().setUseParentHandlers(true);
+		}
+		catch(SecurityException e) {
 			System.out.println("Error opening log file, redirecting output to console.");
 			getLogger().setUseParentHandlers(true);
 		}
@@ -130,8 +137,11 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 	@SuppressWarnings("unchecked")
 	public void loadPlayers() {
 		ConfigurationSection playerData = persist.get().getConfigurationSection("players");
-		if (playerData == null)
+		if (playerData == null) {
 			persist.get().createSection("players");
+			// fix null pointer exception
+			playerData = persist.get().getConfigurationSection("players");
+		}
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			ChatPlayer p = new ChatPlayer(player.getName(), name);
 			PlayerManager.players.add(p);
@@ -210,4 +220,15 @@ public final class MCNSAChat3 extends JavaPlugin implements Listener {
 		fileHandler.close();
 	}
 	
+	public static boolean hasPermission(CommandSender sender, String permission) {
+		if(sender instanceof Player) {
+			return permissions.has((Player)sender, permission);
+		}
+		return true;
+	}
+	
+	// handle commands
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		return command.handleCommand(sender, cmd.getName() + " " + PluginUtil.implode(" ", args));
+	}
 }

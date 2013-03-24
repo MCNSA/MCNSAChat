@@ -11,7 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChatTabCompleteEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+//import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -172,7 +172,7 @@ public class PlayerListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	/*@EventHandler(priority = EventPriority.LOWEST)
 	public void preprocessHandler(PlayerCommandPreprocessEvent evt) {
 		if (evt.isCancelled())
 			return;
@@ -182,5 +182,5 @@ public class PlayerListener implements Listener {
 			// not necessary to announce every single time someone sends a command
 			//System.out.println("Intercepted command from " + evt.getPlayer().getName() + ": " + evt.getMessage());
 		}
-	}
+	}*/
 }

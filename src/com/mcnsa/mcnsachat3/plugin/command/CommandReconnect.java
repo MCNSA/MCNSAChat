@@ -2,8 +2,7 @@ package com.mcnsa.mcnsachat3.plugin.command;
 
 import java.io.IOException;
 
-import org.bukkit.entity.Player;
-
+import org.bukkit.command.CommandSender;
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
 
@@ -15,7 +14,7 @@ public class CommandReconnect implements Command {
 		CommandReconnect.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		if (MCNSAChat3.thread != null) {
 			try {
 				MCNSAChat3.thread.socket.close();
@@ -23,7 +22,7 @@ public class CommandReconnect implements Command {
 				e.printStackTrace();
 			}
 		}
-		PluginUtil.send(player.getName(), "Broke connection");
+		PluginUtil.send(sender, "Broke connection");
 		return true;
 	}
 }

@@ -15,9 +15,15 @@ public class PlayerManager {
 	}
 
 	public static ChatPlayer getPlayer(String name, String server) {
-		for (ChatPlayer play : players)
-			if (play.name.equalsIgnoreCase(name) && play.server.equalsIgnoreCase(server))
+		for (ChatPlayer play : players) {
+			if(play.name == null || play.server == null) {
+				continue;
+			}
+			
+			if (play.name.equalsIgnoreCase(name) && play.server.equalsIgnoreCase(server)) {
 				return play;
+			}
+		}
 		return null;
 	}
 

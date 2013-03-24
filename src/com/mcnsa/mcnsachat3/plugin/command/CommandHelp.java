@@ -2,7 +2,7 @@ package com.mcnsa.mcnsachat3.plugin.command;
 
 import java.util.ArrayList;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 import com.mcnsa.mcnsachat3.managers.CommandManager.InternalCommand;
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
@@ -16,7 +16,7 @@ public class CommandHelp implements Command {
 		CommandHelp.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		sArgs = sArgs.trim();
 		int page = 0;
 		try {
@@ -26,7 +26,7 @@ public class CommandHelp implements Command {
 		InternalCommand[] commands = plugin.command.listCommands();
 		ArrayList<InternalCommand> permCommands = new ArrayList<InternalCommand>();
 		for (int i = 0; i < commands.length; i++)
-			if (commands[i].permissions.equals("") || MCNSAChat3.permissions.has(player, "mcnsachat3.command." + commands[i].permissions))
+			if (commands[i].permissions.equals("") || MCNSAChat3.hasPermission(sender, "mcnsachat3.command." + commands[i].permissions))
 				permCommands.add(commands[i]);
 
 		int totalPages = permCommands.size() / 4;
@@ -36,10 +36,10 @@ public class CommandHelp implements Command {
 
 		int start = page * 4;
 		int end = Math.min(start + 4, permCommands.size());
-		PluginUtil.send(player.getName(), "&7--- &fMCNSAChat3 Help &7- &fPage &e" + (page + 1) + "&7/&e" + totalPages + " &f---");
+		PluginUtil.send(sender, "&7--- &fMCNSAChat3 Help &7- &fPage &e" + (page + 1) + "&7/&e" + totalPages + " &f---");
 		for (int i = start; i < end; i++) {
-			PluginUtil.send(player.getName(), "&f/" + permCommands.get(i).alias + " &e" + permCommands.get(i).usage);
-			PluginUtil.send(player.getName(), "    &7" + permCommands.get(i).description);
+			PluginUtil.send(sender, "&f/" + permCommands.get(i).alias + " &e" + permCommands.get(i).usage);
+			PluginUtil.send(sender, "    &7" + permCommands.get(i).description);
 		}
 		return true;
 	}

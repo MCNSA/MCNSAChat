@@ -1,7 +1,6 @@
 package com.mcnsa.mcnsachat3.plugin.command;
 
-import org.bukkit.entity.Player;
-
+import org.bukkit.command.CommandSender;
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
 import com.mcnsa.mcnsachat3.plugin.PlayerRefresh;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
@@ -12,9 +11,9 @@ public class CommandRefresh implements Command {
 		CommandChannel.plugin = plugin;
 	}
 	
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		PlayerRefresh.refreshTabList();
-		PluginUtil.send(player.getName(), "Reloaded tab list");
+		PluginUtil.send(sender, "Reloaded tab list");
 		return true;
 	}
 }

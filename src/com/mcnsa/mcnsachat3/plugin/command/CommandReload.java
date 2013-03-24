@@ -1,7 +1,6 @@
 package com.mcnsa.mcnsachat3.plugin.command;
 
-import org.bukkit.entity.Player;
-
+import org.bukkit.command.CommandSender;
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
 
@@ -13,9 +12,9 @@ public class CommandReload implements Command {
 		CommandReload.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		plugin.reloadConfig();
-		PluginUtil.send(player.getName(), "Reloaded config.");
+		PluginUtil.send(sender, "Reloaded config.");
 		
 		return true;
 	}

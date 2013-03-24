@@ -3,8 +3,7 @@ package com.mcnsa.mcnsachat3.plugin.command;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.bukkit.entity.Player;
-
+import org.bukkit.command.CommandSender;
 import ru.tehkode.permissions.PermissionGroup;
 
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
@@ -18,7 +17,7 @@ public class CommandRanks implements Command {
 		CommandRanks.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		PermissionGroup[] groups = MCNSAChat3.permissions.getGroups();
 		Arrays.sort(groups, new Comparator<PermissionGroup>() {
 			public int compare(PermissionGroup a, PermissionGroup b) {
@@ -32,7 +31,7 @@ public class CommandRanks implements Command {
 		for (int i = 0; i < groups.length; i++)
 			if (groups[i].getOptionInteger("rank", "", 9999) != 9999) 
 				ranks += groups[i].getPrefix() + groups[i].getName() + "&f" + (i == groups.length - 1 ? "" : ", ");
-		PluginUtil.send(player.getName(), ranks);
+		PluginUtil.send(sender, ranks);
 		return true;
 	}
 }

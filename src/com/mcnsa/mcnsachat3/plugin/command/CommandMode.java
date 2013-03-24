@@ -1,7 +1,6 @@
 package com.mcnsa.mcnsachat3.plugin.command;
 
-import org.bukkit.entity.Player;
-
+import org.bukkit.command.CommandSender;
 import com.mcnsa.mcnsachat3.chat.ChatChannel;
 import com.mcnsa.mcnsachat3.managers.ChannelManager;
 import com.mcnsa.mcnsachat3.packets.ChannelUpdatePacket;
@@ -16,14 +15,14 @@ public class CommandMode implements Command {
 		CommandMode.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		String[] args = sArgs.split("\\s");
 		if (sArgs.length() < 1)
 			return false;
 		ChatChannel chan = ChannelManager.getChannel(args[0]);
 
 		if (chan == null) {
-			PluginUtil.send(player.getName(), "&cChannel not found.");
+			PluginUtil.send(sender, "&cChannel not found.");
 			return true;
 		}
 
@@ -31,7 +30,7 @@ public class CommandMode implements Command {
 			String modeString = "Modes for channel " + chan.color + chan.name + "&7: ";
 			for (ChatChannel.Mode mode : chan.modes)
 				modeString += mode.name() + " ";
-			PluginUtil.send(player.getName(), modeString);
+			PluginUtil.send(sender, modeString);
 			return true;
 		}
 
@@ -52,7 +51,7 @@ public class CommandMode implements Command {
 			}
 		}
 
-		PluginUtil.send(player.getName(), "Modes changed.");
+		PluginUtil.send(sender, "Modes changed.");
 		if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new ChannelUpdatePacket(chan));
 

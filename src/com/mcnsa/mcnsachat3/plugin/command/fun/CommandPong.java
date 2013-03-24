@@ -1,6 +1,6 @@
 package com.mcnsa.mcnsachat3.plugin.command.fun;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
@@ -14,8 +14,8 @@ public class CommandPong implements Command {
 		CommandPong.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
-		PluginUtil.send(player.getName(), "I hear " + player.getName() + " likes cute asian boys.");
+	public Boolean handle(CommandSender sender, String sArgs) {
+		PluginUtil.send(sender, "I hear " + sender.getName() + " likes cute asian boys.");
 		return true;
 	}
 }

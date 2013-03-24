@@ -2,7 +2,7 @@ package com.mcnsa.mcnsachat3.plugin.command.fun;
 
 import java.util.Random;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 import com.mcnsa.mcnsachat3.chat.ChatChannel;
 import com.mcnsa.mcnsachat3.chat.ChatPlayer;
@@ -20,16 +20,16 @@ public class CommandRand implements Command {
 		CommandRand.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
-		ChatPlayer p = PlayerManager.getPlayer(player.getName(), plugin.name);
+	public Boolean handle(CommandSender sender, String sArgs) {
+		ChatPlayer p = PlayerManager.getPlayer(sender.getName(), plugin.name);
 		String write_perm = ChannelManager.getChannel(p.channel).write_permission;
-		if (!write_perm.equals("") && !MCNSAChat3.permissions.has(player, "mcnsachat3.write." + write_perm)) {
-			plugin.getLogger().info(player.getName() + " attempted to write to channel " + p.channel + " without permission!");
-			PluginUtil.send(player.getName(), "&cYou don't have permission to do that!");
+		if (!write_perm.equals("") && !MCNSAChat3.hasPermission(sender, "mcnsachat3.write." + write_perm)) {
+			plugin.getLogger().info(sender.getName() + " attempted to write to channel " + p.channel + " without permission!");
+			PluginUtil.send(sender, "&cYou don't have permission to do that!");
 			return true;
 		}
 		if (p.modes.contains(ChatPlayer.Mode.MUTE) || ChannelManager.getChannel(p.channel).modes.contains(ChatChannel.Mode.MUTE)) {
-			PluginUtil.send(p.name, "You are not allowed to speak right now.");
+			PluginUtil.send(sender, "You are not allowed to speak right now.");
 			return true;
 		}
 		
@@ -56,7 +56,7 @@ public class CommandRand implements Command {
 			int range = end - start + 1;
 			int randomNumber =  rn.nextInt(range) + start;  
 		//Send to everyone
-		PluginUtil.send("&6"+player.getName()+" &frolled the number &6"+randomNumber);
+		PluginUtil.send("&6"+sender.getName()+" &frolled the number &6"+randomNumber);
 		return true;
 	}
 }

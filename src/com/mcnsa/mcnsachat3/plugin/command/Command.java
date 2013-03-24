@@ -5,10 +5,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 public interface Command {
-	public Boolean handle(Player player, String sArgs);
+	public Boolean handle(CommandSender player, String sArgs);
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.TYPE)
@@ -22,5 +22,7 @@ public interface Command {
 		public String description() default "";
 
 		public boolean visible() default true;
+		
+		public boolean playerOnly() default false;
 	}
 }

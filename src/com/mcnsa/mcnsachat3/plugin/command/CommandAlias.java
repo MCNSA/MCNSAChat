@@ -1,6 +1,6 @@
 package com.mcnsa.mcnsachat3.plugin.command;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 import com.mcnsa.mcnsachat3.chat.ChatChannel;
 import com.mcnsa.mcnsachat3.managers.ChannelManager;
@@ -16,14 +16,14 @@ public class CommandAlias implements Command {
 		CommandAlias.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		String[] args = sArgs.split("\\s");
 		if (sArgs.length() < 1)
 			return false;
 		ChatChannel chan = ChannelManager.getChannel(args[0]);
 
 		if (chan == null) {
-			PluginUtil.send(player.getName(), "&cChannel not found.");
+			PluginUtil.send(sender, "&cChannel not found.");
 			return true;
 		}
 
@@ -35,7 +35,7 @@ public class CommandAlias implements Command {
 			chan.alias = args[1];
 		plugin.command.aliases.put(chan.alias, chan.name);
 
-		PluginUtil.send(player.getName(), "Channel alias changed! Now: '" + chan.alias + "'");
+		PluginUtil.send(sender, "Channel alias changed! Now: '" + chan.alias + "'");
 		if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new ChannelUpdatePacket(chan));
 		return true;

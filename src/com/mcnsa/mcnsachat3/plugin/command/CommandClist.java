@@ -1,6 +1,6 @@
 package com.mcnsa.mcnsachat3.plugin.command;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 import com.mcnsa.mcnsachat3.chat.ChatChannel;
 import com.mcnsa.mcnsachat3.managers.ChannelManager;
@@ -16,16 +16,16 @@ public class CommandClist implements Command {
 		CommandClist.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		String chans = "";
 		for(ChatChannel chan : ChannelManager.channels) {
 			String perm = chan.read_permission;
-			boolean hasPerm = perm.equals("") || MCNSAChat3.permissions.has(player, "mcnsachat3.read." + perm);
+			boolean hasPerm = perm.equals("") || MCNSAChat3.hasPermission(sender, "mcnsachat3.read." + perm);
 			boolean chanOccupied = PlayerManager.getPlayersInChannel(chan.name).size() > 0 || chan.modes.contains(ChatChannel.Mode.PERSIST);
 			if(hasPerm && chanOccupied) 
 				chans += chan.color + chan.name + " ";
 		}
-		PluginUtil.send(player.getName(), "Channels: " + chans);
+		PluginUtil.send(sender, "Channels: " + chans);
 		return true;
 	}
 }

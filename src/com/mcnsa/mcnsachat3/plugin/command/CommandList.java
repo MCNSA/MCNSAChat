@@ -1,6 +1,6 @@
 package com.mcnsa.mcnsachat3.plugin.command;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
@@ -13,8 +13,8 @@ public class CommandList implements Command {
 		CommandList.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
-		PluginUtil.send(player.getName(), PluginUtil.getPlayerList());
+	public Boolean handle(CommandSender sender, String sArgs) {
+		PluginUtil.send(sender, PluginUtil.getPlayerList());
 		return true;
 	}
 }

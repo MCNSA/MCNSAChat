@@ -2,6 +2,7 @@ package com.mcnsa.mcnsachat3.plugin.command;
 
 import java.util.ArrayList;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mcnsa.mcnsachat3.chat.ChatChannel;
@@ -13,7 +14,7 @@ import com.mcnsa.mcnsachat3.packets.PlayerUpdatePacket;
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
 
-@Command.CommandInfo(alias = "clisten", permission = "listen", usage = "<channel>", description = "toggles listening to a channel.")
+@Command.CommandInfo(alias = "clisten", permission = "listen", usage = "<channel>", description = "toggles listening to a channel.", playerOnly = true)
 public class CommandListen implements Command {
 	public static MCNSAChat3 plugin = null;
 
@@ -21,22 +22,24 @@ public class CommandListen implements Command {
 		CommandListen.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		if(sArgs.length() < 1)
 			return false;
 
+		Player player = (Player)sender;
+		
 		ChatPlayer cp = PlayerManager.getPlayer(player.getName(), plugin.name);
 		ChatChannel chan = ChannelManager.getChannel(sArgs);
 		String read_perm = chan == null ? "" : chan.read_permission;
 		if (!read_perm.equals("") && !MCNSAChat3.permissions.has(player, "mcnsachat3.read." + read_perm)) {
 			plugin.getLogger().info(player.getName() + " attempted to read channel " + sArgs + " without permission!");
-			PluginUtil.send(player.getName(), "&cYou don't have permission to do that!");
+			PluginUtil.send(sender, "&cYou don't have permission to do that!");
 			return true;
 		}
 		
 		if (cp.listening.contains(sArgs.toLowerCase())) {
 			cp.listening.remove(sArgs.toLowerCase());
-			PluginUtil.send(player.getName(), "You are now no longer listening to channel " + chan.color + chan.name);
+			PluginUtil.send(sender, "You are now no longer listening to channel " + chan.color + chan.name);
 			return true;
 		}
 		cp.listening.add(sArgs.toLowerCase());
@@ -49,11 +52,11 @@ public class CommandListen implements Command {
 		}
 
 		// welcome them
-		PluginUtil.sendLater(cp.name, "You are now listening to channel " + chan.color + chan.name + "&f!");
+		PluginUtil.sendLater(sender, "You are now listening to channel " + chan.color + chan.name + "&f!");
 		ArrayList<String> names = new ArrayList<String>();
 		for (ChatPlayer p : PlayerManager.getPlayersInChannel(chan.name))
 			names.add(p.name);
-		PluginUtil.sendLater(cp.name, "Players here: " + PluginUtil.formatPlayerList(names.toArray(new String[0])));
+		PluginUtil.sendLater(sender, "Players here: " + PluginUtil.formatPlayerList(names.toArray(new String[0])));
 		
 		if (MCNSAChat3.thread != null)
 			MCNSAChat3.thread.write(new PlayerUpdatePacket(cp));

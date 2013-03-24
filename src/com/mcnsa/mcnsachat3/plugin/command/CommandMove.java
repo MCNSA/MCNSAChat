@@ -1,5 +1,6 @@
 package com.mcnsa.mcnsachat3.plugin.command;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mcnsa.mcnsachat3.chat.ChatPlayer;
@@ -17,7 +18,7 @@ public class CommandMove implements Command {
 		CommandMove.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		if (sArgs.length() < 1)
 			return false;
 
@@ -32,7 +33,7 @@ public class CommandMove implements Command {
 			targets = plugin.getServer().getOnlinePlayers();
 		} else {
 			if ((targets[0] = plugin.getServer().getPlayer(args[0])) == null) {
-				PluginUtil.send(player.getName(), "&cPlayer not found");
+				PluginUtil.send(sender, "&cPlayer not found");
 				return true;
 			}
 		}
@@ -40,7 +41,7 @@ public class CommandMove implements Command {
 		for (Player target : targets) {
 			ChatPlayer cp = PlayerManager.getPlayer(target.getName(), plugin.name);
 			cp.changeChannels(channel);
-			PluginUtil.send(player.getName(), "Moved " + PluginUtil.formatUser(cp.name) + " &rto " + ChannelManager.getChannel(cp.channel).color + ChannelManager.getChannel(cp.channel).name);
+			PluginUtil.send(sender, "Moved " + PluginUtil.formatUser(cp.name) + " &rto " + ChannelManager.getChannel(cp.channel).color + ChannelManager.getChannel(cp.channel).name);
 			if (MCNSAChat3.thread != null)
 				MCNSAChat3.thread.write(new PlayerUpdatePacket(cp));
 		}

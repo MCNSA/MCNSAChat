@@ -1,6 +1,7 @@
 package com.mcnsa.mcnsachat3.plugin.command;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mcnsa.mcnsachat3.chat.ChatChannel;
@@ -18,19 +19,19 @@ public class CommandSearch implements Command {
 		CommandSearch.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		if(sArgs.length() < 1)
 			return false;
 	
 		Player bukkitPlayer = Bukkit.getPlayer(sArgs);
 		if(bukkitPlayer == null) {
-			PluginUtil.send(player.getName(), "&cPlayer not found.");
+			PluginUtil.send(sender, "&cPlayer not found.");
 			return true;
 		}
 		ChatPlayer p = PlayerManager.getPlayer(bukkitPlayer.getName(), plugin.name);
 		ChatChannel chan = ChannelManager.getChannel(p.channel);
 		
-		PluginUtil.send(player.getName(), PluginUtil.formatUser(p.name) + "&f is in channel " + chan.color + chan.name);
+		PluginUtil.send(sender, PluginUtil.formatUser(p.name) + "&f is in channel " + chan.color + chan.name);
 		
 		return true;
 	}

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mcnsa.mcnsachat3.chat.ChatChannel;
@@ -98,46 +99,58 @@ public class CommandManager {
 				boolean visible = alias == null ? ci.visible() : false;
 				if(alias == null)
 					alias = ci.alias();
-				commands.put(alias, new InternalCommand(alias, ci.permission(), ci.usage(), ci.description(), visible, command));
+				commands.put(alias, new InternalCommand(alias, ci.permission(), ci.usage(), ci.description(), visible, command, ci.playerOnly()));
 				return;
 			}
 		}
 	}
 
-	public Boolean handleCommand(Player player, String command) {
-		command = command.substring(1);
+	public Boolean handleCommand(CommandSender sender, String command) {
+		//command = command.substring(1);
 		String[] tokens = command.split("\\s");
 		if (tokens.length < 1)
 			return false;
 		tokens[0] = tokens[0].toLowerCase();
 
+		// check to see if it's an alias
 		if (aliases.containsKey(tokens[0])) {
 			String args = new String("");
 			if (command.length() > 1 + tokens[0].length())
 				args = command.substring(1 + tokens[0].length());
-			handleAlias(player, tokens[0], args);
+			handleAlias(sender, tokens[0], args);
 			return true;
 		}
+		
+		// make sure the command exists
 		if (!commands.containsKey(tokens[0]))
 			return false;
-		if (!commands.get(tokens[0]).permissions.equals("") && !MCNSAChat3.permissions.has(player, "mcnsachat3.command." + commands.get(tokens[0]).permissions)) {
-			plugin.getLogger().info(player.getName() + " attempted to use command: " + tokens[0] + " without permission!");
-			PluginUtil.send(player.getName(), "&cYou don't have permission to do that!");
+		
+		// make sure they have permission
+		if (!commands.get(tokens[0]).permissions.equals("") && !MCNSAChat3.hasPermission(sender, "mcnsachat3.command." + commands.get(tokens[0]).permissions)) {
+			plugin.getLogger().info(sender.getName() + " attempted to use command: " + tokens[0] + " without permission!");
+			PluginUtil.send(sender, "&cYou don't have permission to do that!");
+			return true;
+		}
+		
+		// make sure if the command is player only, that a player is doing it
+		if(commands.get(tokens[0]).playerOnly && !(sender instanceof Player)) {
+			PluginUtil.send(sender, "&cOnly players may use that command!");
 			return true;
 		}
 
+		// handle the command
 		String sArgs = new String("");
 		if (command.length() > (1 + tokens[0].length()))
 			sArgs = command.substring(1 + tokens[0].length());
-		if (commands.get(tokens[0]).command.handle(player, sArgs))
+		if (commands.get(tokens[0]).command.handle(sender, sArgs))
 			return true;
 
-		PluginUtil.send(player.getName(), "&cInvalid usage! &aCorrect usage: &6/" + commands.get(tokens[0]).alias + " &e" + commands.get(tokens[0]).usage + " &7(" + commands.get(tokens[0]).description + ")");
+		PluginUtil.send(sender, "&cInvalid usage! &aCorrect usage: &6/" + commands.get(tokens[0]).alias + " &e" + commands.get(tokens[0]).usage + " &7(" + commands.get(tokens[0]).description + ")");
 		return true;
 	}
 
-	private void handleAlias(Player player, String alias, String message) {
-		ChatPlayer cp = PlayerManager.getPlayer(player.getName(), plugin.name);
+	private void handleAlias(CommandSender sender, String alias, String message) {
+		ChatPlayer cp = PlayerManager.getPlayer(sender.getName(), plugin.name);
 		if (cp.modes.contains(ChatPlayer.Mode.LOCKED)) {
 			PluginUtil.send(cp.name, "You have been locked in your channel and may not change channels.");
 			return;
@@ -145,18 +158,18 @@ public class CommandManager {
 
 		String channel = aliases.get(alias);
 		String read_perm = ChannelManager.getChannel(channel).read_permission;
-		if (!read_perm.equals("") && !MCNSAChat3.permissions.has(player, "mcnsachat3.read." + read_perm)) {
-			plugin.getLogger().info(player.getName() + " attempted to read channel " + channel + " without permission!");
-			PluginUtil.send(player.getName(), "&cYou don't have permission to do that!");
+		if (!read_perm.equals("") && !MCNSAChat3.hasPermission(sender, "mcnsachat3.read." + read_perm)) {
+			plugin.getLogger().info(sender.getName() + " attempted to read channel " + channel + " without permission!");
+			PluginUtil.send(sender, "&cYou don't have permission to do that!");
 			return;
 		}
 
 		if (!message.trim().equals("")) {
 			// send a message rather than changing
 			String write_perm = ChannelManager.getChannel(channel).write_permission;
-			if (!write_perm.equals("") && !MCNSAChat3.permissions.has(player, "mcnsachat3.write." + write_perm)) {
-				plugin.getLogger().info(player.getName() + " attempted to write to channel " + channel + " without permission!");
-				PluginUtil.send(player.getName(), "&cYou don't have permission to do that!");
+			if (!write_perm.equals("") && !MCNSAChat3.hasPermission(sender, "mcnsachat3.write." + write_perm)) {
+				plugin.getLogger().info(sender.getName() + " attempted to write to channel " + channel + " without permission!");
+				PluginUtil.send(sender, "&cYou don't have permission to do that!");
 				return;
 			}
 			if (cp.modes.contains(ChatPlayer.Mode.MUTE) || ChannelManager.getChannel(channel).modes.contains(ChatChannel.Mode.MUTE)) {
@@ -196,14 +209,16 @@ public class CommandManager {
 		public String description = new String("");
 		public Boolean visible = new Boolean(true);
 		public Command command = null;
+		public Boolean playerOnly = new Boolean(false);
 
-		public InternalCommand(String _alias, String _perms, String _usage, String _desc, boolean _visible, Command _command) {
+		public InternalCommand(String _alias, String _perms, String _usage, String _desc, boolean _visible, Command _command, boolean _playerOnly) {
 			alias = _alias;
 			permissions = _perms;
 			usage = _usage;
 			description = _desc;
 			visible = _visible;
 			command = _command;
+			playerOnly = _playerOnly;
 		}
 	}
 

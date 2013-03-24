@@ -3,6 +3,7 @@ package com.mcnsa.mcnsachat3.plugin.command;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mcnsa.mcnsachat3.chat.ChatPlayer;
@@ -11,7 +12,7 @@ import com.mcnsa.mcnsachat3.packets.PlayerPMPacket;
 import com.mcnsa.mcnsachat3.plugin.MCNSAChat3;
 import com.mcnsa.mcnsachat3.plugin.PluginUtil;
 
-@Command.CommandInfo(alias = "r", permission = "msg", usage = "<message>", description = "replies to a private message")
+@Command.CommandInfo(alias = "r", permission = "msg", usage = "<message>", description = "replies to a private message", playerOnly = true)
 public class CommandR implements Command {
 	public static MCNSAChat3 plugin = null;
 
@@ -19,10 +20,12 @@ public class CommandR implements Command {
 		CommandR.plugin = plugin;
 	}
 
-	public Boolean handle(Player player, String sArgs) {
+	public Boolean handle(CommandSender sender, String sArgs) {
 		if (sArgs.length() < 1) {
 			return false;
 		}
+		
+		Player player = (Player)sender;
 
 		ChatPlayer from = PlayerManager.getPlayer(player.getName(), plugin.name);
 
