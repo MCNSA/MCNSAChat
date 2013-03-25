@@ -6,6 +6,7 @@ chat-server: '127.0.0.1'
 console-listen-other-servers: true
 console-hide-chat: false
 hide-playerlist-onJoin: false
+server-filter-string: ''
 strings:
   player-welcome: '&aWelcome &e%player% &ato the server!'
   player-join: '%prefix%%player% &ehas joined %server%!'

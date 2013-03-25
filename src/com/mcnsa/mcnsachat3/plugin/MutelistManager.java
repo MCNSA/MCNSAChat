@@ -11,7 +11,7 @@ public class MutelistManager {
 
 	public static Map<String, String> load(MCNSAChat3 plugin){
 		//Loads the mutelist hashmap
-			String path = plugin.getDataFolder()+"mutelist.bin";
+			String path = plugin.getDataFolder()+"/mutelist.bin";
 			File file = new File(path);
 			if (file.exists()) {
 				//Theres already a hashmap. So load it
@@ -33,7 +33,7 @@ public class MutelistManager {
 	
 	public static void save(Map<String, String> mutelist, MCNSAChat3 plugin){
 		//Function to save the map
-		String path = plugin.getDataFolder()+"mutelist.bin";
+		String path = plugin.getDataFolder()+"/mutelist.bin";
 		try { SLAPI.save(mutelist, path);}
 		catch (Exception e) { plugin.getLogger().warning("Could not save mutelist "+e.getMessage()); }
 	}
