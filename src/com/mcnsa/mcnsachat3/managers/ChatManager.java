@@ -146,7 +146,7 @@ public class ChatManager {
 		regexString = regexString.replace("%server-name%", plugin.name);
 		
 		if (line.contains(regexString) && plugin.getConfig().getString("console-listen-other-servers").startsWith("false") && plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
-			Bukkit.getConsoleSender().sendMessage(line);
+			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
 		}
 	}
 	
