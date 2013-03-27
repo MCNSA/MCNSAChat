@@ -5,6 +5,7 @@
   <version>3.0.1.0</version>
   <name>MCNSAChat</name>
   <build>
+	<finalName>MCNSAChat</finalName>
   	<resources>
       <resource>
         <directory>resources</directory>
