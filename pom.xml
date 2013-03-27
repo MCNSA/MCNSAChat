@@ -30,7 +30,7 @@
       </repository>
     <repository>
       <id>Permissions-ex</id>
-        <url>http://repo.tehkode.ru/browse/ru.tehkode</url>
+        <url>http://repo.tehkode.ru/browse/ru.tehkode/</url>
     </repository>
   </repositories>
   <dependencies>
