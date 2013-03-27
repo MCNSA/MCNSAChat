@@ -28,6 +28,10 @@
       <id>bukkit-repo</id>
         <url>http://repo.bukkit.org/content/groups/public/</url>
       </repository>
+    <repository>
+      <id>Permissions-ex</id>
+        <url>http://repo.tehkode.ru/browse/ru.tehkode</url>
+    </repository>
   </repositories>
   <dependencies>
   	<dependency>
@@ -39,8 +43,6 @@
   		<groupId>ru.tehkode</groupId>
   		<artifactId>PermissionsEx</artifactId>
   		<version>1.19.4</version>
-      <scope>system</scope>
-      <systemPath>${basedir}/lib/PermissionsEx.jar</systemPath>
   	</dependency>
   </dependencies>
 </project>
