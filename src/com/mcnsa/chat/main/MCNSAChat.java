@@ -38,7 +38,7 @@ public class MCNSAChat extends JavaPlugin {
 	
 	public static String name;
 	public String longName;
-	public ChatManager chat;
+	public static ChatManager chat;
 	public static PermissionManager permissions;
 	public static ClientThread thread = null;
 	public PlayerListener PListener;
@@ -73,8 +73,8 @@ public class MCNSAChat extends JavaPlugin {
 		TimeoutManager.save(this);
 		
 		//managers
-		this.chat = new ChatManager(this);
-		this.commandManager = new CommandManager();
+		chat = new ChatManager(this);
+		commandManager = new CommandManager();
 		
 		//load player manager
 		PlayerManager.init();
