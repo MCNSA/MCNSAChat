@@ -5,6 +5,7 @@
   <version>3.0.0.3-SNAPSHOT</version>
   <name>mcnsaChat3</name>
   <build>
+  <finalName>MCNSAChat</finalName>
   	<resources>
       <resource>
         <directory>resources</directory>
