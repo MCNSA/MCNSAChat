@@ -120,8 +120,12 @@ public class AdminCommands {
 		//Get the player
 		ChatPlayer target = PlayerManager.getPlayer(Bukkit.getPlayer(player).getName(), MCNSAChat.name);
 		
+		StringBuilder sb = new StringBuilder();
 		//Build the reason string
-		String reason = StringUtils.implode(" ", rawReason);
+		for (String part: rawReason) {
+			sb.append(part+" ");
+		}
+		String reason = sb.toString();
 		//Check if the player is already in timeout
 		if (TimeoutManager.timeouts.containsKey(target.name)) {
 			//Player is already in timeout.

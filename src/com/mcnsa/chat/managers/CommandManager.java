@@ -24,6 +24,7 @@ import com.mcnsa.chat.exceptions.ChatCommandException;
 import com.mcnsa.chat.main.MCNSAChat;
 import com.mcnsa.chat.utilities.ColourHandler;
 import com.mcnsa.chat.utilities.Logger;
+import com.mcnsa.chat.utilities.StringUtils;
 import com.mcnsa.chat.managers.ComponentManager.Component;
 
 public class CommandManager implements TabExecutor {
@@ -355,187 +356,183 @@ public class CommandManager implements TabExecutor {
 	// here is where we actually handle commands
 	public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
 		// handle aliases
-		if(aliasMapping.containsKey(label)) {
-			label = aliasMapping.get(label);
-		}
-
-		// find all our possibilities
-		String lastFailMessage = "";
-		for(String registrationToken: registeredCommands.keySet()) {
-			//MCNSAEssentials.debug("testing " + registrationToken + " against command (" + label + ")");
-			String[] registrationParts = registrationToken.split(":");
-
-			if(!registrationParts[0].equals(label)) {
-				// nope!
-				//MCNSAEssentials.debug("failed " + registrationToken + ": not correct command (" + label + ")");
-				continue;
-			}
-
-			// match the command sender type
-			if(registeredCommands.get(registrationToken).command.playerOnly() && !registrationParts[1].equals("p")) {
-				// nope, not this one!
-				//MCNSAEssentials.debug("failed " + registrationToken + ": player only and not a player");
-				continue;
-			} 
-			else if(registeredCommands.get(registrationToken).command.consoleOnly() && !registrationParts[1].equals("c")) {
-				// nope, not this one!
-				//MCNSAEssentials.debug("failed " + registrationToken + ": console only and not a console");
-				continue;
-			}
-
-			// ok, this one matches the name and who can execute it
-			Class<?>[] params = registeredCommands.get(registrationToken).method.getParameterTypes();
-
-			// check the number of arguments
-			boolean hasVarArg = false;
-			for(int i = 0; i < params.length && !hasVarArg; i++) {
-				if(params[i].equals(String[].class)) {
-					hasVarArg = true;
+				if(aliasMapping.containsKey(label)) {
+					label = aliasMapping.get(label);
 				}
-			}
-			if(!hasVarArg) {
-				if((params.length - 1) != args.length) {
-					continue;
-				}
-			}
 
-			// check the arguments one by one
-			Object[] arguments = new Object[params.length];
+				Logger.debug("%s ran command %s with args: %s", sender.getName(), command.getName(), StringUtils.implode(", ", args));
 
-			// fill in our CommandSender
-			arguments[0] = sender;
+				// find all our possibilities
+				String lastFailMessage = "";
+				for(String registrationToken: registeredCommands.keySet()) {
+					//MCNSAEssentials.debug("testing " + registrationToken + " against command (" + label + ")");
+					String[] registrationParts = registrationToken.split(":");
 
-			// skip the CommandSender
-			boolean possible = true;
-			for(int i = 1; i < params.length && possible; i++) {
-				// parse ints next
-				if(params[i].equals(int.class)) {
-					try {
-						int pi = Integer.parseInt(args[i - 1]);
-						arguments[i] = pi;
-					}
-					catch(Exception e) {
-						// we didn't supply an int..
-						possible = false;
-					}
-				}
-				// floats next
-				else if(params[i].equals(float.class)) {
-					try {
-						float pi = Float.parseFloat(args[i - 1]);
-						arguments[i] = pi;
-					}
-					catch(Exception e) {
-						// we didn't supply an int..
-						possible = false;
-					}
-				}
-				// strings now
-				else if(params[i].equals(String.class)) {
-					try {
-						arguments[i] = args[i - 1];
-					}
-					catch(Exception e) {
-						possible = false;
-					}
-				}
-				// string array
-				else if(params[i].equals(String[].class)) {
-					try {
-						String[] argsArray = new String[args.length - (i - 1)];
-
-						// fill in the array
-						for(int j = 0; j < argsArray.length; j++) {
-							argsArray[j] = args[i - 1 + j];
-						}
-
-						// store the argument
-						arguments[i] = argsArray;
-					}
-					catch(Exception e) {
-						possible = false;
-					}
-					i = params.length;
-				}
-				// something else?
-				else {
-					possible = false;
-				}
-			}
-
-			if(possible) {
-				// we found a possible function!
-				CommandInfo ci = registeredCommands.get(registrationToken);
-
-				// check permissions first
-				if(ci.permissions != null && (sender instanceof Player)) {
-					boolean hasPermission = false;
-
-					// see if the player is currently ignoring permissions
-					if(ignoresPermissions((Player)sender)) {
-						hasPermission = true;
-					}
-
-					// loop through all the permissions and see if we have at least one
-					for(Iterator<String> it = ci.permissions.iterator(); it.hasNext() && !hasPermission;) {
-						if(MCNSAChat.permissions.has((Player)sender, it.next())) {
-							hasPermission = true;
-						}
-					}
-
-					// check to see if we have permission
-					if(!hasPermission) {
-						lastFailMessage = "&cSorry, you don't have permission to do that!";
+					if(!registrationParts[0].equals(label)) {
+						// nope!
+						//MCNSAEssentials.debug("failed " + registrationToken + ": not correct command (" + label + ")");
 						continue;
 					}
-				}
 
-				// make sure we have the right person trying to do the command
-				if(ci.command.playerOnly() && !(sender instanceof Player)) {
-					//lastFailMessage = "&cSorry, that command is for players only";
-					lastFailMessage = "playeronly";
-					continue;
-				}
-				else if(ci.command.consoleOnly() && (sender instanceof Player)) {
-					//lastFailMessage = "&cSorry, that command is for the console only";
-					lastFailMessage = "consoleonly";
-					continue;
-				}
-
-				// finally, call the method
-				// the null is because the method must be static
-				try {
-					boolean result = (Boolean)ci.method.invoke(null, arguments);
-					return result;
-				}
-				catch(Exception e) {					
-					if(e.getCause() instanceof ChatCommandException) {
-						ColourHandler.sendMessage(sender, "&c" + e.getCause().getMessage());
-						return true;
+					// match the command sender type
+					if(registeredCommands.get(registrationToken).command.playerOnly() && !registrationParts[1].equals("p")) {
+						// nope, not this one!
+						//MCNSAEssentials.debug("failed " + registrationToken + ": player only and not a player");
+						continue;
+					} 
+					else if(registeredCommands.get(registrationToken).command.consoleOnly() && !registrationParts[1].equals("c")) {
+						// nope, not this one!
+						//MCNSAEssentials.debug("failed " + registrationToken + ": console only and not a console");
+						continue;
 					}
-					else {
-						ColourHandler.sendMessage(sender, "&cSomething went wrong! Alert an administrator!");
-						Logger.error("failed to execute command: " + label + " (" + e.getMessage() + ")");
-						e.printStackTrace();
-						return false;
+
+					// ok, this one matches the name and who can execute it
+					Class<?>[] params = registeredCommands.get(registrationToken).method.getParameterTypes();
+
+					// check the number of arguments
+					boolean hasVarArg = false;
+					for(int i = 0; i < params.length && !hasVarArg; i++) {
+						if(params[i].equals(String[].class)) {
+							hasVarArg = true;
+						}
+					}
+					if(!hasVarArg) {
+						if((params.length - 1) != args.length) {
+							continue;
+						}
+					}
+
+					// check the arguments one by one
+					Object[] arguments = new Object[params.length];
+
+					// fill in our CommandSender
+					arguments[0] = sender;
+
+					// skip the CommandSender
+					boolean possible = true;
+					for(int i = 1; i < params.length && possible; i++) {
+						// parse ints next
+						if(params[i].equals(int.class)) {
+							try {
+								int pi = Integer.parseInt(args[i - 1]);
+								arguments[i] = pi;
+							}
+							catch(Exception e) {
+								// we didn't supply an int..
+								possible = false;
+							}
+						}
+						// floats next
+						else if(params[i].equals(float.class)) {
+							try {
+								float pi = Float.parseFloat(args[i - 1]);
+								arguments[i] = pi;
+							}
+							catch(Exception e) {
+								// we didn't supply an int..
+								possible = false;
+							}
+						}
+						// strings now
+						else if(params[i].equals(String.class)) {
+							arguments[i] = args[i - 1];
+						}
+						// string array
+						else if(params[i].equals(String[].class)) {
+							String[] argsArray = new String[args.length - (i - 1)];
+
+							// fill in the array
+							for(int j = 0; j < argsArray.length; j++) {
+								argsArray[j] = args[i - 1 + j];
+							}
+
+							// store the argument
+							arguments[i] = argsArray;
+
+							// and get out of here, we're done
+							i = params.length;
+						}
+						// something else?
+						else {
+							possible = false;
+						}
+					}
+
+					if(possible) {
+						// we found a possible function!
+						CommandInfo ci = registeredCommands.get(registrationToken);
+
+						// check permissions first
+						if(ci.permissions != null && (sender instanceof Player)) {
+							boolean hasPermission = false;
+
+							// see if the player is currently ignoring permissions
+							if(ignoresPermissions((Player)sender)) {
+								hasPermission = true;
+							}
+
+							// loop through all the permissions and see if we have at least one
+							for(Iterator<String> it = ci.permissions.iterator(); it.hasNext() && !hasPermission;) {
+								if(MCNSAChat.permissions.has((Player)sender, it.next())) {
+									hasPermission = true;
+								}
+							}
+
+							// check to see if we have permission
+							if(!hasPermission) {
+								lastFailMessage = "&cSorry, you don't have permission to do that!";
+								continue;
+							}
+						}
+
+						// make sure we have the right person trying to do the command
+						if(ci.command.playerOnly() && !(sender instanceof Player)) {
+							//lastFailMessage = "&cSorry, that command is for players only";
+							lastFailMessage = "playeronly";
+							continue;
+						}
+						else if(ci.command.consoleOnly() && (sender instanceof Player)) {
+							//lastFailMessage = "&cSorry, that command is for the console only";
+							lastFailMessage = "consoleonly";
+							continue;
+						}
+
+						// finally, call the method
+						// the null is because the method must be static
+						try {
+							boolean result = (Boolean)ci.method.invoke(null, arguments);
+							return result;
+						}
+						catch(Exception e) {					
+							if(e.getCause() instanceof ChatCommandException) {
+								ColourHandler.sendMessage(sender, "&c" + e.getCause().getMessage());
+								return true;
+							}
+							else {
+								ColourHandler.sendMessage(sender, "&cSomething went wrong! Alert an administrator!");
+								Logger.error("failed to execute command: " + label + " (" + e.getMessage() + ")");
+								e.printStackTrace();
+								return false;
+							}
+						}
 					}
 				}
-			}
-		}
 
-		// if we got here, we couldn't find a matching function
-		if(lastFailMessage.equals("") || lastFailMessage.equals("playeronly") || lastFailMessage.equals("consoleonly")) {			
-			// deal with aliases
-			String commandName = command.getName();
-			if(aliasMapping.containsKey(commandName)) {
-				commandName = aliasMapping.get(commandName);
+				// if we got here, we couldn't find a matching function
+				if(lastFailMessage.equals("") || lastFailMessage.equals("playeronly") || lastFailMessage.equals("consoleonly")) {			
+					// deal with aliases
+					String commandName = command.getName();
+					if(aliasMapping.containsKey(commandName)) {
+						commandName = aliasMapping.get(commandName);
+					}
+
+				}
+				else {
+					ColourHandler.sendMessage(sender, lastFailMessage);
+				}
+				return false;
 			}
-		}
-		else {
-			ColourHandler.sendMessage(sender, lastFailMessage);
-		}
-		return false;
-	}
+
 
 	@Override
 	public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
