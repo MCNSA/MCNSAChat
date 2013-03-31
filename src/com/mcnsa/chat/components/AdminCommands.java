@@ -17,6 +17,7 @@ import com.mcnsa.chat.client.packets.PlayerUpdatePacket;
 import com.mcnsa.chat.exceptions.ChatCommandException;
 import com.mcnsa.chat.main.MCNSAChat;
 import com.mcnsa.chat.managers.ChannelManager;
+import com.mcnsa.chat.managers.CommandManager;
 import com.mcnsa.chat.managers.PlayerManager;
 import com.mcnsa.chat.managers.TimeoutManager;
 import com.mcnsa.chat.utilities.Logger;
@@ -315,6 +316,35 @@ public class AdminCommands {
 		if (MCNSAChat.thread != null)
 			MCNSAChat.thread.write(new ChannelUpdatePacket(chan));
 
+		return true;
+	}
+	@Command(
+			command = "calias",
+			description = "Change the alias of a channel",
+			arguments = {"channel", "alias"}
+			)
+	public static boolean chanAlias(CommandSender player, String channel, String alias) {
+		
+		ChatChannel chan = ChannelManager.getChannel(channel);
+
+		if (chan == null) {
+			PluginUtil.send(player.getName(), "&cChannel not found.");
+			return true;
+		}
+
+		if (alias.equals(""))
+			CommandManager.channelAlias.remove(chan.alias);
+		if (alias.equals("null"))
+			chan.alias = "";
+		else
+			chan.alias = alias;
+		
+		//Ubdate the alias map
+		CommandManager.channelAlias.put(chan.alias, chan.name);
+
+		PluginUtil.send(player.getName(), "Channel alias changed! Now: '" + chan.alias + "'");
+		if (MCNSAChat.thread != null)
+			MCNSAChat.thread.write(new ChannelUpdatePacket(chan));
 		return true;
 	}
 }
