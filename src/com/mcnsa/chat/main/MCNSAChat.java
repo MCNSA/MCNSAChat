@@ -152,17 +152,19 @@ public class MCNSAChat extends JavaPlugin {
 		persist.get().set("channels", null);
 		ArrayList<HashMap<String, Object>> chanMap = new ArrayList<HashMap<String, Object>>();
 		for (ChatChannel c : ChannelManager.channels) {
-			HashMap<String, Object> chan = new HashMap<String, Object>();
-			chan.put("name", c.name);
-			chan.put("read_permission", c.read_permission);
-			chan.put("write_permission", c.write_permission);
-			chan.put("alias", c.alias);
-			chan.put("color", c.color);
-			ArrayList<String> modes = new ArrayList<String>();
-			for(ChatChannel.Mode mode : c.modes)
-				modes.add(mode.name());
-			chan.put("modes", modes);
-			chanMap.add(chan);
+			if (c.modes.contains(ChatChannel.Mode.PERSIST)) {
+				HashMap<String, Object> chan = new HashMap<String, Object>();
+				chan.put("name", c.name);
+				chan.put("read_permission", c.read_permission);
+				chan.put("write_permission", c.write_permission);
+				chan.put("alias", c.alias);
+				chan.put("color", c.color);
+				ArrayList<String> modes = new ArrayList<String>();
+				for(ChatChannel.Mode mode : c.modes)
+					modes.add(mode.name());
+				chan.put("modes", modes);
+				chanMap.add(chan);
+			}
 		}
 		persist.get().set("channels", chanMap);
 		persist.save();

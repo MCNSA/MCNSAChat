@@ -210,11 +210,11 @@ public class ClientThread extends Thread {
 				return true;
 
 			if (packet.type == PlayerChatPacket.Type.CHAT)
-				plugin.chat.chat(packet.player, packet.message, packet.channel);
+				MCNSAChat.chat.chat(packet.player, packet.message, packet.channel);
 			if (packet.type == PlayerChatPacket.Type.ACTION)
-				plugin.chat.action(packet.player, packet.message, packet.channel);
+				MCNSAChat.chat.action(packet.player, packet.message, packet.channel);
 			if (packet.type == PlayerChatPacket.Type.MISC)
-				plugin.chat.info(null, packet.message, packet.channel, true);
+				MCNSAChat.chat.info(null, packet.message, packet.channel, true);
 			return true;
 		}
 		if (type == PlayerPMPacket.id) {
@@ -225,7 +225,7 @@ public class ClientThread extends Thread {
 
 			Logger.log("[" + packet.from.name + " -> " + packet.to + "] " + packet.message);
 			if (Bukkit.getPlayerExact(packet.to) != null)
-				plugin.chat.pm_receive(packet.from, packet.to, packet.message);
+				MCNSAChat.chat.pm_receive(packet.from, packet.to, packet.message);
 			return true;
 		}
 		return false;

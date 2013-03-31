@@ -151,7 +151,7 @@ public class PlayerListener implements Listener {
 			PluginUtil.send(player.name, "You are not allowed to speak right now.");
 			return;
 		}
-		plugin.chat.chat(player, evt.getMessage(), null);
+		MCNSAChat.chat.chat(player, evt.getMessage(), null);
 		// tell *everybody!*
 		if (MCNSAChat.thread != null)
 			MCNSAChat.thread.write(new PlayerChatPacket(player, evt.getMessage(), null, PlayerChatPacket.Type.CHAT));

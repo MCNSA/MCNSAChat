@@ -389,7 +389,7 @@ public class CommandManager implements TabExecutor {
 			// check the number of arguments
 			boolean hasVarArg = false;
 			for(int i = 0; i < params.length && !hasVarArg; i++) {
-				if(params[i].getClass().equals(String[].class)) {
+				if(params[i].equals(String[].class)) {
 					hasVarArg = true;
 				}
 			}
@@ -455,6 +455,7 @@ public class CommandManager implements TabExecutor {
 					catch(Exception e) {
 						possible = false;
 					}
+					i = params.length;
 				}
 				// something else?
 				else {

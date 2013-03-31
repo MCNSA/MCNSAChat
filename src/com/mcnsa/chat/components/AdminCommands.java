@@ -18,6 +18,7 @@ import com.mcnsa.chat.managers.PlayerManager;
 import com.mcnsa.chat.managers.TimeoutManager;
 import com.mcnsa.chat.utilities.Logger;
 import com.mcnsa.chat.utilities.PluginUtil;
+import com.mcnsa.chat.utilities.StringUtils;
 
 @ComponentInfo(friendlyName = "Admin",
 description = "Admin commands",
@@ -111,10 +112,12 @@ public class AdminCommands {
 			arguments = {"Player", "Time", "Reason"},
 			description = "Stops a player from chatting",
 			permissions = {"timeout"})
-	public static boolean timeout(CommandSender sender, String player, String time, String reason) {
+	public static boolean timeout(CommandSender sender, String player, String time, String... rawReason) {
 		//Get the player
 		ChatPlayer target = PlayerManager.getPlayer(Bukkit.getPlayer(player).getName(), MCNSAChat.name);
 		
+		//Build the reason string
+		String reason = StringUtils.implode(" ", rawReason);
 		//Check if the player is already in timeout
 		if (TimeoutManager.timeouts.containsKey(target.name)) {
 			//Player is already in timeout.
@@ -197,4 +200,5 @@ public class AdminCommands {
 		}
 		return true;
 	}
+
 }
