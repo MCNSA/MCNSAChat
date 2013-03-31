@@ -133,7 +133,7 @@ public class PlayerCommands {
 	@Command(command = "me",
 			arguments = {"action"},
 			description = "Emotes your message",
-			permissions = {"listen"})
+			permissions = {"me"})
 	public static boolean me(CommandSender player, String action) throws ChatCommandException{
 		ChatPlayer p = PlayerManager.getPlayer(player.getName(), MCNSAChat.name);
 		String write_perm = ChannelManager.getChannel(p.channel).write_permission;
@@ -154,7 +154,8 @@ public class PlayerCommands {
 	}
 	@Command(command = "csearch",
 			description = "Find what channel a player is in",
-			arguments = {"Player"}
+			arguments = {"Player"},
+			permissions = {"search"}
 			)
 	public static boolean findPlayers(CommandSender player, String findPlayer) throws ChatCommandException{
 		Player bukkitPlayer = Bukkit.getPlayer(findPlayer);

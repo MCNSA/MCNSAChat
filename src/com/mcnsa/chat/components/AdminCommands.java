@@ -1,6 +1,7 @@
 package com.mcnsa.chat.components;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.bukkit.Bukkit;
@@ -9,7 +10,9 @@ import org.bukkit.entity.Player;
 
 import com.mcnsa.chat.annotations.Command;
 import com.mcnsa.chat.annotations.ComponentInfo;
+import com.mcnsa.chat.chat.ChatChannel;
 import com.mcnsa.chat.chat.ChatPlayer;
+import com.mcnsa.chat.client.packets.ChannelUpdatePacket;
 import com.mcnsa.chat.client.packets.PlayerUpdatePacket;
 import com.mcnsa.chat.exceptions.ChatCommandException;
 import com.mcnsa.chat.main.MCNSAChat;
@@ -17,6 +20,7 @@ import com.mcnsa.chat.managers.ChannelManager;
 import com.mcnsa.chat.managers.PlayerManager;
 import com.mcnsa.chat.managers.TimeoutManager;
 import com.mcnsa.chat.utilities.Logger;
+import com.mcnsa.chat.utilities.PlayerRefresh;
 import com.mcnsa.chat.utilities.PluginUtil;
 import com.mcnsa.chat.utilities.StringUtils;
 
@@ -53,7 +57,7 @@ public class AdminCommands {
 	@Command(command = "creconnect",
 			description = "Disconnect from the chatserver",
 			permissions = {"disconnect"})
-	public static boolean reconnect(CommandSender sender) {
+	public static boolean reconnect(CommandSender sender) throws ChatCommandException {
 		if (MCNSAChat.thread != null) {
 			try {
 				MCNSAChat.thread.socket.close();
@@ -68,7 +72,7 @@ public class AdminCommands {
 			arguments = {"Player"},
 			description = "Lock player from changing channels",
 			permissions = {"lock"})
-	public static boolean lock(CommandSender sender, String targetPlayer) {
+	public static boolean lock(CommandSender sender, String targetPlayer) throws ChatCommandException {
 		Player bukkitPlayer = Bukkit.getPlayer(targetPlayer);
 		if (bukkitPlayer == null) {
 			PluginUtil.send(sender.getName(), "Player not found");
@@ -112,7 +116,7 @@ public class AdminCommands {
 			arguments = {"Player", "Time", "Reason"},
 			description = "Stops a player from chatting",
 			permissions = {"timeout"})
-	public static boolean timeout(CommandSender sender, String player, String time, String... rawReason) {
+	public static boolean timeout(CommandSender sender, String player, String time, String... rawReason) throws ChatCommandException {
 		//Get the player
 		ChatPlayer target = PlayerManager.getPlayer(Bukkit.getPlayer(player).getName(), MCNSAChat.name);
 		
@@ -149,7 +153,7 @@ public class AdminCommands {
 			arguments = {"Player"},
 			description = "Removes player from timeout",
 			permissions = {"lock"})
-	public static boolean unTimeout(CommandSender sender, String player) {
+	public static boolean unTimeout(CommandSender sender, String player) throws ChatCommandException {
 		//Get the player
 		ChatPlayer target = PlayerManager.getPlayer(Bukkit.getPlayer(player).getName(), MCNSAChat.name);
 		
@@ -169,7 +173,7 @@ public class AdminCommands {
 			arguments = {},
 			description = "Removes player from timeout",
 			permissions = {"lock"})
-	public static boolean timeoutList(CommandSender sender) {
+	public static boolean timeoutList(CommandSender sender) throws ChatCommandException {
 		
 		if (sender.getName().contains("CONSOLE")) {
 			Bukkit.getConsoleSender().sendMessage(PluginUtil.color("&6Players in timeout"));
@@ -200,5 +204,92 @@ public class AdminCommands {
 		}
 		return true;
 	}
+	@Command (
+			command = "crefresh",
+			description = "Refresh the tab list",
+			permissions = {"refresh"}
+			)
+	public static boolean refresh(CommandSender player) throws ChatCommandException {
+		PlayerRefresh.refreshTabList();
+		PluginUtil.send(player.getName(), "Reloaded tab list");
+		return true;
+	}
+	@Command(
+			command = "seeall",
+			description = "Enables you to see all channels",
+			permissions = {"seeall"}
+			)
+	public static boolean seeall(CommandSender player) throws ChatCommandException {
+		ChatPlayer p = PlayerManager.getPlayer(player.getName(), MCNSAChat.name);
+		if(p.modes.contains(ChatPlayer.Mode.SEEALL)) {
+			PluginUtil.send(p.name, "You are no longer seeing all messages.");
+			p.modes.remove(ChatPlayer.Mode.SEEALL);
+		} else {
+			PluginUtil.send(p.name, "You are now seeing all messages.");
+			p.modes.add(ChatPlayer.Mode.SEEALL);
+		}
 
+		if (MCNSAChat.thread != null)
+			MCNSAChat.thread.write(new PlayerUpdatePacket(p));
+		return true;
+	}
+	@Command(
+			command = "cremove",
+			arguments = {"player", "channel"},
+			description = "Removes a player from listening to channel",
+			permissions = {"remove"}
+			)
+	public static boolean remove(CommandSender player, String removePlayer, String channel) throws ChatCommandException {
+		//Get the player they are trying to remove from the channel
+				ArrayList<ChatPlayer> playerRemove = PlayerManager.getPlayersByFuzzyName(removePlayer);
+				if (playerRemove.isEmpty()) {
+					//Could not find player
+					PluginUtil.send(player.getName(), "Could not find player");
+					return true;
+				}
+				else {
+					//Found player
+					ChatPlayer playerRemoval = playerRemove.get(0);
+					playerRemoval.listening.remove(channel.toLowerCase());
+
+					PluginUtil.send(playerRemoval.name, "You are no longer listening to "+channel);
+					PluginUtil.send(player.getName(), playerRemoval.name+" is no longer listening to "+channel);
+					Logger.log(player.getName() +"removed "+playerRemoval.name+" from "+ channel);
+
+					if (MCNSAChat.thread != null)
+					MCNSAChat.thread.write(new PlayerUpdatePacket(playerRemoval));
+				}
+		return true;
+	}
+	@Command(
+			command = "creload",
+			description = "Reload plugin config",
+			permissions = {"reload"}
+			)
+	public static boolean reload(CommandSender player) throws ChatCommandException {
+		MCNSAChat.plugin.reloadConfig();
+		PluginUtil.send(player.getName(), "Reloaded config.");
+		return true;
+	}
+	@Command(
+			command = "cname",
+			arguments = {"channel", "Name"},
+			description = "Change [channel] name to [name]",
+			permissions = {"rename"}
+			)
+	public static boolean rename(CommandSender player, String channel, String chanName) throws ChatCommandException {
+		ChatChannel chan = ChannelManager.getChannel(channel);
+
+		if (chan == null) {
+			PluginUtil.send(player.getName(), "&cChannel not found.");
+			return true;
+		}
+
+		chan.name = chanName;
+
+		PluginUtil.send(player.getName(), "Channel name changed.");
+		if (MCNSAChat.thread != null)
+			MCNSAChat.thread.write(new ChannelUpdatePacket(chan));
+		return true;
+	}
 }
