@@ -1,0 +1,36 @@
+Chat permissions
+mcnsachat -
+	admin - 
+		move - /cmove, moves players
+		lock - /clock, locks players in channel
+		reconnect - /creconnect, Disconnects the plugin from the chatserver in the hopes it will reconnect
+		timeout - timeout commands /cto, /cto [player], /cto [player] [time] [reason]
+		refresh - /crefresh - refresh tab list
+		seeall - /seeall - listen to all channels
+		remove - /remove remove player from listening to channel
+		reload - /creload - reload plugin config
+		rename - /cname [channel] [name] - renames [channel] to [name]
+		alias - /calias [channel] [alias] - set channel alias
+		
+		
+	player - 
+		move - /c <channel> move to a different channel
+		list - /clist - lists channels
+		listen - /clisten [channel] - listen to channel
+		me - /me [action] - emotify a message
+		search - /csearch [player] - find what channel [player] is in
+		ranks - /ranks - list of server ranks
+		msg - /r - reply to message , /msg [player] [message] - send [message] to [player]
+		
+	fun -
+		dicks - access to /dicks
+		mab - access to /mab
+		pong - access to /pong
+		rand - access to /rand [min] [max]
+	write - add .<channel> to grant writing to channels
+		* - Grants write of all channels
+	read - add .<channel> to grant reading of channels
+		* - Grants read of all channels
+	
+	Read and write permissions must be specified in the persistence file.
+	

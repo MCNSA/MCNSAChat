@@ -321,7 +321,8 @@ public class AdminCommands {
 	@Command(
 			command = "calias",
 			description = "Change the alias of a channel",
-			arguments = {"channel", "alias"}
+			arguments = {"channel", "alias"},
+			permissions = {"alias"}
 			)
 	public static boolean chanAlias(CommandSender player, String channel, String alias) {
 		
