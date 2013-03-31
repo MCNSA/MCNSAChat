@@ -526,6 +526,7 @@ public class CommandManager implements TabExecutor {
 						commandName = aliasMapping.get(commandName);
 					}
 
+
 				}
 				else {
 					ColourHandler.sendMessage(sender, lastFailMessage);

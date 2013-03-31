@@ -36,6 +36,10 @@ public class PlayerCommands {
 			description = "Move to a channel",
 			permissions = {"move"})
 	public static boolean channelChange(CommandSender sender, String channel) throws ChatCommandException{
+		if (channel.isEmpty()) {
+			PluginUtil.send(sender.getName(), "Usage: /c [channel]");
+			return true;
+		}
 		String chanName = channel.replaceAll("[^A-Za-z0-9]", "");
 		ChatPlayer cp = PlayerManager.getPlayer(sender.getName(), MCNSAChat.name);
 		if(cp.modes.contains(ChatPlayer.Mode.LOCKED)) {
@@ -265,6 +269,11 @@ public class PlayerCommands {
 		description = "Sends a message to [player]"
 		)
 	public static boolean msg(CommandSender player, String msgPlayer, String... msg) throws ChatCommandException{
+		//check arguments
+		if (msgPlayer.isEmpty() || msg.length < 1) {
+			PluginUtil.send(player.getName(), "Usage: /msg [player] [message]");
+			return true;
+		}
 		//Get the player thats sending
 		ChatPlayer from = PlayerManager.getPlayer(player.getName(), MCNSAChat.name);
 		//Get the player your sending to
