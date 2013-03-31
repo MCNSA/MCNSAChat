@@ -218,6 +218,7 @@ public class MCNSAChat extends JavaPlugin {
 			if(c.alias.length() > 0)
 				//Set the channel Alias here
 			ChannelManager.channels.add(c);
+			CommandManager.channelAlias.put(c.alias, c.name);
 		}
 	}
 }

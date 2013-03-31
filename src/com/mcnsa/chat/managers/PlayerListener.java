@@ -11,6 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChatTabCompleteEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -20,7 +21,9 @@ import com.mcnsa.chat.chat.ChatPlayer;
 import com.mcnsa.chat.client.packets.PlayerChatPacket;
 import com.mcnsa.chat.client.packets.PlayerJoinedPacket;
 import com.mcnsa.chat.client.packets.PlayerLeftPacket;
+import com.mcnsa.chat.client.packets.PlayerUpdatePacket;
 import com.mcnsa.chat.main.MCNSAChat;
+import com.mcnsa.chat.utilities.Logger;
 import com.mcnsa.chat.utilities.PluginUtil;
 
 public class PlayerListener implements Listener {
@@ -170,6 +173,63 @@ public class PlayerListener implements Listener {
 					evt.getTabCompletions().add(player.name);
 			}
 		}
+	}
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void preprocessHandler(PlayerCommandPreprocessEvent evt) {
+		if (evt.isCancelled())
+			return;
+	String[] args = evt.getMessage().split(" ");
+	String command = args[0].substring(1);
+	if (CommandManager.channelAlias.containsKey(command)) {
+		//Channel alias
+			
+		if (args.length > 1) {
+			//contains message
+			//Build the message
+			StringBuilder sb = new StringBuilder();
+			for(int i = 1; i < args.length; i++ ){
+				
+				sb.append(args[i]+" ");
+				Logger.log(args[i]);
+			}
+			String message = sb.toString();
+			
+			//Get the player
+			ChatPlayer player = PlayerManager.getPlayer(evt.getPlayer().getName(), MCNSAChat.name);
+			String write_perm = ChannelManager.getChannel(CommandManager.channelAlias.get(command)).write_permission;
+			
+			//Check for permissions
+			if (!write_perm.equals("") && !MCNSAChat.permissions.has(evt.getPlayer(), "mcnsachat.write." + write_perm)) {
+				plugin.getLogger().info(player.name + " attempted to write to channel " + CommandManager.channelAlias.get(command) + " without permission!");
+				PluginUtil.send(player.name, "&cYou don't have permission to do that!");
+				return;
+			}
+			
+			//Check for mute modes
+			if(player.modes.contains(ChatPlayer.Mode.MUTE) || ChannelManager.getChannel(CommandManager.channelAlias.get(command)).modes.contains(ChatChannel.Mode.MUTE)) {
+				PluginUtil.send(player.name, "You are not allowed to speak right now.");
+				return;
+			}
+			
+			//Write the message
+			MCNSAChat.chat.chat(player, message, CommandManager.channelAlias.get(command));
+			//Notify other servers
+			if (MCNSAChat.thread != null)
+				MCNSAChat.thread.write(new PlayerChatPacket(player, message, CommandManager.channelAlias.get(command), PlayerChatPacket.Type.CHAT));
+		}
+		else {
+			//get player
+			ChatPlayer cp = PlayerManager.getPlayer(evt.getPlayer().getName(), MCNSAChat.name);
+			//Change channels
+			cp.changeChannels(CommandManager.channelAlias.get(command));
+			//Notify other servers
+			if (MCNSAChat.thread != null)
+				MCNSAChat.thread.write(new PlayerUpdatePacket(cp));
+		}
+		evt.setCancelled(true);
+	}
+	
+	
 	}
 }
 

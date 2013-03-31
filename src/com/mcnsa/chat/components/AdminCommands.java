@@ -22,7 +22,6 @@ import com.mcnsa.chat.managers.TimeoutManager;
 import com.mcnsa.chat.utilities.Logger;
 import com.mcnsa.chat.utilities.PlayerRefresh;
 import com.mcnsa.chat.utilities.PluginUtil;
-import com.mcnsa.chat.utilities.StringUtils;
 
 @ComponentInfo(friendlyName = "Admin",
 description = "Admin commands",
@@ -294,6 +293,28 @@ public class AdminCommands {
 		PluginUtil.send(player.getName(), "Channel name changed.");
 		if (MCNSAChat.thread != null)
 			MCNSAChat.thread.write(new ChannelUpdatePacket(chan));
+		return true;
+	}
+	@Command(
+			command = "ccolour",
+			description = "Set the colour for channel",
+			arguments = {"channel", "colour"},
+			permissions = {"colour"}
+			)
+	public static boolean chanColour(CommandSender player, String channel, String colour) throws ChatCommandException {
+		ChatChannel chan = ChannelManager.getChannel(channel);
+
+		if (chan == null) {
+			PluginUtil.send(player.getName(), "&cChannel not found.");
+			return true;
+		}
+
+		chan.color = "&" + colour;
+
+		PluginUtil.send(player.getName(), "Channel color changed.");
+		if (MCNSAChat.thread != null)
+			MCNSAChat.thread.write(new ChannelUpdatePacket(chan));
+
 		return true;
 	}
 }
