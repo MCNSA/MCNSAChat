@@ -7,6 +7,8 @@ console-listen-other-servers: true
 console-hide-chat: false
 hide-playerlist-onJoin: false
 server-filter-string: ''
+command-mab: ''
+command-dicks: ''
 strings:
   player-welcome: '&aWelcome &e%player% &ato the server!'
   player-join: '%prefix%%player% &ehas joined %server%!'
