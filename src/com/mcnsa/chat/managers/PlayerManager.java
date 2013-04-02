@@ -62,7 +62,7 @@ public class PlayerManager
     ArrayList<ChatPlayer> plays = new ArrayList<ChatPlayer>();
     for (ChatPlayer play : players) {
       boolean forced = (Bukkit.getPlayer(play.name) != null) && (MCNSAChat.permissions.has(Bukkit.getPlayer(play.name), "mcnsachat.forcelisten." + channel.toLowerCase()));
-      if ((play.listening.contains(channel.toLowerCase())) || (forced))
+      if ((play.listening.contains(channel.toLowerCase())) || (play.modes.contains(ChatPlayer.Mode.SEEALL)) || (forced))
         plays.add(play);
     }
     return plays;

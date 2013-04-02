@@ -111,7 +111,8 @@ public class ChatPlayer {
 		for (ChatPlayer p : PlayerManager.getPlayersListeningToChannel(chan.name))
 			if (!chan.modes.contains(ChatChannel.Mode.LOCAL) || p.server.equals(this.server)){
 				if (!(names.contains(p.name))) {
-					names.add(p.name);
+					if (!(p.modes.contains(ChatPlayer.Mode.SEEALL)))
+						names.add(p.name);
 				}
 			}
 		PluginUtil.sendLater(name, "Players here: " + PluginUtil.formatPlayerList(names.toArray(new String[0])));
