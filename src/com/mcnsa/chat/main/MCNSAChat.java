@@ -152,7 +152,6 @@ public class MCNSAChat extends JavaPlugin {
 		persist.get().set("channels", null);
 		ArrayList<HashMap<String, Object>> chanMap = new ArrayList<HashMap<String, Object>>();
 		for (ChatChannel c : ChannelManager.channels) {
-			if (c.modes.contains(ChatChannel.Mode.PERSIST)) {
 				HashMap<String, Object> chan = new HashMap<String, Object>();
 				chan.put("name", c.name);
 				chan.put("read_permission", c.read_permission);
@@ -164,7 +163,6 @@ public class MCNSAChat extends JavaPlugin {
 					modes.add(mode.name());
 				chan.put("modes", modes);
 				chanMap.add(chan);
-			}
 		}
 		persist.get().set("channels", chanMap);
 		persist.save();
