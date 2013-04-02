@@ -16,7 +16,7 @@ public class ChatManager {
 	}
 
 	public void pm_receive(ChatPlayer from, String to, String line) {
-		if (MCNSAChat.permissions.getUser(from.name).has("mcnsachat3.user.cancolor"))
+		if (MCNSAChat.permissions.getUser(from.name).has("mcnsachat.player.cancolor"))
 			line = PluginUtil.color(line);
 		else
 			line = PluginUtil.stripColor(line);
@@ -38,7 +38,7 @@ public class ChatManager {
 	}
 
 	public void pm_send(ChatPlayer from, String to, String line) {
-		if (MCNSAChat.permissions.getUser(from.name).has("mcnsachat3.user.cancolor"))
+		if (MCNSAChat.permissions.getUser(from.name).has("mcnsachat.player.cancolor"))
 			line = PluginUtil.color(line);
 		else
 			line = PluginUtil.stripColor(line);
@@ -63,7 +63,7 @@ public class ChatManager {
 		else
 			chan = ChannelManager.getChannel(channel);
 
-		if (MCNSAChat.permissions.getUser(player.name).has("mcnsachat3.user.cancolor") && !chan.modes.contains(ChatChannel.Mode.BORING))
+		if (MCNSAChat.permissions.getUser(player.name).has("mcnsachat.player.cancolor") && !chan.modes.contains(ChatChannel.Mode.BORING))
 			line = PluginUtil.color(line);
 		else
 			line = PluginUtil.stripColor(line);
@@ -93,7 +93,7 @@ public class ChatManager {
 		else
 			chan = ChannelManager.getChannel(channel);
 
-		if (MCNSAChat.permissions.getUser(player.name).has("mcnsachat3.user.cancolor") && !chan.modes.contains(ChatChannel.Mode.BORING))
+		if (MCNSAChat.permissions.getUser(player.name).has("mcnsachat.player.cancolor") && !chan.modes.contains(ChatChannel.Mode.BORING))
 			line = PluginUtil.color(line);
 		else
 			line = PluginUtil.stripColor(line);
