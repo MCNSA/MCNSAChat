@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
@@ -18,9 +16,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.metadata.MetadataValue;
 
 import com.mcnsa.chat.annotations.Command;
@@ -28,7 +23,6 @@ import com.mcnsa.chat.exceptions.ChatCommandException;
 import com.mcnsa.chat.main.MCNSAChat;
 import com.mcnsa.chat.utilities.ColourHandler;
 import com.mcnsa.chat.utilities.Logger;
-import com.mcnsa.chat.utilities.StringUtils;
 import com.mcnsa.chat.managers.ComponentManager.Component;
 
 public class CommandManager implements TabExecutor {
@@ -366,7 +360,7 @@ public class CommandManager implements TabExecutor {
 					label = aliasMapping.get(label);
 				}
 
-				Logger.debug("%s ran command %s with args: %s", sender.getName(), command.getName(), StringUtils.implode(", ", args));			
+				//Logger.debug("%s ran command %s with args: %s", sender.getName(), command.getName(), StringUtils.implode(", ", args));			
 				
 				// find all our possibilities
 				String lastFailMessage = "";
