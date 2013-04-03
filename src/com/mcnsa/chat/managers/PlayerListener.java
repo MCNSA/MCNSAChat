@@ -53,11 +53,19 @@ public class PlayerListener implements Listener {
 			ConfigurationSection section = playerData.getConfigurationSection(p.name);
 			p.channel = section.getString("channel");
 			p.listening.addAll((List<String>) section.get("listening"));
+			if (ChannelManager.getChannel(p.channel) == null) {
+				//channel does not exist. Add new
+				ChannelManager.channels.add(new ChatChannel(p.channel));
+			}
 		} else {
 			// use default info
 			p.channel = plugin.getConfig().getString("default-channel");
 			p.listening.addAll((List<String>) plugin.getConfig().getList("default-listen"));
 			welcomeThem = true;
+			if (ChannelManager.getChannel(p.channel) == null) {
+				//channel does not exist. Add new
+				ChannelManager.channels.add(new ChatChannel(p.channel));
+			}
 		}
 		
 		
