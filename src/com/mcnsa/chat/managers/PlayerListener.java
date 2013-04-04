@@ -198,7 +198,6 @@ public class PlayerListener implements Listener {
 			for(int i = 1; i < args.length; i++ ){
 				
 				sb.append(args[i]+" ");
-				Logger.log(args[i]);
 			}
 			String message = sb.toString();
 			
