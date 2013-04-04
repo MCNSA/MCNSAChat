@@ -82,8 +82,10 @@ public class PluginUtil {
 	public static String getPlayerList() {
 		Player[] list = Bukkit.getServer().getOnlinePlayers();
 		ArrayList<String> names = new ArrayList<String>();
-		for (Player player : list)
-			names.add(player.getName());
+		for (Player player : list) {
+			if (!names.contains(player.getName())) 
+				names.add(player.getName());
+		}
 		return "&7Online (" + list.length + "/" + Bukkit.getServer().getMaxPlayers() + "): " + formatPlayerList(names.toArray(new String[0]));
 	}
 
