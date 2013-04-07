@@ -44,6 +44,7 @@ public class MCNSAChat extends JavaPlugin {
 	public PlayerListener PListener;
 	private CommandManager commandManager;
 	private ComponentManager componentManager;
+	public static String passcode;
 	
 	
 	
@@ -100,6 +101,7 @@ public class MCNSAChat extends JavaPlugin {
 		loadPlayers();
 		loadChannels();
 		
+		passcode = this.getConfig().getString("server-passcode");
 		
 		//Timed functions
 		

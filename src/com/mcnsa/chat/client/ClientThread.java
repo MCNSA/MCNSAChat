@@ -54,7 +54,7 @@ public class ClientThread extends Thread {
 		System.out.println("Connected to chat server.");
 
 		try {
-			new ServerJoinedPacket(MCNSAChat.name, plugin.longName, PlayerManager.getPlayersByServer(MCNSAChat.name)).write(out);
+			new ServerJoinedPacket(MCNSAChat.name, plugin.longName, PlayerManager.getPlayersByServer(MCNSAChat.name), MCNSAChat.passcode).write(out);
 			new ChannelListingPacket(ChannelManager.channels).write(out);
 
 			while (loop(in, out))

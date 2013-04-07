@@ -3,6 +3,7 @@ longname: Survival
 default-channel: s
 default-listen: [S, Server, Global]
 chat-server: '127.0.0.1'
+server-passcode: ''
 console-listen-other-servers: true
 console-hide-chat: false
 hide-playerlist-onJoin: false

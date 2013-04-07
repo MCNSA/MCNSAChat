@@ -14,18 +14,21 @@ public class ServerJoinedPacket implements IPacket {
 	public String shortName = null;
 	public String longName = null;
 	public ArrayList<ChatPlayer> players = null;
+	public String passcode = null;
 
 	public ServerJoinedPacket() {
 	}
 	
-	public ServerJoinedPacket(String shortName, String longName, ArrayList<ChatPlayer> players) {
+	public ServerJoinedPacket(String shortName, String longName, ArrayList<ChatPlayer> players, String password) {
 		this.shortName = shortName;
 		this.longName = longName;
 		this.players = players;
+		this.passcode = password;
 	}
 
 	public void write(DataOutputStream out) throws IOException {
 		out.writeShort(id);
+		out.writeUTF(passcode);
 		out.writeUTF(shortName);
 		out.writeUTF(longName);
 		if (players == null) {
@@ -40,6 +43,7 @@ public class ServerJoinedPacket implements IPacket {
 	}
 
 	public void read(DataInputStream in) throws IOException {
+		passcode = in.readUTF();
 		shortName = in.readUTF();
 		longName = in.readUTF();
 		players = new ArrayList<ChatPlayer>();
