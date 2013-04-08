@@ -88,10 +88,15 @@ public class PlayerCommands {
 	}
 	@Command(command = "list",
 			description = "Displays online players",
-			arguments = {}
+			aliases = {"online", "players", "who", "playerlist"}
 			)
 	public static boolean listPlayers(CommandSender player) throws ChatCommandException{
-		PluginUtil.send(player.getName(), PluginUtil.getPlayerList());
+		if (player.getName().equalsIgnoreCase("console")) {
+			Bukkit.getConsoleSender().sendMessage(PluginUtil.getPlayerList());
+		}
+		else {
+			PluginUtil.send(player.getName(), PluginUtil.getPlayerList());
+		}
 		return true;
 	}
 	@Command(command = "clisten",
@@ -198,6 +203,7 @@ public class PlayerCommands {
 	@Command(command = "r",
 			description = "Reply to message",
 			arguments = {"message"},
+			aliases = {"reply"},
 			permissions = {"msg"}
 			)
 	public static boolean reply(CommandSender player, String... msg) throws ChatCommandException{
@@ -266,6 +272,7 @@ public class PlayerCommands {
 		command = "msg",
 		arguments = {"player", "message"},
 		permissions = {"msg"},
+		aliases = {"tell", "w", "whisper"},
 		description = "Sends a message to [player]"
 		)
 	public static boolean msg(CommandSender player, String msgPlayer, String... msg) throws ChatCommandException{
