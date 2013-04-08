@@ -36,7 +36,7 @@ public class ClientThread extends Thread {
 	public void run() {
 		Logger.log("Attempting to connect to chat server...");
 		try {
-			socket = new Socket(plugin.getConfig().getString("chat-server"), 51325);
+			socket = new Socket(plugin.getConfig().getString("chat-server"), 51326);
 			out = new DataOutputStream(socket.getOutputStream());
 			in = new DataInputStream(socket.getInputStream());
 		} catch (UnknownHostException e) {
