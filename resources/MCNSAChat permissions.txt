@@ -7,7 +7,7 @@ mcnsachat -
 		timeout - timeout commands /cto, /cto [player], /cto [player] [time] [reason]
 		refresh - /crefresh - refresh tab list
 		seeall - /seeall - listen to all channels
-		remove - /remove remove player from listening to channel
+		remove - /ckick [player] [channel] remove player from listening to channel
 		reload - /creload - reload plugin config
 		rename - /cname [channel] [name] - renames [channel] to [name]
 		alias - /calias [channel] [alias] - set channel alias

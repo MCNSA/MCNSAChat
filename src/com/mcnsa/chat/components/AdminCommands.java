@@ -238,7 +238,7 @@ public class AdminCommands {
 		return true;
 	}
 	@Command(
-			command = "cremove",
+			command = "ckick",
 			arguments = {"player", "channel"},
 			description = "Removes a player from listening to channel",
 			permissions = {"remove"}
