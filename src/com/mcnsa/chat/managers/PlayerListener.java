@@ -188,6 +188,9 @@ public class PlayerListener implements Listener {
 			return;
 	String[] args = evt.getMessage().split(" ");
 	String command = args[0].substring(1);
+	if (command == null)
+		return;
+	
 	if (CommandManager.channelAlias.containsKey(command)) {
 		//Channel alias
 			
@@ -223,6 +226,9 @@ public class PlayerListener implements Listener {
 			//Notify other servers
 			if (MCNSAChat.thread != null)
 				MCNSAChat.thread.write(new PlayerChatPacket(player, message, CommandManager.channelAlias.get(command), PlayerChatPacket.Type.CHAT));
+			
+			//cancel the event
+			evt.setCancelled(true);
 		}
 		else {
 			//get player
@@ -232,8 +238,9 @@ public class PlayerListener implements Listener {
 			//Notify other servers
 			if (MCNSAChat.thread != null)
 				MCNSAChat.thread.write(new PlayerUpdatePacket(cp));
+			//cancel the event
+			evt.setCancelled(true);
 		}
-		evt.setCancelled(true);
 	}
 	
 	

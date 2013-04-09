@@ -78,7 +78,7 @@ public class PlayerCommands {
 			boolean chanOccupied = PlayerManager.getPlayersInChannel(chan.name).size() > 0 || chan.modes.contains(ChatChannel.Mode.PERSIST);
 			if(hasPerm && chanOccupied) 
 				//Support to not show the broadcast channels
-				if (chan.read_permission == null && chan.write_permission != null) {
+				if (chan.read_permission.equals(chan.write_permission)) {
 					chans += chan.color + chan.name + "&f ";
 				}
 				
