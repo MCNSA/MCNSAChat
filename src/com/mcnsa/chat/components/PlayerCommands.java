@@ -140,11 +140,19 @@ public class PlayerCommands {
 		return true;
 	}
 	@Command(command = "me",
-			arguments = {"action"},
+			arguments = {"message"},
 			description = "Emotes your message",
 			permissions = {"me"})
-	public static boolean me(CommandSender player, String action) throws ChatCommandException{
+	public static boolean me(CommandSender player, String... messageRaw) throws ChatCommandException{
 		ChatPlayer p = PlayerManager.getPlayer(player.getName(), MCNSAChat.name);
+		
+		StringBuilder sb = new StringBuilder();
+		//Build the reason string
+		for (String part: messageRaw) {
+			sb.append(part+" ");
+		}
+		String message = sb.toString();
+		
 		String write_perm = ChannelManager.getChannel(p.channel).write_permission;
 		if (!write_perm.equals("") && !MCNSAChat.permissions.has(Bukkit.getPlayer(player.getName()), "mcnsachat.write." + write_perm)) {
 			Logger.log(player.getName() + " attempted to write to channel " + p.channel + " without permission!");
@@ -155,10 +163,10 @@ public class PlayerCommands {
 			PluginUtil.send(p.name, "You are not allowed to speak right now.");
 			return true;
 		}
-		MCNSAChat.chat.action(p, action, null);
+		MCNSAChat.chat.action(p, message, null);
 		// tell *everybody!*
 		if (MCNSAChat.thread != null)
-			MCNSAChat.thread.write(new PlayerChatPacket(p, action, null, PlayerChatPacket.Type.ACTION));
+			MCNSAChat.thread.write(new PlayerChatPacket(p, message, null, PlayerChatPacket.Type.ACTION));
 		return true;
 	}
 	@Command(command = "csearch",
