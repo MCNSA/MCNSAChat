@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 
 import com.mcnsa.chat.annotations.Command;
+import com.mcnsa.chat.chat.ChatPlayer;
 import com.mcnsa.chat.exceptions.ChatCommandException;
 import com.mcnsa.chat.main.MCNSAChat;
 import com.mcnsa.chat.utilities.ColourHandler;
@@ -560,10 +561,17 @@ public class CommandManager implements TabExecutor {
 				continue;
 			}
 
-			// TODO: better linting based on variable types, etc
+			//Check if argument is for player
+			if (registeredCommands.get(registrationToken).command.arguments()[argumentCount - 1].replaceAll("\\s+", "_").equalsIgnoreCase("player")) {
+				//Get a list of possible players
+				ArrayList<ChatPlayer> possiblePlayers = PlayerManager.getPlayersByFuzzyName(args[argumentCount - 1]);
+				for (ChatPlayer player: possiblePlayers) {
+					possibleArguments.add(player.name);
+				}
+			}
 
 			// add it
-			possibleArguments.add("<" + registeredCommands.get(registrationToken).command.arguments()[argumentCount - 1].replaceAll("\\s+", "_") + ">");
+			//possibleArguments.add("<" + registeredCommands.get(registrationToken).command.arguments()[argumentCount - 1].replaceAll("\\s+", "_") + ">");
 		}
 
 		return possibleArguments;
