@@ -92,7 +92,7 @@ public class PlayerCommands {
 			)
 	public static boolean listPlayers(CommandSender player) throws ChatCommandException{
 		if (player.getName().equalsIgnoreCase("console")) {
-			Bukkit.getConsoleSender().sendMessage(PluginUtil.getPlayerList());
+			Logger.log(PluginUtil.getPlayerList());
 		}
 		else {
 			PluginUtil.send(player.getName(), PluginUtil.getPlayerList());
