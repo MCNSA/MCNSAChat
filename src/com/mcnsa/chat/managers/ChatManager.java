@@ -138,12 +138,19 @@ public class ChatManager {
 			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
 		}
 		
-		//Here we set a regex string to filter out server specific messages. Its configured from config.yml as it needs to be modified for the message string
-		String regexString = plugin.getConfig().getString("server-filter-string");
-		regexString = regexString.replace("%server-name%", MCNSAChat.name);
-		
-		if (line.contains(regexString) && plugin.getConfig().getString("console-listen-other-servers").startsWith("false") && plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
-			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+		//Here we check whether the console is listening to chat
+		if (plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
+			//Console is listening to chat.
+			//Check if the console is listening to other servers
+			if (plugin.getConfig().getString("console-listen-other-servers").startsWith("false") && !net) {
+				//Console is listening to other server chat
+				Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+			}
+			//check if message is local
+			else if (!net) {
+				//Console is listening to local messages only
+				Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+			}
 		}
 	}
 	
