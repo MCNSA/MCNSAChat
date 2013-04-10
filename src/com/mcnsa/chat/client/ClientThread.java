@@ -183,7 +183,7 @@ public class ClientThread extends Thread {
 				return true;
 
 			// log + notify
-			Logger.log("Updated player" + packet.player.name + " on " + packet.player.server);
+			Logger.log("Updated player " + packet.player.name + " on " + packet.player.server);
 			// this usually signifies a mode change or channel change. We don't
 			// really care, however, as it is on another server
 			PlayerManager.removePlayer(packet.player);
