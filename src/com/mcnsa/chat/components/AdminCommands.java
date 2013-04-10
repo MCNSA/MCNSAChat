@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import com.mcnsa.chat.annotations.Command;
 import com.mcnsa.chat.annotations.ComponentInfo;
 import com.mcnsa.chat.chat.ChatChannel;
+import com.mcnsa.chat.chat.ChatChannel.Mode;
 import com.mcnsa.chat.chat.ChatPlayer;
 import com.mcnsa.chat.client.packets.ChannelUpdatePacket;
 import com.mcnsa.chat.client.packets.PlayerUpdatePacket;
@@ -344,6 +345,43 @@ public class AdminCommands {
 		CommandManager.channelAlias.put(chan.alias, chan.name);
 
 		PluginUtil.send(player.getName(), "Channel alias changed! Now: '" + chan.alias + "'");
+		if (MCNSAChat.thread != null)
+			MCNSAChat.thread.write(new ChannelUpdatePacket(chan));
+		return true;
+	}
+	@Command(command = "cmode",
+			arguments = {"Channel", "Action", "Mode"},
+			description = "Stops a player from chatting",
+			permissions = {"mode"})
+	public static boolean cmode(CommandSender sender, String channel, String action, String mode) {
+		ChatChannel chan = ChannelManager.getChannel(channel);
+		ChatChannel.Mode chanMode = null;
+		
+		if (chan == null) {
+			PluginUtil.send(sender.getName(), "&cChannel not found: "+channel);
+			return true;
+		}
+		
+		if (action.equalsIgnoreCase("+") || action.equalsIgnoreCase("add")) {
+			try {
+				chanMode = ChatChannel.Mode.valueOf((mode).toUpperCase());
+				chan.modes.add(chanMode);
+			}
+			catch (IllegalArgumentException e) {
+				PluginUtil.send(sender.getName(), "&cInvalid mode: "+mode);
+			}
+		}
+		if (action.equalsIgnoreCase("-") || action.equalsIgnoreCase("remove")) {
+			try {
+				chanMode = ChatChannel.Mode.valueOf((mode).toUpperCase());
+				chan.modes.remove(chanMode);
+			}
+			catch (IllegalArgumentException e) {
+				PluginUtil.send(sender.getName(), "&cInvalid mode: "+mode);
+			}
+		}
+		
+		PluginUtil.send(sender.getName(), "Modes changed.");
 		if (MCNSAChat.thread != null)
 			MCNSAChat.thread.write(new ChannelUpdatePacket(chan));
 		return true;
