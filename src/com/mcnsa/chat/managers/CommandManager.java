@@ -581,8 +581,12 @@ public class CommandManager implements TabExecutor {
 			if (registeredCommands.get(registrationToken).command.arguments()[argumentCount - 1].replaceAll("\\s+", "_").equalsIgnoreCase("channel")) {
 				//Get list of channels
 				for (ChatChannel channel: ChannelManager.channels) {
-					if (!possibleArguments.contains(channel.name))
-						possibleArguments.add(channel.name);
+					if (!channel.read_permission.equals("") && !MCNSAChat.permissions.has(Bukkit.getPlayer(sender.getName()), "mcnsachat.read." + channel.read_permission)) {
+						if (channel.name.startsWith(args[argumentCount - 1])) {
+							if (!possibleArguments.contains(channel.name))
+								possibleArguments.add(channel.name);
+						}
+					}
 				}
 			}
 
