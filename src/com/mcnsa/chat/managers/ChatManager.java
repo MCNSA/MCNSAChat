@@ -170,11 +170,19 @@ public class ChatManager {
 			if (send)
 				PluginUtil.sendLater(p.name, line + "&r");
 		}
-		if (plugin.getConfig().getString("console-listen-other-servers").startsWith("true")) {
-			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
-		}
-		if (line.contains(MCNSAChat.name) && plugin.getConfig().getString("console-listen-other-servers").startsWith("false") && plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
-			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+		//Here we check whether the console is listening to chat
+		if (plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
+			//Console is listening to chat.
+			//Check if the console is listening to other servers
+			if (plugin.getConfig().getString("console-listen-other-servers").startsWith("false") && !net) {
+				//Console is listening to other server chat
+				Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+			}
+			//check if message is local
+			else if (!net) {
+				//Console is listening to local messages only
+				Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+			}
 		}
 	}
 }
