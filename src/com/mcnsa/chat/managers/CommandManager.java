@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 
 import com.mcnsa.chat.annotations.Command;
+import com.mcnsa.chat.chat.ChatChannel;
 import com.mcnsa.chat.chat.ChatPlayer;
 import com.mcnsa.chat.exceptions.ChatCommandException;
 import com.mcnsa.chat.main.MCNSAChat;
@@ -568,6 +569,20 @@ public class CommandManager implements TabExecutor {
 				for (ChatPlayer player: possiblePlayers) {
 					if (!possibleArguments.contains(player.name))
 						possibleArguments.add(player.name);
+				}
+			}
+			if (registeredCommands.get(registrationToken).command.arguments()[argumentCount - 1].replaceAll("\\s+", "_").equalsIgnoreCase("Mode")) {
+				//Get list of channel modes
+				for (ChatChannel.Mode mode: ChatChannel.Mode.values()) {
+					if (!possibleArguments.contains(mode.name()))
+						possibleArguments.add(mode.name());
+				}
+			}
+			if (registeredCommands.get(registrationToken).command.arguments()[argumentCount - 1].replaceAll("\\s+", "_").equalsIgnoreCase("channel")) {
+				//Get list of channels
+				for (ChatChannel channel: ChannelManager.channels) {
+					if (!possibleArguments.contains(channel.name))
+						possibleArguments.add(channel.name);
 				}
 			}
 

@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import com.mcnsa.chat.annotations.Command;
 import com.mcnsa.chat.annotations.ComponentInfo;
 import com.mcnsa.chat.chat.ChatChannel;
-import com.mcnsa.chat.chat.ChatChannel.Mode;
 import com.mcnsa.chat.chat.ChatPlayer;
 import com.mcnsa.chat.client.packets.ChannelUpdatePacket;
 import com.mcnsa.chat.client.packets.PlayerUpdatePacket;
