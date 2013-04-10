@@ -566,7 +566,8 @@ public class CommandManager implements TabExecutor {
 				//Get a list of possible players
 				ArrayList<ChatPlayer> possiblePlayers = PlayerManager.getPlayersByFuzzyName(args[argumentCount - 1]);
 				for (ChatPlayer player: possiblePlayers) {
-					possibleArguments.add(player.name);
+					if (!possibleArguments.contains(player.name))
+						possibleArguments.add(player.name);
 				}
 			}
 
