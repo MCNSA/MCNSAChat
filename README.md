@@ -55,17 +55,18 @@ Built jars can be found at http://build.mcnsa.com/
 
 # Configuration
 |**Config**|**Default**|**Description**|
+|:------|:--------------|:----------|
 |`name:`|`S`|Set the short name of the server. Usually displayed in the chat messages|
 |`longname:`|`Survival`|Set the long name for the server. Usually displayed when a player joins|
-|`default-channel:`|``|Set the channel a player should be in on first join|
+|`default-channel:`|`s`|Set the channel a player should be in on first join|
 |`default-listen:`|`[S, Server, Global]`|Set the default list of channels a player should be listening to on first join|
 |`chat-server:`|`127.0.0.1`|Specify the chatserver address|
-|`server-passcode:`|``|Specify the password for the chatserver|
+|`server-passcode:`||Specify the password for the chatserver|
 |`console-listen-other-servers:`|`true`|Display other server chat in the console|
 |`console-hide-chat:`|`false`|Hide the chat messages from the console|
 |`hide-playerlist-onJoin:`|`false`|Hide the list of players dsiplayed on join|
-|`command-mab:`|``|Set the phrase when /mab command is used|
-|`command-dicks:`|``|Set the phrase when /dicks command is used|
+|`command-mab:`||Set the phrase when /mab command is used|
+|`command-dicks:`||Set the phrase when /dicks command is used|
 
 ## Permissions
 
