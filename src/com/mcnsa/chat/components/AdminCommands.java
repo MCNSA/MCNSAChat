@@ -385,4 +385,22 @@ public class AdminCommands {
 			MCNSAChat.thread.write(new ChannelUpdatePacket(chan));
 		return true;
 	}
+	@Command(command = "cmode",
+			arguments = {"Channel"},
+			description = "Stops a player from chatting",
+			permissions = {"mode"})
+	public static boolean cmodeView(CommandSender sender, String channel) {
+		ChatChannel chan = ChannelManager.getChannel(channel);
+		
+		if (chan == null) {
+			PluginUtil.send(sender.getName(), "&cChannel not found: "+channel);
+			return true;
+		}
+		String modeString = "Modes for channel " + chan.color + chan.name + "&7: ";
+		for (ChatChannel.Mode mode : chan.modes)
+			modeString += mode.name() + " ";
+		PluginUtil.send(sender.getName(), modeString);
+		return true;
+
+	}
 }

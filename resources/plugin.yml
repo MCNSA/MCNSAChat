@@ -1,5 +1,5 @@
 name: MCNSAChat
 main: com.mcnsa.chat.main.MCNSAChat
-version: 3.0.1.3-SNAPSHOT
+version: 3.0.2.0
 authors: [maboughey, mcnsa, mcnsa.com]
 depend: [PermissionsEx]
