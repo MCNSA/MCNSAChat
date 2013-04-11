@@ -134,9 +134,6 @@ public class ChatManager {
 			if (send)
 					PluginUtil.sendLaterBlock(p.name, line + "&r",sender);
 		}
-		if (plugin.getConfig().getString("console-listen-other-servers").startsWith("true")) {
-			Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
-		}
 		
 		//Here we check whether the console is listening to chat
 		if (plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
