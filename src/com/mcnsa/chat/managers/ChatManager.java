@@ -131,8 +131,10 @@ public class ChatManager {
 					send = Bukkit.getPlayerExact(p.name) != null && p.server.equals(player.server);
 			}
 			
-			if (send)
-					PluginUtil.sendLaterBlock(p.name, line + "&r",sender);
+			if (send) {
+					if (Bukkit.getPlayer(p.name) != null)
+						PluginUtil.sendLaterBlock(p.name, line + "&r",sender);
+			}
 		}
 		
 		//Here we check whether the console is listening to chat
@@ -164,8 +166,10 @@ public class ChatManager {
 				else
 					send = Bukkit.getPlayerExact(p.name) != null && p.server.equals(player.server);
 			}
-			if (send)
-				PluginUtil.sendLater(p.name, line + "&r");
+			if (send) {
+				if (Bukkit.getPlayer(p.name) != null)
+					PluginUtil.sendLater(p.name, line + "&r");
+			}
 		}
 		//Here we check whether the console is listening to chat
 		if (plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
