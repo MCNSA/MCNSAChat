@@ -119,6 +119,7 @@ public class ChatManager {
 
 	public void info(ChatPlayer player, String line, String channel, boolean net, String sender) {
 		ChatChannel chan = ChannelManager.getChannel(channel);
+		ArrayList<ChatPlayer> sentPlayers = new ArrayList<ChatPlayer>();
 		if (chan == null)
 			return;
 		ArrayList<ChatPlayer> players = PlayerManager.getPlayersListeningToChannel(chan.name);		
@@ -132,7 +133,10 @@ public class ChatManager {
 			}
 			
 			if (send)
+				if (!sentPlayers.contains(p)) {
 					PluginUtil.sendLaterBlock(p.name, line + "&r",sender);
+					sentPlayers.add(p);
+				}
 		}
 		
 		//Here we check whether the console is listening to chat
