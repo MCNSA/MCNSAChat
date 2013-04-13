@@ -15,7 +15,7 @@ import com.mcnsa.chat.utilities.PluginUtil;
 import com.mcnsa.chat.utilities.Slapi;
 
 public class TimeoutManager {
-	public static Map<String, Long> timeouts;
+	public static Map<String, Long> timeouts = new HashMap<String, Long>();
 	@SuppressWarnings("unchecked")
 	public static void load(MCNSAChat plugin)
 	  {
