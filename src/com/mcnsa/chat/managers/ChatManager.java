@@ -175,7 +175,7 @@ public class ChatManager {
 		if (plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
 			//Console is listening to chat.
 			//Check if the console is listening to other servers
-			if (plugin.getConfig().getString("console-listen-other-servers").startsWith("false") && !net) {
+			if (plugin.getConfig().getString("console-listen-other-servers").startsWith("true")) {
 				//Console is listening to other server chat
 				Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
 			}
