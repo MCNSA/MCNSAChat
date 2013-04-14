@@ -140,19 +140,18 @@ public class ChatManager {
 		}
 		
 		//Here we check whether the console is listening to chat
-		if (plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
-			//Console is listening to chat.
-			//Check if the console is listening to other servers
-			if (plugin.getConfig().getString("console-listen-other-servers").startsWith("false") && !net) {
-				//Console is listening to other server chat
-				Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
-			}
-			//check if message is local
-			else if (!net) {
-				//Console is listening to local messages only
-				Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
-			}
-		}
+				if (!plugin.getConfig().getBoolean("console-hide-chat")) {
+					//Console is listening to chat.
+					if (plugin.getConfig().getBoolean("console-listen-other-servers")) {
+						//Console is listening to other server chat
+						Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+					}
+					//check if message is local
+					else if (!net) {
+						//Console is listening to local messages only
+						Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
+					}
+				}
 	}
 	
 	public void info(ChatPlayer player, String line, String channel, boolean net) {
@@ -172,10 +171,10 @@ public class ChatManager {
 				PluginUtil.sendLater(p.name, line + "&r");
 		}
 		//Here we check whether the console is listening to chat
-		if (plugin.getConfig().getString("console-hide-chat").startsWith("false")) {
+		if (!plugin.getConfig().getBoolean("console-hide-chat")) {
 			//Console is listening to chat.
 			//Check if the console is listening to other servers
-			if (plugin.getConfig().getString("console-listen-other-servers").startsWith("true")) {
+			if (plugin.getConfig().getBoolean("console-listen-other-servers")) {
 				//Console is listening to other server chat
 				Bukkit.getConsoleSender().sendMessage(PluginUtil.color(line));
 			}
