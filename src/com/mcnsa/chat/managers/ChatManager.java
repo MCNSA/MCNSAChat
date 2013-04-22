@@ -57,12 +57,12 @@ public class ChatManager {
 	}
 	public void Console_pm_send(String to, String line) {
 		
-		String message = plugin.getConfig().getString("strings.pm_send");
+		String message = plugin.getConfig().getString("strings.pm_receive");
 		message = message.replace("%message%", line);
 		message = message.replace("%from%", "Console");
 		message = message.replace("%to%", to);
 
-		PluginUtil.sendLater("Console", message);
+		PluginUtil.send(to, message);
 
 		// and log it to the console
 		System.out.println("[msg] Console to " + to +": " + line);

@@ -301,6 +301,7 @@ public class PlayerCommands {
 			else {
 				Bukkit.getConsoleSender().sendMessage("Could not find player");
 			}
+			return true;
 		}
 		//Get the player thats sending
 		ChatPlayer from = PlayerManager.getPlayer(player.getName(), MCNSAChat.name);
