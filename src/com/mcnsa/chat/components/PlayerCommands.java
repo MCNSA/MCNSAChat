@@ -289,6 +289,19 @@ public class PlayerCommands {
 			PluginUtil.send(player.getName(), "Usage: /msg [player] [message]");
 			return true;
 		}
+		//Console support
+		if (player.getName().equalsIgnoreCase("console")) {
+			if (Bukkit.getPlayer(msgPlayer) !=null) {
+				//Got player. Send the msg
+				//Build the message string
+				String message = StringUtils.implode(msg, " ");
+				
+				MCNSAChat.chat.Console_pm_send(msgPlayer, message);
+			}
+			else {
+				Bukkit.getConsoleSender().sendMessage("Could not find player");
+			}
+		}
 		//Get the player thats sending
 		ChatPlayer from = PlayerManager.getPlayer(player.getName(), MCNSAChat.name);
 		//Get the player your sending to

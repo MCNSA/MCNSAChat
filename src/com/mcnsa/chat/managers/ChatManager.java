@@ -55,6 +55,18 @@ public class ChatManager {
 		// and log it to the console
 		System.out.println("[msg] " + from.name + " to " + to +": " + line);
 	}
+	public void Console_pm_send(String to, String line) {
+		
+		String message = plugin.getConfig().getString("strings.pm_send");
+		message = message.replace("%message%", line);
+		message = message.replace("%from%", "Console");
+		message = message.replace("%to%", to);
+
+		PluginUtil.sendLater("Console", message);
+
+		// and log it to the console
+		System.out.println("[msg] Console to " + to +": " + line);
+	}
 
 	public void chat(ChatPlayer player, String line, String channel) {
 		ChatChannel chan = ChannelManager.getChannel(PlayerManager.getPlayer(player).channel);
