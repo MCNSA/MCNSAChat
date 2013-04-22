@@ -166,6 +166,9 @@ public class AdminCommands {
 			//Player is already in timeout.
 			TimeoutManager.timeouts.remove(target.name);
 			
+			//remove the mute mode which prevents chatting
+			target.modes.remove(ChatPlayer.Mode.MUTE);
+			
 			//Notify everyone that player is out of timeout
 			PluginUtil.send("&4"+target.name+" &6has been removed from timeout");
 			return true;
