@@ -49,6 +49,9 @@ public class AdminCommands {
 			ChatPlayer cp = PlayerManager.getPlayer(target.getName(), MCNSAChat.name);
 			cp.changeChannels(channel);
 			Logger.log(sender.getName()+ " Moved " + PluginUtil.formatUser(cp.name) + " &rto " + ChannelManager.getChannel(cp.channel).color + ChannelManager.getChannel(cp.channel).name);
+			
+			//Notify the user
+			PluginUtil.send(sender.getName()," Moved " + PluginUtil.formatUser(cp.name) + " &rto " + ChannelManager.getChannel(cp.channel).color + ChannelManager.getChannel(cp.channel).name);
 			if (MCNSAChat.thread != null)
 				MCNSAChat.thread.write(new PlayerUpdatePacket(cp));
 		}
