@@ -23,7 +23,6 @@ import com.mcnsa.chat.client.packets.PlayerJoinedPacket;
 import com.mcnsa.chat.client.packets.PlayerLeftPacket;
 import com.mcnsa.chat.client.packets.PlayerUpdatePacket;
 import com.mcnsa.chat.main.MCNSAChat;
-import com.mcnsa.chat.utilities.Logger;
 import com.mcnsa.chat.utilities.PluginUtil;
 
 public class PlayerListener implements Listener {
