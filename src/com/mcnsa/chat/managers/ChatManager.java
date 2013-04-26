@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 
 import com.mcnsa.chat.chat.ChatChannel;
 import com.mcnsa.chat.chat.ChatPlayer;
+import com.mcnsa.chat.client.packets.PlayerUpdatePacket;
 import com.mcnsa.chat.main.MCNSAChat;
 import com.mcnsa.chat.utilities.PluginUtil;
 
@@ -172,6 +173,16 @@ public class ChatManager {
 			return;
 		ArrayList<ChatPlayer> players = PlayerManager.getPlayersListeningToChannel(chan.name);
 		for (ChatPlayer p : players) {
+			//Check for admin channel
+			if (chan.name.equalsIgnoreCase("admin")) {
+				if (!MCNSAChat.permissions.has(Bukkit.getPlayer(player.name), "mcnsachat.forcelisten.admin")) {
+					//Player has had permissions removed. Lets boot them from the channel
+					player.listening.remove(chan.name.toLowerCase());
+					//Update on all servers
+					if (MCNSAChat.thread != null)
+						MCNSAChat.thread.write(new PlayerUpdatePacket(player));
+				}
+			}
 			boolean send = player == null;
 			if (!send) {
 				if (net)

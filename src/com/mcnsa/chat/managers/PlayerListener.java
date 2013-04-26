@@ -119,6 +119,15 @@ public class PlayerListener implements Listener {
 						}
 					}
 				}
+		//Check to see if the player is forcelistened to admin
+		if (MCNSAChat.permissions.has(evt.getPlayer(), "mcnsachat.forcelisten.admin")) {
+			//Player is forcelistened to admin
+			p.listening.add("admin");
+			
+			//Update on all servers
+			if (MCNSAChat.thread != null)
+				MCNSAChat.thread.write(new PlayerUpdatePacket(p));
+		}
 	}
 
 

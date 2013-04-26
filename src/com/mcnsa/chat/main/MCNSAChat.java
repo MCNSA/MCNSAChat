@@ -130,7 +130,6 @@ public class MCNSAChat extends JavaPlugin {
 			}
 		}, 0L, 1200L);
 		
-		
 		//Log that the plugin is enabled
 		Logger.log("Plugin Enabled");
 	}
