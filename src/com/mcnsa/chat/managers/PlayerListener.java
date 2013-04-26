@@ -66,7 +66,11 @@ public class PlayerListener implements Listener {
 				ChannelManager.channels.add(new ChatChannel(p.channel));
 			}
 		}
-		
+		//Check to see if the player is forcelistened to admin
+		if (MCNSAChat.permissions.has(evt.getPlayer(), "mcnsachat.forcelisten.admin") && !p.listening.contains("admin")) {
+			//Player is forcelistened to admin
+			p.listening.add("admin");
+		}
 		
 		PlayerManager.players.add(p);
 		if (MCNSAChat.thread != null)
@@ -119,15 +123,6 @@ public class PlayerListener implements Listener {
 						}
 					}
 				}
-		//Check to see if the player is forcelistened to admin
-		if (MCNSAChat.permissions.has(evt.getPlayer(), "mcnsachat.forcelisten.admin")) {
-			//Player is forcelistened to admin
-			p.listening.add("admin");
-			
-			//Update on all servers
-			if (MCNSAChat.thread != null)
-				MCNSAChat.thread.write(new PlayerUpdatePacket(p));
-		}
 	}
 
 
@@ -174,6 +169,16 @@ public class PlayerListener implements Listener {
 		// tell *everybody!*
 		if (MCNSAChat.thread != null)
 			MCNSAChat.thread.write(new PlayerChatPacket(player, evt.getMessage(), null, PlayerChatPacket.Type.CHAT));
+		
+		//Check to see if the player is forcelistened to admin
+		if (MCNSAChat.permissions.has(evt.getPlayer(), "mcnsachat.forcelisten.admin") && !player.listening.contains("admin")) {
+			//Player is forcelistened to admin
+			player.listening.add("admin");
+			
+			//Update servers
+			if (MCNSAChat.thread != null)
+				MCNSAChat.thread.write(new PlayerUpdatePacket(player));
+		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -216,6 +221,16 @@ public class PlayerListener implements Listener {
 			ChatPlayer player = PlayerManager.getPlayer(evt.getPlayer().getName(), MCNSAChat.name);
 			String write_perm = ChannelManager.getChannel(CommandManager.channelAlias.get(command)).write_permission;
 			
+			//Check to see if the player is forcelistened to admin
+			if (MCNSAChat.permissions.has(evt.getPlayer(), "mcnsachat.forcelisten.admin") && !player.listening.contains("admin")) {
+				//Player is forcelistened to admin
+				player.listening.add("admin");
+				
+				//Update servers
+				if (MCNSAChat.thread != null)
+					MCNSAChat.thread.write(new PlayerUpdatePacket(player));
+			}
+			
 			//Check for permissions
 			if (!write_perm.equals("") && !MCNSAChat.permissions.has(evt.getPlayer(), "mcnsachat.write." + write_perm)) {
 				plugin.getLogger().info(player.name + " attempted to write to channel " + CommandManager.channelAlias.get(command) + " without permission!");
@@ -235,6 +250,7 @@ public class PlayerListener implements Listener {
 			if (MCNSAChat.thread != null)
 				MCNSAChat.thread.write(new PlayerChatPacket(player, message, CommandManager.channelAlias.get(command), PlayerChatPacket.Type.CHAT));
 			
+			
 			//cancel the event
 			evt.setCancelled(true);
 		}
@@ -250,7 +266,6 @@ public class PlayerListener implements Listener {
 			evt.setCancelled(true);
 		}
 	}
-	
 	
 	}
 }
