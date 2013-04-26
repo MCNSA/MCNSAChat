@@ -153,8 +153,7 @@ public class PlayerListener implements Listener {
 			return;
 		evt.setCancelled(true);
 		ChatPlayer player = PlayerManager.getPlayer(evt.getPlayer().getName(), MCNSAChat.name);
-		// XXX blah blah check some stuff, like timeout maybe? are they allowed
-		// to chat?
+
 		String write_perm = ChannelManager.getChannel(player.channel).write_permission;
 		if (!write_perm.equals("") && !MCNSAChat.permissions.has(evt.getPlayer(), "mcnsachat.write." + write_perm)) {
 			plugin.getLogger().info(player.name + " attempted to write to channel " + player.channel + " without permission!");
@@ -165,11 +164,6 @@ public class PlayerListener implements Listener {
 			PluginUtil.send(player.name, "You are not allowed to speak right now.");
 			return;
 		}
-		MCNSAChat.chat.chat(player, evt.getMessage(), null);
-		// tell *everybody!*
-		if (MCNSAChat.thread != null)
-			MCNSAChat.thread.write(new PlayerChatPacket(player, evt.getMessage(), null, PlayerChatPacket.Type.CHAT));
-		
 		//Check to see if the player is forcelistened to admin
 		if (MCNSAChat.permissions.has(evt.getPlayer(), "mcnsachat.forcelisten.admin") && !player.listening.contains("admin")) {
 			//Player is forcelistened to admin
@@ -179,6 +173,12 @@ public class PlayerListener implements Listener {
 			if (MCNSAChat.thread != null)
 				MCNSAChat.thread.write(new PlayerUpdatePacket(player));
 		}
+		MCNSAChat.chat.chat(player, evt.getMessage(), null);
+		// tell *everybody!*
+		if (MCNSAChat.thread != null)
+			MCNSAChat.thread.write(new PlayerChatPacket(player, evt.getMessage(), null, PlayerChatPacket.Type.CHAT));
+		
+		
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
