@@ -139,7 +139,7 @@ public class ClientThread extends Thread {
 				return true;
 
 			// log + notify
-			Logger.log("Player joined " + packet.player.name + " from " + packet.longname);
+			Logger.log(packet.player.name + " joined " + packet.longname);
 			if (!ChannelManager.getChannel(packet.player.channel).modes.contains(ChatChannel.Mode.LOCAL)) {
 				String joinString = plugin.getConfig().getString("strings.player-join");
 				joinString = joinString.replaceAll("%prefix%", MCNSAChat.permissions.getUser(packet.player.name).getPrefix());
@@ -161,7 +161,7 @@ public class ClientThread extends Thread {
 				return true;
 
 			// log + notify
-			Logger.log("Player left " + packet.player.name + " from " + packet.longname);
+			Logger.log(packet.player.name + " left " + packet.longname);
 			if (!ChannelManager.getChannel(packet.player.channel).modes.contains(ChatChannel.Mode.LOCAL)) {
 				String quitString = plugin.getConfig().getString("strings.player-quit");
 				quitString = quitString.replaceAll("%prefix%", MCNSAChat.permissions.getUser(packet.player.name).getPrefix());
