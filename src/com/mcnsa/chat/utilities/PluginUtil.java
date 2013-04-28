@@ -9,8 +9,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import com.mcnsa.chat.chat.ChatPlayer;
 import com.mcnsa.chat.main.MCNSAChat;
 import com.mcnsa.chat.managers.MutelistManager;
+import com.mcnsa.chat.managers.PlayerManager;
 
 public class PluginUtil {
 	public static MCNSAChat plugin = null;
@@ -57,7 +59,11 @@ public class PluginUtil {
 	public static void send(String message) {
 		if (message.length() <= 0)
 			return;
-		Bukkit.broadcastMessage(color(message));
+		ArrayList<ChatPlayer> players = PlayerManager.getPlayersByServer(MCNSAChat.name);
+		for (ChatPlayer player: players){
+			PluginUtil.send(player.name, message);
+		}
+		Logger.log(message);
 	}
 
 	public static void sendLater(final String who, final String message) {
