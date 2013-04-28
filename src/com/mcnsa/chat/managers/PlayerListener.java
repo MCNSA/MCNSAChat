@@ -23,6 +23,7 @@ import com.mcnsa.chat.client.packets.PlayerJoinedPacket;
 import com.mcnsa.chat.client.packets.PlayerLeftPacket;
 import com.mcnsa.chat.client.packets.PlayerUpdatePacket;
 import com.mcnsa.chat.main.MCNSAChat;
+import com.mcnsa.chat.utilities.Logger;
 import com.mcnsa.chat.utilities.PluginUtil;
 
 public class PlayerListener implements Listener {
@@ -80,7 +81,11 @@ public class PlayerListener implements Listener {
 		joinString = joinString.replaceAll("%prefix%", MCNSAChat.permissions.getUser(evt.getPlayer()).getPrefix());
 		joinString = joinString.replaceAll("%player%", evt.getPlayer().getName());
 		joinString = joinString.replaceAll("%server%", plugin.longName);
-		PluginUtil.send(joinString);
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			PluginUtil.send(player.getName(), joinString);
+		}
+		//Log the join
+		Logger.log(joinString);
 		if (welcomeThem) {
 			String welcomeString = plugin.getConfig().getString("strings.player-welcome");
 			welcomeString = welcomeString.replaceAll("%player%", evt.getPlayer().getName());
@@ -144,7 +149,11 @@ public class PlayerListener implements Listener {
 		quitString = quitString.replaceAll("%prefix%", MCNSAChat.permissions.getUser(evt.getPlayer()).getPrefix());
 		quitString = quitString.replaceAll("%player%", evt.getPlayer().getName());
 		quitString = quitString.replaceAll("%server%", plugin.longName);
-		PluginUtil.send(quitString);
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			PluginUtil.send(player.getName(), quitString);
+		}
+		//Log the quit
+		Logger.log(quitString);
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
