@@ -43,6 +43,7 @@ Built jars can be found at http://build.mcnsa.com/
 |`/ccolor <channel> <color>`|`mcnsachat.admin.color`|Changes channel name’s color. [List of color codes](http://www.minecraftwiki.net/wiki/Color_Codes). Example: `/ccolor mod b`.|
 |`/cmode <channel> <mode>`|`mcnsachat.admin.mode`|Changes channel’s mode. Modes: `LOCAL` (makes channel work only on the current server), `MUTE` (nobody can talk), `RAVE` (random colors for letters, useful to stop huge fights), `RANDOM` (prepends everything with `&k` to make the text obfuscated), `LOUD` (enables bold and changes text to caps), `BORING` (removes all color and formatting), `PERSIST` (makes the channel show up in `/clist` even if it’s empty)|
 |`/cname <channel> <name>`|`mcnsachat.admin.name`|Changes channel’s display name. Can be used to properly capitalize letters. Example: `/cname mod MOD`|
+|`/cperm <channel> <read/write> <set/del> <permission>`|`mcnsachat.admin.perm`|Change the read and write permission `set <permission>` to set it `del ""` to remove it. (currently has to have a permission argument to remove it|
     
 # MCNSA Fun Commands
 
