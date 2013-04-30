@@ -409,4 +409,40 @@ public class AdminCommands {
 		return true;
 
 	}
+	@Command(command = "cperm",
+			arguments = {"Channel", "type", "action", "permission"},
+			description = "Adds permissions to a channel",
+			permissions = {"perm"})
+	public static boolean cperm(CommandSender sender, String channel, String type, String action, String permission) {
+		ChatChannel chan = ChannelManager.getChannel(channel);
+		
+		if (chan == null) {
+			PluginUtil.send(sender.getName(), "&cChannel not found: "+channel);
+			return true;
+		}
+		if (action.equalsIgnoreCase("set") || action.equals("+")) {
+			if (type.equalsIgnoreCase("read")) {
+				chan.read_permission = permission;
+				PluginUtil.send(sender.getName(),"Read permission for channel "+channel+" is now: "+permission);
+			}
+			if (type.equalsIgnoreCase("write")) {
+				chan.write_permission = permission;
+				PluginUtil.send(sender.getName(),"Write permission for channel "+channel+" is now: "+permission);
+			}
+		}
+		if (action.equalsIgnoreCase("del") || action.equals("-")) {
+			if (type.equalsIgnoreCase("read")) {
+				chan.read_permission = "";
+				PluginUtil.send(sender.getName(),"Read permission for channel "+channel+" has been removed ");
+			}
+			if (type.equalsIgnoreCase("write")) {
+				chan.write_permission = "";
+				PluginUtil.send(sender.getName(),"Write permission for channel "+channel+" has been removed ");
+			}
+		}
+		if (MCNSAChat.thread !=null)
+			MCNSAChat.thread.write(new ChannelUpdatePacket(chan));
+		return true;
+
+	}
 }
