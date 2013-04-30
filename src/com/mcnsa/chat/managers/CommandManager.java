@@ -437,7 +437,13 @@ public class CommandManager implements TabExecutor {
 						}
 						// strings now
 						else if(params[i].equals(String.class)) {
-							arguments[i] = args[i - 1];
+							try {
+								arguments[i] = args[i - 1];
+							}
+							catch (Exception e) {
+								//didnt supply a string
+								possible = false;
+							}
 						}
 						// string array
 						else if(params[i].equals(String[].class)) {
