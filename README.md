@@ -10,7 +10,7 @@ Built jars can be found at http://build.mcnsa.com/
 |**Command**|**Permission Node**|**Description**|
 |:------|:--------------|:----------|
 |`/c <channel>`|`mcnsachat.player.move`|Switches to a channel.|
-|`/cmute <player>`||Ignore player’s chat and private messages.|
+|`/mute <player>`||Ignore player’s chat and private messages.|
 |`/clist`|`mcnsachat.player.list`|List available channels.|
 |`/clisten <channel>`|`mcnsachat.player.listen`|Allows to listen to more channels, while typing in another.|
 |`/csearch <player>`|`mcnsachat.player.search`|Views the channel a player is currently in.|
@@ -41,7 +41,7 @@ Built jars can be found at http://build.mcnsa.com/
 |:------|:--------------|:----------|
 |`/calias <channel> <alias>`|`mcnsachat.admin.alias`|Changes channel’s alias. Alias is a short command that can be used to send directly to that channel (example: `/m <message>`) or make the channel your primary channel to write in (example: `/m`).|
 |`/ccolor <channel> <color>`|`mcnsachat.admin.color`|Changes channel name’s color. [List of color codes](http://www.minecraftwiki.net/wiki/Color_Codes). Example: `/ccolor mod b`.|
-|`/cmode <channel> <mode>`|`mcnsachat.admin.mode`|Changes channel’s mode. Modes: `LOCAL` (makes channel work only on the current server), `MUTE` (nobody can talk), `RAVE` (random colors for letters, useful to stop huge fights), `RANDOM` (prepends everything with `&k` to make the text obfuscated), `LOUD` (enables bold and changes text to caps), `BORING` (removes all color and formatting), `PERSIST` (makes the channel show up in `/clist` even if it’s empty)|
+|`/cmode <channel> <+/-> <mode>`|`mcnsachat.admin.mode`|Changes channel’s mode. Modes: `LOCAL` (makes channel work only on the current server), `MUTE` (nobody can talk), `RAVE` (random colors for letters, useful to stop huge fights), `RANDOM` (prepends everything with `&k` to make the text obfuscated), `LOUD` (enables bold and changes text to caps), `BORING` (removes all color and formatting), `PERSIST` (makes the channel show up in `/clist` even if it’s empty)|
 |`/cname <channel> <name>`|`mcnsachat.admin.name`|Changes channel’s display name. Can be used to properly capitalize letters. Example: `/cname mod MOD`|
 |`/cperm <channel> <read/write> <set/del> <permission>`|`mcnsachat.admin.perm`|Change the read and write permission `set <permission>` to set it `del ""` to remove it. (currently has to have a permission argument to remove it|
     
