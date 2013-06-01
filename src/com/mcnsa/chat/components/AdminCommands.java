@@ -121,6 +121,11 @@ public class AdminCommands {
 			permissions = {"timeout"})
 	public static boolean timeout(CommandSender sender, String player, String time, String... rawReason) throws ChatCommandException {
 		//Get the player
+		Player p = Bukkit.getPlayer(player);
+		if(p == null)
+		{
+			throw new ChatCommandException("Player %s not found", player);
+		}
 		ChatPlayer target = PlayerManager.getPlayer(Bukkit.getPlayer(player).getName(), MCNSAChat.name);
 		
 		StringBuilder sb = new StringBuilder();
@@ -137,7 +142,7 @@ public class AdminCommands {
 		}
 		
 		////sort out when we need to get them out of timeout
-		int timer = Integer.parseInt(time);
+		long timer =Long.parseLong(time);
 		timer = (timer * 60)*1000;
 		long currentTime = new Date().getTime();
 		long timeOut = currentTime + timer;
@@ -149,10 +154,17 @@ public class AdminCommands {
 		target.modes.add(ChatPlayer.Mode.MUTE);
 		
 		//Notify the target.
-		PluginUtil.send(target.name, "&4You have been put in timeout for &6"+time+"&4 mins. Reason: &6"+reason);
+		String timeoutTargetString =  MCNSAChat.plugin.getConfig().getString("strings.timeout-target");
+		timeoutTargetString = timeoutTargetString.replaceAll("%time%", time);
+		timeoutTargetString = timeoutTargetString.replaceAll("%reason%", reason);
+		PluginUtil.send(target.name, timeoutTargetString);
 		
 		//Notify everyone else
-		PluginUtil.send("&4"+target.name+" &6Has been put in timeout for: &4"+reason);
+		String timeoutEnterString = MCNSAChat.plugin.getConfig().getString("strings.timeout-enter");
+		timeoutEnterString = timeoutEnterString.replaceAll("%prefix%", MCNSAChat.permissions.getUser(Bukkit.getPlayer(player)).getPrefix());
+		timeoutEnterString = timeoutEnterString.replaceAll("%player%", target.name);
+		timeoutEnterString = timeoutEnterString.replaceAll("%reason%", reason);
+		PluginUtil.send(timeoutEnterString);
 				
 		return true;
 	}
@@ -162,7 +174,13 @@ public class AdminCommands {
 			permissions = {"lock"})
 	public static boolean unTimeout(CommandSender sender, String player) throws ChatCommandException {
 		//Get the player
-		ChatPlayer target = PlayerManager.getPlayer(Bukkit.getPlayer(player).getName(), MCNSAChat.name);
+		Player p = Bukkit.getPlayer(player);
+		if(p == null)
+		{
+			throw new ChatCommandException("Player %s not found", player);
+		}
+		
+		ChatPlayer target = PlayerManager.getPlayer(p.getName(), MCNSAChat.name);
 		
 		//Check if the player is already in timeout
 		if (TimeoutManager.timeouts.containsKey(target.name)) {
@@ -173,7 +191,10 @@ public class AdminCommands {
 			target.modes.remove(ChatPlayer.Mode.MUTE);
 			
 			//Notify everyone that player is out of timeout
-			PluginUtil.send("&4"+target.name+" &6has been removed from timeout");
+			String timeoutLeaveString = MCNSAChat.plugin.getConfig().getString("strings.timeout-leave");
+			timeoutLeaveString = timeoutLeaveString.replaceAll("%prefix%", MCNSAChat.permissions.getUser(Bukkit.getPlayer(player)).getPrefix());
+			timeoutLeaveString = timeoutLeaveString.replaceAll("%player%", target.name);
+			PluginUtil.send(timeoutLeaveString);	
 			return true;
 		}
 		PluginUtil.send(sender.getName(), "&4"+target.name+" &6is not in timeout");

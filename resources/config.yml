@@ -18,3 +18,6 @@ strings:
   action: '&f<&3%server%&7%channel%&f> * %prefix%%player% &f%message%'
   pm_send: '&7(to %to%) %message%' # you can also use %from%
   pm_receive: '&7(from %from%) %message%' # you can also use %to%
+  timeout-enter: '%prefix%%player% &chas been put in timeout for: &7%reason%'
+  timeout-leave: '%prefix%%player% &ahas been removed from timeout.'
+  timeout-target: '&4You have been put in timeout for &6%time%&4 mins. Reason: &6%reason%'
