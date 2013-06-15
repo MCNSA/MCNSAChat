@@ -69,7 +69,7 @@ public class PlayerCommands {
 			arguments = {},
 			description = "Lists all channels",
 			permissions = {"list"})
-	public static boolean listChannels(CommandSender sender) {
+	public static boolean listinchannel(CommandSender sender) {
 		String chans = "";
 		for(ChatChannel chan : ChannelManager.channels) {
 			String perm = chan.read_permission;
@@ -87,18 +87,26 @@ public class PlayerCommands {
 		return true;
 	}
 	@Command(command = "list",
-			description = "Displays online players",
-			aliases = {"online", "players", "who", "playerlist"}
+			description = "lists players in the channel",
+			aliases = {"online", "players", "who", "playerlist", "names", "n"}
 			)
-	public static boolean listPlayers(CommandSender player) throws ChatCommandException{
-		if (player.getName().equalsIgnoreCase("console")) {
-			Logger.log(PluginUtil.getPlayerList());
-		}
-		else {
-			PluginUtil.send(player.getName(), PluginUtil.getPlayerList());
-		}
-		return true;
-	}
+    public static boolean names(CommandSender player) throws ChatCommandException{
+        ChatPlayer cp = PlayerManager.getPlayer(player.getName(), MCNSAChat.name);
+        ChatChannel chan = ChannelManager.getChannel(cp.channel.toLowerCase());
+        if(chan != null)
+        {
+            ArrayList<String> names = new ArrayList<String>();
+		    for (ChatPlayer p : PlayerManager.getPlayersListeningToChannel(chan.name))
+			    if (!chan.modes.contains(ChatChannel.Mode.LOCAL) || p.server.equals(cp.server)){
+				    if (!(names.contains(p.name))) {
+					    if (!(p.modes.contains(ChatPlayer.Mode.SEEALL)))
+						    names.add(p.name);
+				    }
+			    }
+		    PluginUtil.sendLater(player.getName(), "&7Players in "+ chan.color + chan.name + "&7: " + PluginUtil.formatPlayerList(names.toArray(new String[0])));
+        }
+        return true;
+    }
 	@Command(command = "clisten",
 			arguments = {"Channel"},
 			description = "Listens to a channel",
@@ -115,7 +123,7 @@ public class PlayerCommands {
 
 		if (cp.listening.contains(channel.toLowerCase())) {
 			cp.listening.remove(channel.toLowerCase());
-			PluginUtil.send(player.getName(), "You are now no longer listening to channel " + chan.color + chan.name);
+			PluginUtil.send(player.getName(), "No longer listening to channel " + chan.color + chan.name + "&f.");
 			return true;
 		}
 		cp.listening.add(channel.toLowerCase());
@@ -128,12 +136,7 @@ public class PlayerCommands {
 		}
 
 		// welcome them
-		PluginUtil.sendLater(cp.name, "You are now listening to channel " + chan.color + chan.name + "&f!");
-		ArrayList<String> names = new ArrayList<String>();
-		for (ChatPlayer p : PlayerManager.getPlayersInChannel(chan.name))
-			names.add(p.name);
-		PluginUtil.sendLater(cp.name, "Players here: " + PluginUtil.formatPlayerList(names.toArray(new String[0])));
-
+		PluginUtil.sendLater(cp.name, "Now listening to channel " + chan.color + chan.name + "&f.");
 		if (MCNSAChat.thread != null)
 			MCNSAChat.thread.write(new PlayerUpdatePacket(cp));
 

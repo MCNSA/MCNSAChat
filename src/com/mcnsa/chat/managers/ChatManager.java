@@ -90,7 +90,11 @@ public class ChatManager {
 
 		String message = plugin.getConfig().getString("strings.message");
 		message = message.replace("%server%", player.server);
-		message = message.replace("%channel%", chan.color + chan.name);
+		if("Global".equals(chan.name))
+			message = message.replace("%channel%", "");
+		else
+			message = message.replace("%channel%", " to " + "&3" + chan.color + chan.name);
+        message = message.replace("%ccolor%", "&3" + chan.color);
 		message = message.replace("%rank%", PluginUtil.formatRank(player.name));
 		message = message.replace("%prefix%", MCNSAChat.permissions.getUser(player.name).getPrefix());
 		message = message.replace("%player%", player.name);
@@ -120,7 +124,11 @@ public class ChatManager {
 
 		String message = plugin.getConfig().getString("strings.action");
 		message = message.replace("%server%", player.server);
-		message = message.replace("%channel%", chan.color + chan.name);
+		if("Global".equals(chan.name))
+			message = message.replace("%channel%", "");
+		else
+			message = message.replace("%channel%", " to " + "&3" + chan.color + chan.name);
+        message = message.replace("%ccolor%", "&3" + chan.color);
 		message = message.replace("%rank%", PluginUtil.formatRank(player.name));
 		message = message.replace("%prefix%", MCNSAChat.permissions.getUser(player.name).getPrefix());
 		message = message.replace("%suffix%", MCNSAChat.permissions.getUser(player.name).getSuffix());

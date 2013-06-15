@@ -61,7 +61,7 @@ public class PlayerListener implements Listener {
 			// use default info
 			p.channel = plugin.getConfig().getString("default-channel");
 			p.listening.addAll((List<String>) plugin.getConfig().getList("default-listen"));
-			welcomeThem = true;
+			welcomeThem = false;
 			if (ChannelManager.getChannel(p.channel) == null) {
 				//channel does not exist. Add new
 				ChannelManager.channels.add(new ChatChannel(p.channel));
