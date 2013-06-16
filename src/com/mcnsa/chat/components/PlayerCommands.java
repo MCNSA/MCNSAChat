@@ -69,7 +69,7 @@ public class PlayerCommands {
 			arguments = {},
 			description = "Lists all channels",
 			permissions = {"list"})
-	public static boolean listinchannel(CommandSender sender) {
+	public static boolean listchannels(CommandSender sender) {
 		String chans = "";
 		for(ChatChannel chan : ChannelManager.channels) {
 			String perm = chan.read_permission;
@@ -86,9 +86,9 @@ public class PlayerCommands {
 		PluginUtil.send(sender.getName(), "Channels: " + chans);
 		return true;
 	}
-	@Command(command = "list",
+	@Command(command = "who",
 			description = "lists players in the channel",
-			aliases = {"online", "players", "who", "playerlist", "names", "n"}
+			aliases = {"online", "players", "playerlist", "names", "n"}
 			)
     public static boolean names(CommandSender player) throws ChatCommandException{
         ChatPlayer cp = PlayerManager.getPlayer(player.getName(), MCNSAChat.name);
@@ -244,6 +244,7 @@ public class PlayerCommands {
 	@Command(
 		command = "mute",
 		arguments = {"Player"},
+    	aliases = {"ignore"},
 		description = "Stops display of [player]'s chat and msgs"
 		)
 	public static boolean mute (CommandSender player, String mutePlayer) throws ChatCommandException{
