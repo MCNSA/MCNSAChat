@@ -115,7 +115,7 @@ public class AdminCommands {
 		}
 		return true;
 	}
-	@Command(command = "cto",
+	@Command(command = "ctimeout",
 			arguments = {"Player", "Time", "Reason"},
 			description = "Stops a player from chatting",
 			permissions = {"timeout"})
@@ -168,7 +168,7 @@ public class AdminCommands {
 				
 		return true;
 	}
-	@Command(command = "cto",
+	@Command(command = "ctimeout",
 			arguments = {"Player"},
 			description = "Removes player from timeout",
 			permissions = {"lock"})
@@ -200,7 +200,7 @@ public class AdminCommands {
 		PluginUtil.send(sender.getName(), "&4"+target.name+" &6is not in timeout");
 		return true;
 	}
-	@Command(command = "cto",
+	@Command(command = "ctimeout",
 			arguments = {},
 			description = "Removes player from timeout",
 			permissions = {"lock"})

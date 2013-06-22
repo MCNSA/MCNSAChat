@@ -81,9 +81,6 @@ public class PlayerListener implements Listener {
 		joinString = joinString.replaceAll("%prefix%", MCNSAChat.permissions.getUser(evt.getPlayer()).getPrefix());
 		joinString = joinString.replaceAll("%player%", evt.getPlayer().getName());
 		joinString = joinString.replaceAll("%server%", plugin.longName);
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			PluginUtil.send(player.getName(), joinString);
-		}
 		//Log the join
 		Logger.log(joinString);
 		if (welcomeThem) {
@@ -149,14 +146,11 @@ public class PlayerListener implements Listener {
 		quitString = quitString.replaceAll("%prefix%", MCNSAChat.permissions.getUser(evt.getPlayer()).getPrefix());
 		quitString = quitString.replaceAll("%player%", evt.getPlayer().getName());
 		quitString = quitString.replaceAll("%server%", plugin.longName);
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			PluginUtil.send(player.getName(), quitString);
-		}
 		//Log the quit
 		Logger.log(quitString);
 	}
 
-	@EventHandler(priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void chatHandler(AsyncPlayerChatEvent evt) {
 		if (evt.isCancelled())
 			return;
